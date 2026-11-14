@@ -1,4 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
+import { enrichEvents } from "./features.mjs";
 
 const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
@@ -44,7 +45,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab.id || !tab.url?.startsWith("http")) throw new Error("Open a public website in the active tab first.");
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
-    collected = result.result.events;
+    collected = enrichEvents(result.result.events);
     extractionStatus.textContent = collected.length
       ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.`
       : "No supported visible posts were found on this page.";
