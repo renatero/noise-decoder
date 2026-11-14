@@ -23,6 +23,7 @@ globalThis.chrome = {
       async get() {
         return { dashboardUrl: "https://radar.example/app?from=extension" };
       },
+      async set() {},
     },
   },
   tabs: { async create(tab) { openedTabs.push(tab); } },
@@ -79,5 +80,8 @@ const [manifest, background] = await Promise.all([
 assert.equal(manifest.includes('"scripting"'), false);
 assert.equal(manifest.includes('"host_permissions"'), false);
 assert.equal(background.includes("fetch("), false);
+
+const settingsModule = await import("../dashboard-settings.js");
+assert.equal(await settingsModule.getDashboardUrl(), "https://radar.example/app?from=extension");
 
 console.log("background handoff tests: 6 passed");

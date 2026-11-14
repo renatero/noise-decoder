@@ -1,4 +1,5 @@
-const DEFAULT_DASHBOARD_URL = "https://radar.188.166.112.226.nip.io/";
+import { getDashboardUrl } from "./dashboard-settings.js";
+
 const MENU_ID = "investigate-with-coordination-radar";
 const SETTINGS_MENU_ID = "open-coordination-radar-settings";
 
@@ -24,9 +25,7 @@ function selectedInput(info) {
 }
 
 async function dashboardUrl(input = "", kind = "page") {
-  const { dashboardUrl: savedUrl } = await chrome.storage.sync.get({
-    dashboardUrl: DEFAULT_DASHBOARD_URL,
-  });
+  const savedUrl = await getDashboardUrl();
   const url = new URL(savedUrl);
   if (input) url.searchParams.set("investigate", input.slice(0, 12000));
   url.searchParams.set("input_type", kind);

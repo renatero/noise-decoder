@@ -10,6 +10,9 @@ EnvironmentFile=-/etc/noise-decoder/context.env
 Environment=CONTEXT_STATE_PATH=/var/lib/noise-decoder/context.sqlite3
 StateDirectory=noise-decoder
 UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
 # Caddy terminates public HTTPS and proxies to this local-only application.
 ExecStart=/opt/projects/noise-decoder/.venv/bin/python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
 Restart=on-failure
