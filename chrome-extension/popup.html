@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Noise Decoder</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Noise Decoder</h1>
+        <p>Extract visible posts and search public Bluesky posts for related content. Search runs when you select the button.</p>
+      </header>
+
+      <button id="extract" class="primary">Extract visible posts</button>
+      <p id="extraction-status" class="status" aria-live="polite">Nothing collected from this tab yet.</p>
+
+      <section id="review" hidden>
+        <div class="row">
+          <strong id="event-count">0 events</strong>
+          <button id="clear" class="quiet">Clear</button>
+        </div>
+        <details>
+          <summary>Review payload</summary>
+          <pre id="payload"></pre>
+        </details>
+        <button id="analyze" class="primary">Send for analysis</button>
+      </section>
+
+      <section id="analysis" hidden>
+        <h2>Analysis</h2>
+        <p id="analysis-mode" class="status"></p>
+        <pre id="analysis-result"></pre>
+      </section>
+
+      <a href="options.html" target="_blank">Configure API endpoint</a>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
