@@ -16,13 +16,14 @@ function format(value) {
 }
 
 function mockAnalysis(events, reason) {
+  const identifiedActors = events.filter((event) => event.actor_id);
   return {
     status: events.length < 2 ? "insufficient_data" : "inconclusive",
-    nodes: [...new Map(events.map((event) => [event.actor_id, { id: event.actor_id, platform: event.platform }])).values()],
+    nodes: [...new Map(identifiedActors.map((event) => [event.actor_id, { id: event.actor_id, platform: event.platform }])).values()],
     edges: [],
     clusters: [],
     evidence: [],
-    statistics: { events_analyzed: events.length, actors_analyzed: new Set(events.map((event) => event.actor_id)).size },
+    statistics: { events_analyzed: events.length, actors_analyzed: new Set(identifiedActors.map((event) => event.actor_id)).size },
     limitations: [
       "Mock response: the detector API is not available yet.",
       "Visible-page extraction is incomplete and should be reviewed before drawing conclusions.",
@@ -46,7 +47,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
     collected = result.result.events;
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.${result.result.limitations?.length ? ` ${result.result.limitations[0]}` : ""}`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
