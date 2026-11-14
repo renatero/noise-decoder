@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Noise Decoder",
+  "version": "0.1.0",
+  "description": "Collect visible public posts for explainable coordination analysis.",
+  "action": {
+    "default_title": "Noise Decoder",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"]
+}
