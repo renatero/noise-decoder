@@ -1,0 +1,35 @@
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { margin: 0; overscroll-behavior: none; }
+  button, select, input, textarea { font: inherit; }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #3d494c; border-radius: 8px; }
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  border-radius: .5rem;
+  padding: .5rem .75rem;
+  color: #bcc9cd;
+  transition: background-color .15s, color .15s;
+}
+.side-link:hover { background: #252a39; color: #dee2f6; }
+.field-label { display: block; color: #bcc9cd; font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.field-control { width: 100%; box-sizing: border-box; border: 1px solid #3d494c; border-radius: .5rem; background: #090e1c; color: #dee2f6; padding: .6rem .7rem; outline: none; font-family: "Inter", sans-serif; font-size: 13px; text-transform: none; letter-spacing: normal; }
+.field-control:focus { border-color: #4cd7f6; box-shadow: 0 0 0 2px rgb(76 215 246 / .16); }
+.field-control::file-selector-button { margin-right: .65rem; border: 0; border-radius: .25rem; background: #252a39; color: #dee2f6; padding: .35rem .5rem; }
+.kpi-card { display: flex; align-items: center; justify-content: space-between; border-radius: 1rem; background: #161b2a; padding: 1rem; }
+.kpi-label { display: block; color: #869397; font-family: "JetBrains Mono", monospace; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.kpi-value { display: block; color: #dee2f6; font-family: "Plus Jakarta Sans", sans-serif; font-size: 36px; font-weight: 700; line-height: 44px; }
+.kpi-note { display: block; color: #bcc9cd; font-size: 12px; }
+.kpi-icon { display: grid; height: 3rem; width: 3rem; place-items: center; border-radius: .75rem; background: #1a1f2e; color: #869397; font-size: 24px; }
+.graph-control { display: grid; height: 2rem; width: 2rem; place-items: center; border: 0; border-radius: .5rem; background: #1a1f2e; color: #bcc9cd; cursor: pointer; transition: background-color .15s, color .15s; }
+.graph-control:hover { background: #252a39; color: #dee2f6; }
+.legend-dot { display: inline-block; height: .625rem; width: .625rem; border-radius: 999px; }
+.report-panel { min-height: 10rem; border-radius: 1rem; background: #161b2a; padding: 1rem; }
+.panel-title { display: flex; align-items: center; gap: .375rem; font-family: "Plus Jakarta Sans", sans-serif; font-size: 16px; font-weight: 600; }
+.panel-content { margin-top: .75rem; color: #bcc9cd; font-size: 12px; line-height: 18px; }
+#graph canvas { outline: none; }

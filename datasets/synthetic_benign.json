@@ -1,0 +1,5048 @@
+{
+  "dataset_type": "synthetic_demonstration",
+  "scenario": "synthetic_benign",
+  "notice": "All actors, events, URLs, and source links in this file are synthetic demonstration data.",
+  "event_count": 336,
+  "events": [
+    {
+      "id": "demo-benign-0243",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-086",
+      "timestamp": "2026-11-14T08:01:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/188"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0243",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0169",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-034",
+      "timestamp": "2026-11-14T08:11:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/114"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0169",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0267",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-070",
+      "timestamp": "2026-11-14T08:15:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/212"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0267",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0103",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-006",
+      "timestamp": "2026-11-14T08:19:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/048"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0103",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0245",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-063",
+      "timestamp": "2026-11-14T08:20:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/190"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0245",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0125",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-135",
+      "timestamp": "2026-11-14T08:33:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/070"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0125",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0250",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-076",
+      "timestamp": "2026-11-14T08:55:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/195"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0250",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0233",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-086",
+      "timestamp": "2026-11-14T09:02:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/178"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0233",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0323",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-072",
+      "timestamp": "2026-11-14T09:08:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/268"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0323",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0137",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-123",
+      "timestamp": "2026-11-14T09:20:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/082"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0137",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0165",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-125",
+      "timestamp": "2026-11-14T09:21:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/110"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0165",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0109",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-091",
+      "timestamp": "2026-11-14T09:24:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/054"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0109",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0084",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-043",
+      "timestamp": "2026-11-14T09:31:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/029"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0084",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0150",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-062",
+      "timestamp": "2026-11-14T09:35:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/095"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0150",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0307",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-109",
+      "timestamp": "2026-11-14T09:38:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/252"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0307",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0234",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-141",
+      "timestamp": "2026-11-14T09:47:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/179"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0234",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0310",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-067",
+      "timestamp": "2026-11-14T09:52:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/255"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0310",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0072",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-088",
+      "timestamp": "2026-11-14T09:58:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/017"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0072",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0189",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-039",
+      "timestamp": "2026-11-14T10:00:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/134"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0189",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0079",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-087",
+      "timestamp": "2026-11-14T10:11:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/024"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0079",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0066",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-043",
+      "timestamp": "2026-11-14T10:13:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/011"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0066",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0254",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-009",
+      "timestamp": "2026-11-14T10:18:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/199"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0254",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0229",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-122",
+      "timestamp": "2026-11-14T10:23:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/174"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0229",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0220",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-14T10:29:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/165"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0220",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0111",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-065",
+      "timestamp": "2026-11-14T10:31:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/056"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0111",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0172",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-045",
+      "timestamp": "2026-11-14T10:34:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/117"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0172",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0191",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-029",
+      "timestamp": "2026-11-14T10:45:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/136"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0191",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0223",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-088",
+      "timestamp": "2026-11-14T10:48:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/168"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0223",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0081",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-129",
+      "timestamp": "2026-11-14T10:50:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/026"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0081",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0160",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-092",
+      "timestamp": "2026-11-14T10:53:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/105"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0160",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0260",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-012",
+      "timestamp": "2026-11-14T10:58:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/205"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0260",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0183",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-074",
+      "timestamp": "2026-11-14T10:59:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/128"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0183",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0119",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-14T11:04:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/064"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0119",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0269",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-002",
+      "timestamp": "2026-11-14T11:09:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/214"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0269",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0136",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-14T11:13:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/081"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0136",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0259",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-143",
+      "timestamp": "2026-11-14T11:17:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/204"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0259",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0090",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-056",
+      "timestamp": "2026-11-14T11:22:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/035"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0090",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0127",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-14T11:24:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/072"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0127",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0075",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-079",
+      "timestamp": "2026-11-14T11:26:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/020"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0075",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0088",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-119",
+      "timestamp": "2026-11-14T11:28:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/033"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0088",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0275",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-057",
+      "timestamp": "2026-11-14T11:41:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/220"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0275",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0098",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-107",
+      "timestamp": "2026-11-14T11:44:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/043"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0098",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0232",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-063",
+      "timestamp": "2026-11-14T11:45:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/177"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0232",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0115",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-108",
+      "timestamp": "2026-11-14T11:47:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/060"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0115",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0117",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-042",
+      "timestamp": "2026-11-14T11:51:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/062"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0117",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0318",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-14T11:55:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/263"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0318",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0224",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-122",
+      "timestamp": "2026-11-14T11:57:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/169"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0224",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0276",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-114",
+      "timestamp": "2026-11-14T11:58:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/221"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0276",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0112",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-009",
+      "timestamp": "2026-11-14T12:16:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/057"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0112",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0193",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-134",
+      "timestamp": "2026-11-14T12:16:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/138"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0193",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0086",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-082",
+      "timestamp": "2026-11-14T12:18:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/031"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0086",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0131",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-066",
+      "timestamp": "2026-11-14T12:21:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/076"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0131",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0124",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-050",
+      "timestamp": "2026-11-14T12:25:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/069"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0124",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0297",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-055",
+      "timestamp": "2026-11-14T12:30:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/242"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0297",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0293",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-102",
+      "timestamp": "2026-11-14T12:34:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/238"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0293",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0273",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-037",
+      "timestamp": "2026-11-14T12:36:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/218"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0273",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0108",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-14T13:00:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/053"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0108",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0025",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-025",
+      "timestamp": "2026-11-14T13:00:04Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0025",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0051",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-051",
+      "timestamp": "2026-11-14T13:01:32Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0051",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0043",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-043",
+      "timestamp": "2026-11-14T13:01:34Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0043",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0040",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-14T13:01:53Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0040",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0053",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-053",
+      "timestamp": "2026-11-14T13:01:54Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0053",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0321",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-025",
+      "timestamp": "2026-11-14T13:03:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/266"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0321",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0044",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-044",
+      "timestamp": "2026-11-14T13:05:18Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0044",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0017",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-017",
+      "timestamp": "2026-11-14T13:05:56Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0017",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0005",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-005",
+      "timestamp": "2026-11-14T13:06:28Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0005",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0049",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-049",
+      "timestamp": "2026-11-14T13:06:29Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0049",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0018",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-018",
+      "timestamp": "2026-11-14T13:06:33Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0018",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0185",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-041",
+      "timestamp": "2026-11-14T13:07:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/130"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0185",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0034",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-034",
+      "timestamp": "2026-11-14T13:07:34Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0034",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0023",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-023",
+      "timestamp": "2026-11-14T13:07:41Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0023",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0041",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-041",
+      "timestamp": "2026-11-14T13:08:03Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0041",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0035",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-035",
+      "timestamp": "2026-11-14T13:08:06Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0035",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0010",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-010",
+      "timestamp": "2026-11-14T13:09:27Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0010",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0007",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-007",
+      "timestamp": "2026-11-14T13:10:14Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0007",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0028",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-028",
+      "timestamp": "2026-11-14T13:10:16Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0028",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0030",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-14T13:11:12Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0030",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0012",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-012",
+      "timestamp": "2026-11-14T13:11:59Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0012",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0037",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-037",
+      "timestamp": "2026-11-14T13:12:37Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0037",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0042",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-042",
+      "timestamp": "2026-11-14T13:13:15Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0042",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0209",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-044",
+      "timestamp": "2026-11-14T13:14:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/154"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0209",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0038",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-038",
+      "timestamp": "2026-11-14T13:14:34Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0038",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0022",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-022",
+      "timestamp": "2026-11-14T13:16:04Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0022",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0052",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-052",
+      "timestamp": "2026-11-14T13:16:09Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0052",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0006",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-006",
+      "timestamp": "2026-11-14T13:16:22Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0006",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0045",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-045",
+      "timestamp": "2026-11-14T13:16:57Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0045",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0046",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-046",
+      "timestamp": "2026-11-14T13:17:10Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0046",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0024",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-024",
+      "timestamp": "2026-11-14T13:17:15Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0024",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0039",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-039",
+      "timestamp": "2026-11-14T13:17:45Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0039",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0026",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-026",
+      "timestamp": "2026-11-14T13:17:57Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0026",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0001",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-001",
+      "timestamp": "2026-11-14T13:20:32Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0001",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0027",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-027",
+      "timestamp": "2026-11-14T13:21:19Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0027",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0029",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-029",
+      "timestamp": "2026-11-14T13:21:29Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0029",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0015",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-015",
+      "timestamp": "2026-11-14T13:22:11Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0015",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0009",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-009",
+      "timestamp": "2026-11-14T13:22:58Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0009",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0021",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-021",
+      "timestamp": "2026-11-14T13:23:42Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0021",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0003",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-003",
+      "timestamp": "2026-11-14T13:24:00Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0003",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0014",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-014",
+      "timestamp": "2026-11-14T13:24:34Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0014",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0048",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-14T13:24:43Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0048",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0114",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-013",
+      "timestamp": "2026-11-14T13:25:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/059"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0114",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0033",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-033",
+      "timestamp": "2026-11-14T13:25:13Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0033",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0031",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-031",
+      "timestamp": "2026-11-14T13:25:26Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0031",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0016",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-016",
+      "timestamp": "2026-11-14T13:25:52Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0016",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0161",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-118",
+      "timestamp": "2026-11-14T13:27:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/106"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0161",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0050",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-050",
+      "timestamp": "2026-11-14T13:27:30Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0050",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0019",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-019",
+      "timestamp": "2026-11-14T13:27:48Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0019",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0036",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-036",
+      "timestamp": "2026-11-14T13:28:09Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0036",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0013",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-013",
+      "timestamp": "2026-11-14T13:28:57Z",
+      "text": "Following the harbour service update; hoping for a quick resolution.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0013",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0047",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-047",
+      "timestamp": "2026-11-14T13:29:45Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0047",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0020",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-020",
+      "timestamp": "2026-11-14T13:30:22Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0020",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0004",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-004",
+      "timestamp": "2026-11-14T13:30:52Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0004",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0064",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-091",
+      "timestamp": "2026-11-14T13:31:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/009"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0064",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0070",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-14T13:31:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/015"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0070",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0214",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-029",
+      "timestamp": "2026-11-14T13:31:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/159"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0214",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0011",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-011",
+      "timestamp": "2026-11-14T13:31:28Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0011",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0002",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-002",
+      "timestamp": "2026-11-14T13:32:28Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0002",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0008",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-008",
+      "timestamp": "2026-11-14T13:33:47Z",
+      "text": "Sharing the harbour update for people travelling today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0008",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0054",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-054",
+      "timestamp": "2026-11-14T13:33:49Z",
+      "text": "Checking the harbour report before making plans this afternoon.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0054",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0032",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-032",
+      "timestamp": "2026-11-14T13:34:23Z",
+      "text": "This harbour news affects a lot of local journeys today.",
+      "urls": [
+        "https://demo.example/news/harbour-service-update"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0032",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0177",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-049",
+      "timestamp": "2026-11-14T13:38:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/122"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0177",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0270",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-024",
+      "timestamp": "2026-11-14T13:43:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/215"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0270",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0326",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-146",
+      "timestamp": "2026-11-14T13:50:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/271"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0326",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0196",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-087",
+      "timestamp": "2026-11-14T13:52:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/141"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0196",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0197",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-116",
+      "timestamp": "2026-11-14T14:16:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/142"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0197",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0281",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-061",
+      "timestamp": "2026-11-14T14:36:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/226"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0281",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0212",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-034",
+      "timestamp": "2026-11-14T14:40:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/157"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0212",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0216",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-076",
+      "timestamp": "2026-11-14T14:42:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/161"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0216",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0336",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-132",
+      "timestamp": "2026-11-14T14:43:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/281"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0336",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0253",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-094",
+      "timestamp": "2026-11-14T14:44:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/198"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0253",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0207",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-028",
+      "timestamp": "2026-11-14T14:46:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/152"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0207",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0093",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-092",
+      "timestamp": "2026-11-14T14:54:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/038"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0093",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0203",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-003",
+      "timestamp": "2026-11-14T15:04:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/148"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0203",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0248",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-080",
+      "timestamp": "2026-11-14T15:05:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/193"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0248",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0312",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-079",
+      "timestamp": "2026-11-14T15:07:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/257"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0312",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0157",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-138",
+      "timestamp": "2026-11-14T15:10:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/102"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0157",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0279",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-110",
+      "timestamp": "2026-11-14T15:26:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/224"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0279",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0178",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-032",
+      "timestamp": "2026-11-14T15:29:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/123"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0178",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0073",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-085",
+      "timestamp": "2026-11-14T15:30:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/018"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0073",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0162",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-036",
+      "timestamp": "2026-11-14T15:31:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/107"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0162",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0148",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-009",
+      "timestamp": "2026-11-14T15:32:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/093"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0148",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0290",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-045",
+      "timestamp": "2026-11-14T15:34:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/235"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0290",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0134",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-005",
+      "timestamp": "2026-11-14T15:38:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/079"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0134",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0327",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-093",
+      "timestamp": "2026-11-14T15:43:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/272"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0327",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0305",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-104",
+      "timestamp": "2026-11-14T15:50:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/250"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0305",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0061",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-050",
+      "timestamp": "2026-11-14T16:05:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/006"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0061",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0095",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-027",
+      "timestamp": "2026-11-14T16:11:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/040"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0095",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0135",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-020",
+      "timestamp": "2026-11-14T16:13:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/080"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0135",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0302",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-012",
+      "timestamp": "2026-11-14T16:15:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/247"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0302",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0289",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-057",
+      "timestamp": "2026-11-14T16:19:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/234"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0289",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0080",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-136",
+      "timestamp": "2026-11-14T16:20:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/025"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0080",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0266",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-14T16:22:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/211"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0266",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0083",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-011",
+      "timestamp": "2026-11-14T16:28:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/028"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0083",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0101",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-123",
+      "timestamp": "2026-11-14T16:28:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/046"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0101",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0058",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-061",
+      "timestamp": "2026-11-14T16:35:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/003"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0058",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0164",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-119",
+      "timestamp": "2026-11-14T16:47:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/109"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0164",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0330",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-076",
+      "timestamp": "2026-11-14T16:49:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/275"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0330",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0060",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-026",
+      "timestamp": "2026-11-14T16:55:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/005"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0060",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0280",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-132",
+      "timestamp": "2026-11-14T16:56:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/225"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0280",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0139",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-133",
+      "timestamp": "2026-11-14T16:58:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/084"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0139",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0152",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-035",
+      "timestamp": "2026-11-14T17:05:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/097"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0152",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0142",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-012",
+      "timestamp": "2026-11-14T17:18:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/087"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0142",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0246",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-088",
+      "timestamp": "2026-11-14T17:25:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/191"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0246",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0222",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-017",
+      "timestamp": "2026-11-14T17:26:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/167"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0222",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0153",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-003",
+      "timestamp": "2026-11-14T17:34:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/098"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0153",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0236",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-073",
+      "timestamp": "2026-11-14T17:38:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/181"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0236",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0295",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-008",
+      "timestamp": "2026-11-14T17:40:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/240"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0295",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0133",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-089",
+      "timestamp": "2026-11-14T17:58:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/078"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0133",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0089",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-055",
+      "timestamp": "2026-11-14T18:01:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/034"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0089",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0311",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-146",
+      "timestamp": "2026-11-14T18:14:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/256"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0311",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0300",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-054",
+      "timestamp": "2026-11-14T18:16:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/245"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0300",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0116",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-105",
+      "timestamp": "2026-11-14T18:17:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/061"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0116",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0118",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-007",
+      "timestamp": "2026-11-14T18:26:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/063"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0118",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0181",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-14T18:28:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/126"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0181",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0210",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-016",
+      "timestamp": "2026-11-14T18:28:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/155"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0210",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0099",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-076",
+      "timestamp": "2026-11-14T18:31:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/044"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0099",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0199",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-14T18:32:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/144"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0199",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0198",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-133",
+      "timestamp": "2026-11-14T18:41:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/143"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0198",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0094",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-142",
+      "timestamp": "2026-11-14T19:03:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/039"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0094",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0225",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-106",
+      "timestamp": "2026-11-14T19:03:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/170"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0225",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0192",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-029",
+      "timestamp": "2026-11-14T19:08:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/137"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0192",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0316",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-14T19:13:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/261"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0316",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0187",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-080",
+      "timestamp": "2026-11-14T19:15:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/132"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0187",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0141",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-117",
+      "timestamp": "2026-11-14T19:20:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/086"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0141",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0059",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-003",
+      "timestamp": "2026-11-14T19:22:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/004"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0059",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0292",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-063",
+      "timestamp": "2026-11-14T19:30:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/237"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0292",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0287",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-064",
+      "timestamp": "2026-11-14T19:35:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/232"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0287",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0314",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-101",
+      "timestamp": "2026-11-14T19:38:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/259"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0314",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0211",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-083",
+      "timestamp": "2026-11-14T19:42:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/156"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0211",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0082",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-103",
+      "timestamp": "2026-11-14T19:47:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/027"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0082",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0244",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-015",
+      "timestamp": "2026-11-14T19:47:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/189"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0244",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0272",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-061",
+      "timestamp": "2026-11-14T19:51:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/217"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0272",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0065",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-14T19:52:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/010"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0065",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0271",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-107",
+      "timestamp": "2026-11-14T20:08:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/216"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0271",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0154",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-14T20:10:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/099"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0154",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0235",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-008",
+      "timestamp": "2026-11-14T20:14:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/180"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0235",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0190",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-054",
+      "timestamp": "2026-11-14T20:21:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/135"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0190",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0256",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-103",
+      "timestamp": "2026-11-14T20:24:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/201"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0256",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0201",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-14T20:27:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/146"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0201",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0170",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-111",
+      "timestamp": "2026-11-14T20:36:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/115"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0170",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0296",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-049",
+      "timestamp": "2026-11-14T20:36:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/241"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0296",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0242",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-142",
+      "timestamp": "2026-11-14T20:41:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/187"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0242",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0092",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-103",
+      "timestamp": "2026-11-14T20:44:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/037"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0092",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0163",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-115",
+      "timestamp": "2026-11-14T20:54:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/108"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0163",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0277",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-087",
+      "timestamp": "2026-11-14T20:54:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/222"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0277",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0249",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-084",
+      "timestamp": "2026-11-14T20:59:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/194"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0249",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0264",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-14T21:00:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/209"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0264",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0285",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-093",
+      "timestamp": "2026-11-14T21:00:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/230"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0285",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0091",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-136",
+      "timestamp": "2026-11-14T21:12:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/036"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0091",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0284",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-144",
+      "timestamp": "2026-11-14T21:14:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/229"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0284",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0174",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-14T21:15:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/119"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0174",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0331",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-14T21:23:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/276"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0331",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0215",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-130",
+      "timestamp": "2026-11-14T21:26:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/160"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0215",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0145",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-010",
+      "timestamp": "2026-11-14T21:30:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/090"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0145",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0301",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-022",
+      "timestamp": "2026-11-14T21:32:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/246"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0301",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0218",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-094",
+      "timestamp": "2026-11-14T21:45:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/163"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0218",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0158",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-013",
+      "timestamp": "2026-11-14T21:47:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/103"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0158",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0128",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-059",
+      "timestamp": "2026-11-14T21:49:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/073"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0128",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0123",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-109",
+      "timestamp": "2026-11-14T21:55:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/068"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0123",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0200",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-077",
+      "timestamp": "2026-11-14T21:58:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/145"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0200",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0332",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-140",
+      "timestamp": "2026-11-14T21:58:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/277"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0332",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0252",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-14T22:08:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/197"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0252",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0291",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-069",
+      "timestamp": "2026-11-14T22:15:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/236"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0291",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0313",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-019",
+      "timestamp": "2026-11-14T22:25:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/258"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0313",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0167",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-037",
+      "timestamp": "2026-11-14T22:54:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/112"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0167",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0156",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-011",
+      "timestamp": "2026-11-14T22:59:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/101"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0156",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0078",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-119",
+      "timestamp": "2026-11-14T23:00:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/023"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0078",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0176",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-020",
+      "timestamp": "2026-11-14T23:01:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/121"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0176",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0237",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-056",
+      "timestamp": "2026-11-14T23:05:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/182"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0237",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0166",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-047",
+      "timestamp": "2026-11-14T23:07:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/111"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0166",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0283",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-091",
+      "timestamp": "2026-11-14T23:11:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/228"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0283",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0087",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-053",
+      "timestamp": "2026-11-14T23:26:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/032"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0087",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0068",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-015",
+      "timestamp": "2026-11-14T23:28:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/013"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0068",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0298",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-129",
+      "timestamp": "2026-11-14T23:29:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/243"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0298",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0319",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-011",
+      "timestamp": "2026-11-14T23:36:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/264"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0319",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0213",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-141",
+      "timestamp": "2026-11-14T23:39:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/158"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0213",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0204",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-136",
+      "timestamp": "2026-11-14T23:47:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/149"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0204",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0074",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-14T23:48:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/019"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0074",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0155",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-098",
+      "timestamp": "2026-11-14T23:58:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/100"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0155",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0286",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-137",
+      "timestamp": "2026-11-14T23:58:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/231"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0286",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0329",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-135",
+      "timestamp": "2026-11-15T00:00:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/274"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0329",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0261",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-046",
+      "timestamp": "2026-11-15T00:03:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/206"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0261",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0184",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-140",
+      "timestamp": "2026-11-15T00:20:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/129"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0184",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0168",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-077",
+      "timestamp": "2026-11-15T00:22:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/113"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0168",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0067",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-15T00:23:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/012"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0067",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0144",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-114",
+      "timestamp": "2026-11-15T00:25:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/089"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0144",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0231",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-026",
+      "timestamp": "2026-11-15T00:27:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/176"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0231",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0205",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-085",
+      "timestamp": "2026-11-15T00:28:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/150"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0205",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0325",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-039",
+      "timestamp": "2026-11-15T00:33:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/270"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0325",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0328",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-129",
+      "timestamp": "2026-11-15T00:57:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/273"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0328",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0147",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-058",
+      "timestamp": "2026-11-15T00:58:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/092"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0147",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0056",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-15T01:00:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/001"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0056",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0100",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-15T01:01:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/045"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0100",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0324",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-135",
+      "timestamp": "2026-11-15T01:09:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/269"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0324",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0188",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-107",
+      "timestamp": "2026-11-15T01:10:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/133"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0188",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0315",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-15T01:12:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/260"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0315",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0288",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-120",
+      "timestamp": "2026-11-15T01:28:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/233"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0288",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0106",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-089",
+      "timestamp": "2026-11-15T01:40:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/051"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0106",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0221",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-031",
+      "timestamp": "2026-11-15T01:44:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/166"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0221",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0107",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-042",
+      "timestamp": "2026-11-15T01:49:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/052"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0107",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0265",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-15T01:57:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/210"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0265",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0258",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-127",
+      "timestamp": "2026-11-15T01:59:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/203"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0258",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0113",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-023",
+      "timestamp": "2026-11-15T02:04:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/058"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0113",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0299",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-004",
+      "timestamp": "2026-11-15T02:06:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/244"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0299",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0228",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-15T02:07:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/173"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0228",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0206",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-089",
+      "timestamp": "2026-11-15T02:16:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/151"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0206",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0076",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-012",
+      "timestamp": "2026-11-15T02:21:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/021"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0076",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0262",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-041",
+      "timestamp": "2026-11-15T02:32:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/207"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0262",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0120",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-15T02:38:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/065"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0120",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0140",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-082",
+      "timestamp": "2026-11-15T02:44:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/085"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0140",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0179",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-004",
+      "timestamp": "2026-11-15T02:46:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/124"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0179",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0180",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-123",
+      "timestamp": "2026-11-15T02:56:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/125"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0180",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0077",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-130",
+      "timestamp": "2026-11-15T02:59:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/022"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0077",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0195",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-15T03:07:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/140"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0195",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0138",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-143",
+      "timestamp": "2026-11-15T03:12:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/083"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0138",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0334",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-052",
+      "timestamp": "2026-11-15T03:14:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/279"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0334",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0096",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-115",
+      "timestamp": "2026-11-15T03:17:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/041"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0096",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0149",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-076",
+      "timestamp": "2026-11-15T03:23:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/094"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0149",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0335",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-052",
+      "timestamp": "2026-11-15T03:28:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/280"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0335",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0071",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-088",
+      "timestamp": "2026-11-15T03:32:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/016"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0071",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0217",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-045",
+      "timestamp": "2026-11-15T03:41:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/162"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0217",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0226",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-092",
+      "timestamp": "2026-11-15T03:52:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/171"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0226",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0126",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-030",
+      "timestamp": "2026-11-15T03:53:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/071"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0126",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0208",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-135",
+      "timestamp": "2026-11-15T03:59:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/153"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0208",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0219",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-078",
+      "timestamp": "2026-11-15T04:00:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/164"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0219",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0121",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-116",
+      "timestamp": "2026-11-15T04:04:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/066"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0121",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0255",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-064",
+      "timestamp": "2026-11-15T04:04:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/200"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0255",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0069",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-107",
+      "timestamp": "2026-11-15T04:07:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/014"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0069",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0274",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-051",
+      "timestamp": "2026-11-15T04:07:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/219"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0274",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0097",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-15T04:13:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/042"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0097",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0306",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-032",
+      "timestamp": "2026-11-15T04:17:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/251"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0306",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0057",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-001",
+      "timestamp": "2026-11-15T04:18:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/002"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0057",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0146",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-126",
+      "timestamp": "2026-11-15T04:25:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/091"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0146",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0105",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-120",
+      "timestamp": "2026-11-15T04:28:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/050"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0105",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0304",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-058",
+      "timestamp": "2026-11-15T04:29:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/249"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0304",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0186",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-121",
+      "timestamp": "2026-11-15T04:33:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/131"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0186",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0194",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-036",
+      "timestamp": "2026-11-15T04:35:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/139"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0194",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0333",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-124",
+      "timestamp": "2026-11-15T04:37:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/278"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0333",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0278",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-120",
+      "timestamp": "2026-11-15T04:41:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/223"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0278",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0317",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-048",
+      "timestamp": "2026-11-15T04:45:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/262"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0317",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0182",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-046",
+      "timestamp": "2026-11-15T04:58:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/127"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0182",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0282",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-019",
+      "timestamp": "2026-11-15T04:58:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/227"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0282",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0202",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-003",
+      "timestamp": "2026-11-15T05:12:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/147"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0202",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0085",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-057",
+      "timestamp": "2026-11-15T05:13:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/030"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0085",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0104",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-027",
+      "timestamp": "2026-11-15T05:26:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/049"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0104",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0132",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-025",
+      "timestamp": "2026-11-15T05:28:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/077"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0132",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0173",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-032",
+      "timestamp": "2026-11-15T05:35:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/118"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0173",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0303",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-041",
+      "timestamp": "2026-11-15T05:35:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/248"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0303",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0240",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-014",
+      "timestamp": "2026-11-15T05:37:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/185"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0240",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0247",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-045",
+      "timestamp": "2026-11-15T05:38:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/192"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0247",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0238",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-137",
+      "timestamp": "2026-11-15T05:39:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/183"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0238",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0257",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-016",
+      "timestamp": "2026-11-15T05:41:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/202"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0257",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0055",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-058",
+      "timestamp": "2026-11-15T06:11:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/000"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0055",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0309",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-053",
+      "timestamp": "2026-11-15T06:17:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/254"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0309",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0263",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-15T06:30:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/208"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0263",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0308",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-085",
+      "timestamp": "2026-11-15T06:30:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/253"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0308",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0322",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-061",
+      "timestamp": "2026-11-15T06:30:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/267"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0322",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0320",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-049",
+      "timestamp": "2026-11-15T06:38:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/265"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0320",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0143",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-140",
+      "timestamp": "2026-11-15T06:44:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/088"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0143",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0251",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-089",
+      "timestamp": "2026-11-15T06:49:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/196"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0251",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0175",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-019",
+      "timestamp": "2026-11-15T06:50:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/120"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0175",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0159",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-091",
+      "timestamp": "2026-11-15T06:55:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/104"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0159",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0241",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-090",
+      "timestamp": "2026-11-15T06:59:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/186"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0241",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0230",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-150",
+      "timestamp": "2026-11-15T07:05:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/175"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0230",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0294",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-149",
+      "timestamp": "2026-11-15T07:05:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/239"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0294",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0227",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-082",
+      "timestamp": "2026-11-15T07:06:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/172"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0227",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0268",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-011",
+      "timestamp": "2026-11-15T07:06:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/213"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0268",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0110",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-122",
+      "timestamp": "2026-11-15T07:09:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/055"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0110",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0171",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-079",
+      "timestamp": "2026-11-15T07:10:00Z",
+      "text": "A synthetic independent reaction about museum.",
+      "urls": [
+        "https://demo.example/ordinary/museum/116"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0171",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0130",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-040",
+      "timestamp": "2026-11-15T07:13:00Z",
+      "text": "A synthetic independent reaction about school event.",
+      "urls": [
+        "https://demo.example/ordinary/school-event/075"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0130",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0122",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-095",
+      "timestamp": "2026-11-15T07:21:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/067"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0122",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0062",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-062",
+      "timestamp": "2026-11-15T07:26:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/007"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0062",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0102",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-053",
+      "timestamp": "2026-11-15T07:34:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/047"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0102",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0151",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-126",
+      "timestamp": "2026-11-15T07:35:00Z",
+      "text": "A synthetic independent reaction about weather.",
+      "urls": [
+        "https://demo.example/ordinary/weather/096"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0151",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0239",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-078",
+      "timestamp": "2026-11-15T07:37:00Z",
+      "text": "A synthetic independent reaction about health advice.",
+      "urls": [
+        "https://demo.example/ordinary/health-advice/184"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0239",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0063",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-023",
+      "timestamp": "2026-11-15T07:47:00Z",
+      "text": "A synthetic independent reaction about football.",
+      "urls": [
+        "https://demo.example/ordinary/football/008"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0063",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    },
+    {
+      "id": "demo-benign-0129",
+      "platform": "bluesky",
+      "actor_id": "demo:benign-060",
+      "timestamp": "2026-11-15T07:57:00Z",
+      "text": "A synthetic independent reaction about garden.",
+      "urls": [
+        "https://demo.example/ordinary/garden/074"
+      ],
+      "source_url": "https://demo.invalid/benign/demo-benign-0129",
+      "demo": {
+        "synthetic": true,
+        "scenario": "benign"
+      }
+    }
+  ]
+}

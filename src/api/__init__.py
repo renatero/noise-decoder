@@ -1,0 +1,1 @@
+"""Coordination Radar HTTP application."""

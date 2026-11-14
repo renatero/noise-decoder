@@ -1,6 +1,27 @@
 # noise-decoder
 hostinger challenge junction 2026
 
+## Run the demonstration
+
+```bash
+python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
+```
+
+Open `http://127.0.0.1:8000/` locally, or the VPS address during a network
+demo. The dashboard provides two reproducible synthetic scenarios, bounded
+public Bluesky search, an offline public-data snapshot, and normalized JSON
+import. See [the API guide](src/api/README.md), [deployment guide](deploy/README.md),
+and [demo runbook](docs/demo-runbook.md).
+
+## Verify
+
+```bash
+python3 -m unittest discover -s src/collectors/tests -v
+python3 -m unittest discover -s src/api/tests -v
+python3 -m unittest discover -s src/engine/tests -v
+node --experimental-default-type=module chrome-extension/tests/background.test.mjs
+```
+
 ## Behavioral coordination detection: time-window signal
 
 The first time-based signal looks for accounts publishing posts that are already related by a shared canonical URL or similar content. It identifies candidate bursts for review; timing and content similarity alone do not establish coordination.
