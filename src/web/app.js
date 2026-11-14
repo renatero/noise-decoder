@@ -16,6 +16,17 @@ let graph = null;
 let latestReport = null;
 let latestEvents = [];
 
+function openInvestigation() {
+  $("#investigation-overlay").classList.remove("hidden");
+  $("#investigation-overlay").classList.add("flex");
+  window.setTimeout(() => investigation.focus(), 0);
+}
+
+function closeInvestigation() {
+  $("#investigation-overlay").classList.add("hidden");
+  $("#investigation-overlay").classList.remove("flex");
+}
+
 const sourceMessages = {
   synthetic_coordinated: "Synthetic data is reproducible, labelled demonstration data and works offline.",
   synthetic_benign: "Synthetic data is reproducible, labelled demonstration data and works offline.",
@@ -311,6 +322,7 @@ async function runInvestigation(event) {
     const report = await api("/api/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ events: latestEvents }) });
     renderReport(report, sourceData);
     setStatus(`Report ready: ${formatLabel(report.status)}.`, "success");
+    closeInvestigation();
   } catch (error) {
     setStatus(error.message || "Unable to run this investigation.", "error");
   } finally {
@@ -348,6 +360,7 @@ function initialiseExtensionInput() {
   handoffNotice.textContent = "Extension handoff: this prefills an investigation only. It does not mean the selected page or post has been collected or analyzed.";
   handoffNotice.classList.remove("hidden");
   updateSourceFields();
+  openInvestigation();
 }
 
 form.addEventListener("submit", runInvestigation);
@@ -358,6 +371,10 @@ $("#graph-zoom-out").addEventListener("click", () => graph?.zoom({ level: graph.
 $("#graph-reset").addEventListener("click", () => graph?.fit(undefined, 36));
 exportButton.addEventListener("click", exportReport);
 document.querySelectorAll("[data-scroll-target]").forEach((button) => button.addEventListener("click", () => document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth" })));
+document.querySelectorAll("[data-investigation-toggle]").forEach((trigger) => trigger.addEventListener("click", (event) => { event.preventDefault(); openInvestigation(); }));
+document.querySelectorAll("[data-investigation-close]").forEach((trigger) => trigger.addEventListener("click", closeInvestigation));
+$("#investigation-overlay").addEventListener("click", (event) => { if (event.target === event.currentTarget) closeInvestigation(); });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeInvestigation(); });
 updateSourceFields();
 initialiseExtensionInput();
 checkHealth();

@@ -31,7 +31,7 @@
       <div class="hidden items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 sm:flex"><span id="service-indicator" class="h-2 w-2 rounded-full bg-outline"></span><span id="service-label" class="font-label text-label-sm font-medium">Checking service</span></div>
     </div>
     <div class="flex items-center gap-2">
-      <button type="button" data-scroll-target="investigation-section" aria-label="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">troubleshoot</span></button>
+      <button type="button" data-investigation-toggle aria-label="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">troubleshoot</span></button>
       <button type="button" data-scroll-target="limitations-section" aria-label="View limits" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">settings</span></button>
       <div class="grid h-9 w-9 place-items-center rounded-full border-l-2 border-primary bg-surface-container-high font-bold"><span class="material-symbols-outlined text-[18px]">person</span></div>
     </div>
@@ -41,7 +41,7 @@
     <div class="px-2">
       <div class="mb-1 px-3 py-1"><span class="font-label text-label-sm font-semibold uppercase tracking-wider text-outline">Forensic workspace</span></div>
       <nav class="flex flex-col gap-1" aria-label="Dashboard sections">
-        <a href="#investigation-section" class="flex items-center gap-3 rounded-lg border-l-2 border-primary bg-surface-container-high px-3 py-2 text-primary"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-label text-label-md font-semibold text-on-surface">Investigation</span></a>
+        <a href="#report-section" data-investigation-toggle class="flex items-center gap-3 rounded-lg border-l-2 border-primary bg-surface-container-high px-3 py-2 text-primary"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-label text-label-md font-semibold text-on-surface">Investigation</span></a>
         <a href="#graph-section" class="side-link"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label text-label-md">Network Graph</span></a>
         <a href="#clusters-section" class="side-link"><span class="material-symbols-outlined text-[20px]">bubble_chart</span><span class="font-label text-label-md">Cluster Analysis</span></a>
         <a href="#evidence-section" class="side-link"><span class="material-symbols-outlined text-[20px]">lock</span><span class="font-label text-label-md">Evidence</span></a>
@@ -51,19 +51,6 @@
   </aside>
 
   <div class="md:pl-64"><main class="min-h-screen bg-surface pt-16"><div class="mx-auto flex max-w-6xl flex-col gap-5 p-4 md:p-6">
-    <section id="investigation-section" class="rounded-2xl bg-surface-container-low p-4 shadow-[0_4px_24px_rgba(0,0,0,0.25)] md:p-5">
-      <div class="mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">manage_search</span><div><h1 class="font-headline text-headline-md font-bold">Open an investigation</h1><p class="text-body-sm text-on-surface-variant">Collect bounded data or load an offline source, then inspect the observed relationships.</p></div></div>
-      <form id="investigation-form" class="grid gap-3 lg:grid-cols-[180px_1fr_auto] lg:items-end">
-        <label class="field-label">Source<select id="source" class="field-control mt-1"><option value="synthetic_coordinated">Synthetic: coordinated</option><option value="synthetic_benign">Synthetic: benign</option><option value="bluesky">Live: Bluesky public search</option><option value="snapshot">Offline: Bluesky snapshot</option><option value="import">Normalized JSON import</option></select></label>
-        <label class="field-label">Investigation phrase or URL<textarea id="investigation" rows="2" class="field-control mt-1 resize-none" placeholder="Search phrase, URL, or context passed from the extension"></textarea></label>
-        <button id="investigate-button" type="submit" class="flex h-10 items-center justify-center gap-2 rounded-xl bg-primary-container px-4 font-label text-label-md font-bold text-on-primary transition hover:brightness-110"><span class="material-symbols-outlined text-[18px]">radar</span>Investigate</button>
-        <label id="limit-field" class="field-label lg:col-start-1">Live result limit<input id="limit" class="field-control mt-1" type="number" value="50" min="1" max="100"></label>
-        <div class="lg:col-span-2"><p id="source-help" class="text-body-sm text-on-surface-variant">Synthetic data is reproducible, labelled demonstration data and works offline.</p><p id="handoff-notice" class="mt-1 hidden text-body-sm text-tertiary"></p></div>
-        <label id="import-field" class="field-label hidden lg:col-span-3">Normalized events JSON<input id="import-file" class="field-control mt-1 block" type="file" accept="application/json,.json"></label>
-      </form>
-      <p id="request-status" role="status" class="mt-3 hidden rounded-xl bg-surface-container-high px-3 py-2 text-body-sm text-on-surface-variant"></p>
-    </section>
-
     <section id="report-section" aria-live="polite" class="flex flex-col gap-4">
       <div class="flex flex-col justify-between gap-4 rounded-2xl bg-surface-container-low p-5 shadow-[0_4px_24px_rgba(0,0,0,0.3)] md:flex-row md:items-center">
         <div class="flex items-start gap-3"><div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-surface-container-high text-primary"><span id="verdict-icon" class="material-symbols-outlined text-[28px]">saved_search</span></div><div><div class="flex flex-wrap items-center gap-2"><h2 id="verdict-title" class="font-headline text-headline-md font-bold">Awaiting investigation</h2><span id="verdict-badge" class="rounded-full bg-surface-container-highest px-2.5 py-0.5 font-label text-label-sm font-medium">No report</span></div><p id="verdict-summary" class="mt-1 max-w-2xl text-body-md text-on-surface-variant">Choose a source and run an investigation. Results describe observed data and do not establish identity or intent.</p></div></div>
@@ -81,7 +68,7 @@
         <section id="graph-section" class="flex flex-col gap-3 rounded-2xl bg-surface-container-low p-4 shadow-sm lg:col-span-7">
           <div class="flex items-center justify-between"><div class="flex items-center gap-1"><span class="material-symbols-outlined text-[20px] text-primary">hub</span><h2 class="font-headline text-headline-sm font-semibold">Network relationship graph</h2></div><div class="flex gap-1.5"><button id="graph-zoom-in" class="graph-control" aria-label="Zoom graph in"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button><button id="graph-zoom-out" class="graph-control" aria-label="Zoom graph out"><span class="material-symbols-outlined text-[18px]">zoom_out</span></button><button id="graph-reset" class="graph-control" aria-label="Reset graph"><span class="material-symbols-outlined text-[18px]">restart_alt</span></button></div></div>
           <div class="relative h-[380px] overflow-hidden rounded-xl bg-surface-container-lowest shadow-inner"><div id="graph" class="h-full w-full"><p class="grid h-full place-items-center px-8 text-center text-body-sm text-outline">Run an investigation to render observed actor relationships.</p></div><div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-surface-container-low/90 p-2 backdrop-blur-md"><div class="flex flex-wrap gap-3 text-body-sm"><span class="inline-flex items-center gap-1.5"><i class="legend-dot bg-primary"></i>Recurring relationship</span><span class="inline-flex items-center gap-1.5"><i class="legend-dot bg-outline"></i>Observed actor</span></div><span class="font-label text-label-sm text-outline">Select a node or edge for source evidence</span></div></div>
-          <div class="grid gap-2 sm:grid-cols-[1fr_auto]"><div id="graph-detail" class="rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant">Select a node or relationship to inspect the event records behind it.</div><label class="field-label">Cluster filter<select id="cluster-filter" class="field-control mt-1 min-w-40"><option value="all">All observed actors</option></select></label></div>
+          <div id="graph-detail" class="rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant">Select a node or relationship to inspect the event records behind it.</div><select id="cluster-filter" class="hidden" aria-label="Cluster filter"><option value="all">All observed actors</option></select>
         </section>
 
         <section id="evidence-section" class="flex flex-col gap-3 rounded-2xl bg-surface-container-low p-4 shadow-sm lg:col-span-5"><div class="flex items-center justify-between"><div class="flex items-center gap-1"><span class="material-symbols-outlined text-[20px] text-primary">policy</span><h2 class="font-headline text-headline-sm font-semibold">Captured evidence</h2></div><span id="evidence-count" class="rounded-lg bg-surface-container-high px-2 py-1 font-label text-label-sm text-on-surface-variant">0 records</span></div><div id="evidence-feed" class="flex max-h-[454px] flex-col gap-2 overflow-y-auto pr-1"><p class="rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant">No evidence loaded yet.</p></div></section>
@@ -94,5 +81,19 @@
       </div>
     </section>
   </div></main></div>
+
+  <div id="investigation-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-[#090e1c]/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="investigation-dialog-title">
+    <section class="w-full max-w-2xl rounded-2xl bg-surface-container-low p-5 shadow-[0_12px_48px_rgba(0,0,0,0.55)]">
+      <div class="mb-4 flex items-start justify-between gap-4"><div><p class="font-label text-label-sm uppercase tracking-wider text-primary">Forensic workspace</p><h1 id="investigation-dialog-title" class="mt-1 font-headline text-headline-md font-bold">Open investigation</h1><p class="mt-1 text-body-sm text-on-surface-variant">Load a source, then review its observed relationships in the workspace.</p></div><button type="button" data-investigation-close aria-label="Close investigation dialog" class="graph-control"><span class="material-symbols-outlined">close</span></button></div>
+      <form id="investigation-form" class="grid gap-3 sm:grid-cols-[180px_1fr]">
+        <label class="field-label">Source<select id="source" class="field-control mt-1"><option value="synthetic_coordinated">Synthetic: coordinated</option><option value="synthetic_benign">Synthetic: benign</option><option value="bluesky">Live: Bluesky public search</option><option value="snapshot">Offline: Bluesky snapshot</option><option value="import">Normalized JSON import</option></select></label>
+        <label class="field-label">Investigation phrase or URL<textarea id="investigation" rows="2" class="field-control mt-1 resize-none" placeholder="Search phrase, URL, or extension context"></textarea></label>
+        <label id="limit-field" class="field-label">Live result limit<input id="limit" class="field-control mt-1" type="number" value="50" min="1" max="100"></label>
+        <div class="flex items-end"><button id="investigate-button" type="submit" class="flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-primary-container px-4 font-label text-label-md font-bold text-on-primary transition hover:brightness-110"><span class="material-symbols-outlined text-[18px]">radar</span>Investigate</button></div>
+        <label id="import-field" class="field-label hidden sm:col-span-2">Normalized events JSON<input id="import-file" class="field-control mt-1 block" type="file" accept="application/json,.json"></label>
+        <div class="sm:col-span-2"><p id="source-help" class="text-body-sm text-on-surface-variant">Synthetic data is reproducible, labelled demonstration data and works offline.</p><p id="handoff-notice" class="mt-1 hidden text-body-sm text-tertiary"></p><p id="request-status" role="status" class="mt-3 hidden rounded-xl bg-surface-container-high px-3 py-2 text-body-sm text-on-surface-variant"></p></div>
+      </form>
+    </section>
+  </div>
 </body>
 </html>
