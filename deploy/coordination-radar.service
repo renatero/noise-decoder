@@ -6,7 +6,9 @@ After=network.target
 Type=simple
 User=ubuntu
 WorkingDirectory=/opt/projects/noise-decoder
-ExecStart=/usr/bin/python3 -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
+# Temporary public-IP demo binding. Move this back to 127.0.0.1 when the
+# Nginx HTTPS reverse proxy in this directory is configured for a real domain.
+ExecStart=/usr/bin/python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 Restart=on-failure
 RestartSec=3
 
