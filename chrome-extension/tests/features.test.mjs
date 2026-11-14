@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity } from "../features.mjs";
+import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "../features.mjs";
 
 function event(postId, text, links = []) {
   return { post_id: postId, actor_id: `actor:${postId}`, platform: "demo", timestamp: null, text, url: `https://social.example/posts/${postId}`, links };
@@ -210,4 +210,78 @@ test("weighted actor graph returns identified nodes and explainable co-activity 
   assert.equal(graph.edges[0].weight, 1.25);
   assert.equal(graph.edges[0].evidence_assessment, "limited");
   assert.equal(graph.statistics.excluded_posts_without_account_id, 1);
+});
+
+test("permutation null model compares repeated pairs with 199 reproducible topic-time shuffles", () => {
+  const events = [
+    { ...event("a1", "Climate report from local researchers"), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("b1", "Climate update from local researchers"), actor_id: "account:b", timestamp: "2026-05-01T12:02:00Z" },
+    { ...event("a2", "Climate numbers from local analysts"), actor_id: "account:a", timestamp: "2026-05-01T12:04:00Z" },
+    { ...event("b2", "Climate outlook from local analysts"), actor_id: "account:b", timestamp: "2026-05-01T12:06:00Z" }
+  ];
+  const clusters = [
+    { id: "group-one", post_ids: ["a1", "b1"], evidence: [] },
+    { id: "group-two", post_ids: ["a2", "b2"], evidence: [] }
+  ];
+  const timeAnalysis = { config: { window_minutes: 60 }, bursts: [] };
+  const coActivity = recordCoActivity(events, clusters, timeAnalysis);
+  const graph = buildWeightedActorGraph(events, clusters, timeAnalysis, coActivity);
+  const firstRun = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 1234 });
+  const secondRun = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 1234 });
+
+  assert.equal(firstRun.permutations, 199);
+  assert.equal(firstRun.strata.shuffleable_strata, 1);
+  assert.equal(firstRun.strata.shuffleable_posts, 4);
+  assert.equal(firstRun.statistics.p_value_resolution, 0.005);
+  assert.equal(firstRun.results.length, 1);
+  assert.equal(firstRun.results[0].testable, true);
+  assert.ok(firstRun.results[0].p_value >= 0.005 && firstRun.results[0].p_value <= 1);
+  assert.equal(firstRun.results[0].p_value, Number(((firstRun.results[0].exceedances + 1) / 200).toFixed(4)));
+  assert.deepEqual(firstRun.results, secondRun.results);
+});
+
+test("permutation model marks actor pairs untestable when no stratum can be shuffled", () => {
+  const events = [
+    { ...event("a1", "Telescope comet observation"), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("b1", "Cyclone forecast storm"), actor_id: "account:b", timestamp: "2026-05-01T12:02:00Z" },
+    { ...event("a2", "Rainforest biodiversity research"), actor_id: "account:a", timestamp: "2026-05-01T12:04:00Z" },
+    { ...event("b2", "Astronomy satellite discovery"), actor_id: "account:b", timestamp: "2026-05-01T12:06:00Z" }
+  ];
+  const clusters = [
+    { id: "group-one", post_ids: ["a1", "b1"], evidence: [] },
+    { id: "group-two", post_ids: ["a2", "b2"], evidence: [] }
+  ];
+  const timeAnalysis = { config: { window_minutes: 60 }, bursts: [] };
+  const coActivity = recordCoActivity(events, clusters, timeAnalysis);
+  const graph = buildWeightedActorGraph(events, clusters, timeAnalysis, coActivity);
+  const result = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 42 });
+
+  assert.equal(result.strata.shuffleable_strata, 0);
+  assert.equal(result.results.length, 1);
+  assert.equal(result.results[0].testable, false);
+  assert.equal(result.results[0].p_value, null);
+});
+
+test("permutation model marks pair-specific invariant null weights untestable", () => {
+  const events = [
+    { ...event("a1", "Climate report update"), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("b1", "Climate data release"), actor_id: "account:b", timestamp: "2026-05-01T12:02:00Z" },
+    { ...event("a2", "Climate analysis report"), actor_id: "account:a", timestamp: "2026-05-01T14:00:00Z" },
+    { ...event("b2", "Climate outlook update"), actor_id: "account:b", timestamp: "2026-05-01T14:02:00Z" },
+    { ...event("c", "Storm warning forecast"), actor_id: "account:c", timestamp: "2026-05-01T16:00:00Z" },
+    { ...event("d", "Storm tracking forecast"), actor_id: "account:d", timestamp: "2026-05-01T16:02:00Z" }
+  ];
+  const clusters = [
+    { id: "climate-one", post_ids: ["a1", "b1"], evidence: [] },
+    { id: "climate-two", post_ids: ["a2", "b2"], evidence: [] }
+  ];
+  const timeAnalysis = { config: { window_minutes: 60 }, bursts: [] };
+  const coActivity = recordCoActivity(events, clusters, timeAnalysis);
+  const graph = buildWeightedActorGraph(events, clusters, timeAnalysis, coActivity);
+  const result = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 52 });
+
+  assert.ok(result.strata.shuffleable_strata > 0);
+  assert.equal(result.results.length, 1);
+  assert.equal(result.results[0].testable, false);
+  assert.equal(result.results[0].p_value, null);
 });

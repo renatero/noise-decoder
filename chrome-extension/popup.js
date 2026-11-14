@@ -1,5 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
-import { buildClusters, buildWeightedActorGraph, detectTimeBursts, enrichEvents, recordCoActivity } from "./features.mjs";
+import { buildClusters, buildWeightedActorGraph, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "./features.mjs";
 
 const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
@@ -19,12 +19,25 @@ let timeWindowAnalysis = {
 };
 let coActivity = { account_pairs: [], repeated_pairs: [], statistics: { account_pairs_seen: 0, repeated_pairs_found: 0 } };
 let actorGraph = buildWeightedActorGraph([], [], { bursts: [] }, coActivity);
+let permutationAnalysis = emptyPermutationAnalysis();
 
 function format(value) {
   return JSON.stringify(value, null, 2);
 }
 
-function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorGraphResult, reason) {
+function emptyPermutationAnalysis() {
+  return {
+    method: "stratified_actor_assignment_permutation",
+    permutations: 199,
+    seed: null,
+    strata: {},
+    statistics: { repeated_pairs_tested: 0, untestable_pairs: 0, minimum_p_value: 0.005, p_value_resolution: 0.005 },
+    results: [],
+    limitations: []
+  };
+}
+
+function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorGraphResult, permutationResult, reason) {
   return {
     status: events.length < 2 ? "insufficient_data" : "inconclusive",
     nodes: actorGraphResult.nodes,
@@ -33,6 +46,7 @@ function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorG
     time_window_analysis: timeAnalysis,
     co_activity: coActivityAnalysis,
     actor_graph: actorGraphResult,
+    permutation_analysis: permutationResult,
     evidence: [],
     statistics: {
       events_analyzed: events.length,
@@ -41,6 +55,7 @@ function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorG
       time_bursts_found: timeAnalysis.bursts.length,
       repeated_co_activity_pairs: coActivityAnalysis.statistics.repeated_pairs_found,
       weighted_actor_edges: actorGraphResult.statistics.weighted_edges,
+      repeated_pairs_tested: permutationResult.statistics.repeated_pairs_tested,
       excluded_invalid_timestamps: timeAnalysis.statistics.excluded_invalid_timestamps
     },
     limitations: [
@@ -50,6 +65,7 @@ function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorG
       "Repeated co-activity is an observed recurrence across content groups or publication bursts; it does not establish coordination or intent.",
       "A single simultaneous response may reflect breaking news or another shared cause and is treated as limited evidence.",
       "Account identifiers may be derived from visible display names and may not uniquely identify accounts.",
+      ...permutationResult.limitations,
       "Visible-page extraction is incomplete and should be reviewed before drawing conclusions.",
       reason
     ]
@@ -59,7 +75,7 @@ function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorG
 function renderCollected() {
   review.hidden = collected.length === 0;
   eventCount.textContent = `${collected.length} event${collected.length === 1 ? "" : "s"}`;
-  payload.textContent = format({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity, actor_graph: actorGraph });
+  payload.textContent = format({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity, actor_graph: actorGraph, permutation_analysis: permutationAnalysis });
 }
 
 document.querySelector("#extract").addEventListener("click", async () => {
@@ -75,8 +91,17 @@ document.querySelector("#extract").addEventListener("click", async () => {
     timeWindowAnalysis = detectTimeBursts(collected, clusters, { windowMinutes, minimumAccounts });
     coActivity = recordCoActivity(collected, clusters, timeWindowAnalysis);
     actorGraph = buildWeightedActorGraph(collected, clusters, timeWindowAnalysis, coActivity);
+    permutationAnalysis = runPermutationNullModel(collected, clusters, timeWindowAnalysis, coActivity, actorGraph);
+    const permutationByPair = new Map(permutationAnalysis.results.map((result) => [JSON.stringify([...result.account_ids].sort()), result]));
+    actorGraph = {
+      ...actorGraph,
+      edges: actorGraph.edges.map((edge) => ({
+        ...edge,
+        permutation_evidence: permutationByPair.get(JSON.stringify([edge.source, edge.target].sort())) || null
+      }))
+    };
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Review the weighted actor graph before sending.`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared ${permutationAnalysis.statistics.repeated_pairs_tested} repeated pair${permutationAnalysis.statistics.repeated_pairs_tested === 1 ? "" : "s"} against 199 permutations. Review the evidence before sending.`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
@@ -85,6 +110,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
     timeWindowAnalysis = detectTimeBursts([], [], {});
     coActivity = recordCoActivity([], [], timeWindowAnalysis);
     actorGraph = buildWeightedActorGraph([], [], timeWindowAnalysis, coActivity);
+    permutationAnalysis = emptyPermutationAnalysis();
     renderCollected();
     extractionStatus.textContent = `Could not extract posts: ${error.message}`;
   }
@@ -96,6 +122,7 @@ document.querySelector("#clear").addEventListener("click", () => {
   timeWindowAnalysis = detectTimeBursts([], [], {});
   coActivity = recordCoActivity([], [], timeWindowAnalysis);
   actorGraph = buildWeightedActorGraph([], [], timeWindowAnalysis, coActivity);
+  permutationAnalysis = emptyPermutationAnalysis();
   analysis.hidden = true;
   extractionStatus.textContent = "Collected events cleared.";
   renderCollected();
@@ -109,7 +136,7 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity, actor_graph: actorGraph })
+      body: JSON.stringify({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity, actor_graph: actorGraph, permutation_analysis: permutationAnalysis })
     });
     if (!response.ok) throw new Error(`API returned ${response.status}`);
     const report = await response.json();
@@ -117,6 +144,6 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     analysisResult.textContent = format(report);
   } catch (error) {
     analysisMode.textContent = "Showing a mock detector response — the API could not be reached.";
-    analysisResult.textContent = format(mockAnalysis(collected, clusters, timeWindowAnalysis, coActivity, actorGraph, error.message));
+    analysisResult.textContent = format(mockAnalysis(collected, clusters, timeWindowAnalysis, coActivity, actorGraph, permutationAnalysis, error.message));
   }
 });

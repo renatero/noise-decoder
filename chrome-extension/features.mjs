@@ -489,3 +489,149 @@ export function buildWeightedActorGraph(events, clusters, timeWindowAnalysis, co
     }
   };
 }
+
+/** Compare repeated observed actor-pair weights with a stratified permutation null. */
+export function runPermutationNullModel(
+  events,
+  clusters,
+  timeWindowAnalysis,
+  coActivity,
+  observedGraph,
+  { permutations = 199, seed = Math.floor(Math.random() * 0x1_0000_0000) } = {}
+) {
+  const permutationCount = Number.isInteger(permutations) && permutations > 0 ? permutations : 199;
+  const random = seededRandom(seed >>> 0);
+  const windowMinutes = timeWindowAnalysis?.config?.window_minutes || 60;
+  const windowMs = windowMinutes * 60_000;
+  const topicKeys = topicProxyForEvents(events);
+  const strata = new Map();
+  let eligiblePosts = 0;
+  for (let index = 0; index < events.length; index += 1) {
+    const event = events[index];
+    const timestampMs = Date.parse(event.timestamp || "");
+    if (!Number.isFinite(timestampMs) || !hasAccountId(event.actor_id)) continue;
+    eligiblePosts += 1;
+    const timeBucket = Math.floor(timestampMs / windowMs);
+    const key = JSON.stringify([event.platform || "unknown", topicKeys[index], timeBucket]);
+    if (!strata.has(key)) strata.set(key, []);
+    strata.get(key).push(index);
+  }
+
+  const shuffleableStrata = [...strata.values()].filter((indexes) =>
+    indexes.length > 1 && new Set(indexes.map((index) => events[index].actor_id)).size > 1
+  );
+  const shuffleablePosts = shuffleableStrata.reduce((sum, indexes) => sum + indexes.length, 0);
+  const observedRepeatedPairs = coActivity.repeated_pairs || [];
+  const observedEdges = new Map((observedGraph.edges || []).map((edge) => [pairKey(edge.source, edge.target), edge]));
+  const scoresByPair = new Map(observedRepeatedPairs.map((pair) => {
+    const key = pairKey(pair.account_ids[0], pair.account_ids[1]);
+    const edge = observedEdges.get(key);
+    return [key, { pair, observedWeight: edge?.weight || 0, nullWeights: [] }];
+  }));
+
+  for (let permutation = 0; permutation < permutationCount; permutation += 1) {
+    const shuffledActorIds = events.map((event) => event.actor_id);
+    for (const indexes of shuffleableStrata) {
+      const actorIds = indexes.map((index) => events[index].actor_id);
+      fisherYatesShuffle(actorIds, random);
+      indexes.forEach((index, position) => { shuffledActorIds[index] = actorIds[position]; });
+    }
+    const permutedEvents = events.map((event, index) => ({ ...event, actor_id: shuffledActorIds[index] }));
+    const permutedCoActivity = recordCoActivity(permutedEvents, clusters, timeWindowAnalysis);
+    const permutedGraph = buildWeightedActorGraph(permutedEvents, clusters, timeWindowAnalysis, permutedCoActivity);
+    const permutedEdges = new Map(permutedGraph.edges.map((edge) => [pairKey(edge.source, edge.target), edge.weight]));
+    for (const [key, record] of scoresByPair) record.nullWeights.push(permutedEdges.get(key) || 0);
+  }
+
+  const results = [...scoresByPair.values()].map(({ pair, observedWeight, nullWeights }) => {
+    const exceedances = nullWeights.filter((weight) => weight >= observedWeight).length;
+    const testable = shuffleableStrata.length > 0 && new Set(nullWeights).size > 1;
+    const mean = nullWeights.reduce((sum, weight) => sum + weight, 0) / permutationCount;
+    const variance = nullWeights.reduce((sum, weight) => sum + (weight - mean) ** 2, 0) / permutationCount;
+    const sorted = [...nullWeights].sort((left, right) => left - right);
+    const percentileIndex = Math.max(0, Math.ceil(0.95 * sorted.length) - 1);
+    return {
+      account_ids: pair.account_ids,
+      observed_weight: observedWeight,
+      null_mean_weight: Number(mean.toFixed(3)),
+      null_standard_deviation: Number(Math.sqrt(variance).toFixed(3)),
+      null_95th_percentile_weight: Number(sorted[percentileIndex].toFixed(3)),
+      exceedances,
+      p_value: testable
+        ? Number(((exceedances + 1) / (permutationCount + 1)).toFixed(4))
+        : null,
+      testable,
+      evidence_assessment: pair.evidence_assessment
+    };
+  });
+
+  return {
+    method: "stratified_actor_assignment_permutation",
+    permutations: permutationCount,
+    seed: seed >>> 0,
+    strata: {
+      topic_proxy: "most common non-stopword token in the extracted batch",
+      time_bucket_minutes: windowMinutes,
+      preserve_platform: true,
+      eligible_posts: eligiblePosts,
+      shuffleable_strata: shuffleableStrata.length,
+      shuffleable_posts: shuffleablePosts,
+      fixed_eligible_posts: eligiblePosts - shuffleablePosts
+    },
+    statistics: {
+      repeated_pairs_tested: results.length,
+      untestable_pairs: results.filter((result) => !result.testable).length,
+      minimum_p_value: Number((1 / (permutationCount + 1)).toFixed(4)),
+      p_value_resolution: Number((1 / (permutationCount + 1)).toFixed(4))
+    },
+    results,
+    limitations: [
+      "The dominant non-stopword token is a coarse topic proxy; actor labels are shuffled only within the same platform, topic proxy, and fixed time bucket.",
+      "With 199 permutations, p-values have 0.005 resolution; this is for demonstrating the method, not high-resolution inference.",
+      "Results do not adjust for testing many actor pairs and do not establish coordination or intent.",
+      ...(shuffleableStrata.length ? [] : ["No strata contained multiple distinct identified accounts, so the null comparison is not testable for this sample."]),
+      ...(results.some((result) => !result.testable) && shuffleableStrata.length
+        ? ["Some pair-specific null distributions did not vary across permutations; their p-values are null."]
+        : [])
+    ]
+  };
+}
+
+function topicProxyForEvents(events) {
+  const commonWords = new Set([
+    "about", "after", "again", "also", "amid", "been", "before", "being", "between", "could", "from", "have", "into", "just", "more", "most", "over", "said", "same", "some", "such", "than", "that", "their", "there", "these", "they", "this", "those", "through", "under", "very", "were", "what", "when", "where", "which", "while", "with", "would", "your"
+  ]);
+  const tokenSets = events.map((event) => new Set(event.tokens || tokenize(event.text)));
+  const frequencies = new Map();
+  for (const tokens of tokenSets) {
+    for (const token of tokens) {
+      if (token.length < 4 || commonWords.has(token)) continue;
+      frequencies.set(token, (frequencies.get(token) || 0) + 1);
+    }
+  }
+  return tokenSets.map((tokens) => [...tokens]
+    .filter((token) => token.length >= 4 && !commonWords.has(token))
+    .sort((left, right) => (frequencies.get(right) || 0) - (frequencies.get(left) || 0) || left.localeCompare(right))[0] || "unclassified");
+}
+
+function pairKey(firstActor, secondActor) {
+  return JSON.stringify([firstActor, secondActor].sort());
+}
+
+function seededRandom(seed) {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6D2B79F5) >>> 0;
+    let value = state;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 0x1_0000_0000;
+  };
+}
+
+function fisherYatesShuffle(values, random) {
+  for (let index = values.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(random() * (index + 1));
+    [values[index], values[swapIndex]] = [values[swapIndex], values[index]];
+  }
+}
