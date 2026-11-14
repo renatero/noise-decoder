@@ -13,10 +13,12 @@ The default endpoint is `http://localhost:8000/analyze`. Change it through **Con
 
 ## API handoff
 
-The extension sends this body:
+The extension sends this body (with extraction features attached to each event):
 
 ```json
 { "events": [{ "post_id": "…", "actor_id": "…", "text": "…", "url": "…", "timestamp": "…", "platform": "…" }] }
 ```
 
-`post_id` is the platform post ID where available (otherwise a stable page-derived ID), and `url` is the permalink for the post where one can be found. The detector should return a JSON report with `status`, `nodes`, `edges`, `clusters`, `evidence`, `statistics`, and `limitations`. Extraction is intentionally conservative and page structure varies across platforms, so users must review the payload before submitting it.
+`post_id` is the platform post ID where available (otherwise a stable page-derived ID), and `url` is the permalink for the post where one can be found. Events retain the visible `text` and also include `normalized_text`, Unicode-aware `tokens`, normalized outgoing `links`, and `features`. URL normalization removes fragments and common analytics parameters (such as `utm_*`, `fbclid`, and `gclid`), sorts remaining query parameters, and canonicalizes the host and trailing slash. `features.shared_urls` lists links found in multiple extracted posts; `features.similar_messages` lists other post IDs with token-set Jaccard similarity of at least 0.8 (only comparing messages with at least three unique tokens).
+
+The detector should return a JSON report with `status`, `nodes`, `edges`, `clusters`, `evidence`, `statistics`, and `limitations`. Extraction is intentionally conservative and page structure varies across platforms, so users must review the payload before submitting it.
