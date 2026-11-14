@@ -1,25 +1,20 @@
-# Development API
+# Coordination Radar API
 
-Run the local endpoint for the Chrome extension with:
+Run the dashboard and mock API on all network interfaces:
 
 ```bash
-python3 src/api/dev_server.py
+python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 ```
 
-It listens on all IPv4 interfaces at port `8000` and exposes:
+The current demo is reachable at:
 
-- `GET /health`
-- `POST /analyze`
+- Dashboard: `http://188.166.112.226:8000/`
+- Health: `http://188.166.112.226:8000/healthz`
+- Analysis: `POST http://188.166.112.226:8000/api/analyze`
 
-`POST /analyze` accepts an object with an `events` array. Each event must have
-exactly these fields: `post_id`, `actor_id`, `text`, `url`, `timestamp`, and
-`platform`. `actor_id` and `timestamp` may be `null` for sources such as SS.LV
-that do not expose them in a listing view.
+The dashboard and API share one origin, so the extension only opens the
+dashboard; it does not make cross-origin API requests. The server currently
+returns a schema-valid mock analysis response until the detector is integrated.
 
-This server validates the extension handoff and returns a clearly marked
-development report. It does not perform coordination detection yet.
-
-The development API sends `Access-Control-Allow-Origin: *`, so browser clients
-on other origins may call it. It has no authentication; only expose it on a
-trusted network. Public internet access additionally requires firewall and
-network-routing configuration outside this repository.
+For internet-facing use, keep port `8000` allowed by the VPS/cloud firewall and
+place the application behind an HTTPS reverse proxy before a public demo.

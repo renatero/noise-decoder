@@ -7,6 +7,7 @@ p { margin: 4px 0 14px; }
 button, input { box-sizing: border-box; font: inherit; }
 button { border: 0; border-radius: 6px; cursor: pointer; padding: 9px 12px; }
 .primary { width: 100%; background: #55d6be; color: #071b1c; font-weight: 700; }
+.secondary { width: 100%; margin-top: 8px; background: #26364f; color: #e7edf8; font-weight: 650; }
 .quiet { background: transparent; color: #9ec7ff; padding: 2px; }
 .status { color: #bac4d5; font-size: 12px; }
 .row { display: flex; justify-content: space-between; align-items: center; margin: 16px 0 8px; }

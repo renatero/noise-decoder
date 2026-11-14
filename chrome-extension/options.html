@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Noise Decoder settings</title>
+    <title>Coordination Radar settings</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main>
-      <h1>Noise Decoder settings</h1>
-      <label for="endpoint">Detector API endpoint</label>
-      <input id="endpoint" type="url" placeholder="http://127.0.0.1:8000/analyze">
-      <p class="status">When the endpoint is unreachable, the extension displays a clearly labelled mock report.</p>
+      <h1>Coordination Radar settings</h1>
+      <label for="dashboard-url">Dashboard URL</label>
+      <input id="dashboard-url" type="url" placeholder="http://188.166.112.226:8000/">
+      <p class="status">The context-menu action opens this dashboard with the selected text, link, or page URL.</p>
       <button id="save" class="primary">Save</button>
       <p id="saved" class="status" aria-live="polite"></p>
     </main>

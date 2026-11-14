@@ -1,18 +1,15 @@
 {
   "manifest_version": 3,
-  "name": "Noise Decoder",
-  "version": "0.1.0",
-  "description": "Collect visible public posts for explainable coordination analysis.",
+  "name": "Coordination Radar",
+  "version": "0.2.0",
+  "description": "Open a selected public page, link, or text in Coordination Radar.",
   "action": {
-    "default_title": "Noise Decoder",
-    "default_popup": "popup.html"
+    "default_title": "Open Coordination Radar"
   },
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
   "options_page": "options.html",
-  "permissions": ["activeTab", "contextMenus", "scripting", "storage"],
-  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
-  "optional_host_permissions": ["http://*/*", "https://*/*"]
+  "permissions": ["contextMenus", "storage"]
 }
