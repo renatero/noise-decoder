@@ -4,7 +4,8 @@ The Coordination Radar dashboard runs at `http://2.24.173.100/`. It runs as a
 separate loopback service on port 8001 behind Nginx. The existing Noise Decoder
 API remains on loopback port 8000 and keeps its `/health`, `/analyze`, and
 `/discover` routes. The dashboard exposes `/healthz` and its `/api/*` routes on
-the same public origin.
+the same public origin. Nginx allows normal dashboard requests at 60 per minute
+and limits the collection routes to 5 per minute per client IP.
 
 The project is checked out at `/home/joepeach/noise-decoder`, with dependencies
 installed in `.venv`. From the repository root, install or refresh the service
