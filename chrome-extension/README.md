@@ -12,6 +12,9 @@ or send content to an analysis API.
    `http://188.166.112.226:8000/`; replace it with the deployed HTTPS URL when
    available.
 
+To open Settings as its own browser tab, right-click the extension toolbar icon
+and choose **Coordination Radar settings**.
+
 ## Investigate from a page
 
 Right-click selected text, a link, or a web page and choose **Investigate with
