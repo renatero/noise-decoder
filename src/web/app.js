@@ -36,6 +36,7 @@ const sourceMessages = {
   guardian: "The Guardian World headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
   aljazeera: "Al Jazeera headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
   bluesky: "Uses a bounded public Bluesky search. Availability and coverage depend on the public endpoint.",
+  context: "Search recent English news across publishers. Up to 10 results per search, normally 1 credit; repeated searches are cached for 10 minutes. Articles provide background context for your investigation.",
   snapshot: "Uses a stored public-data snapshot, so the demonstration can run without network access.",
   import: "Import normalized event JSON with id, platform, actor_id, timestamp, text, urls, and source_url fields.",
 };
@@ -77,8 +78,12 @@ async function api(path, options = {}) {
 }
 
 function updateSourceFields() {
-  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera"].includes(source.value);
+  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
   const isImport = source.value === "import";
+  const isContext = source.value === "context";
+  $("#context-days-field").classList.toggle("hidden", !isContext);
+  $("#limit").max = isContext ? "10" : "100";
+  if (isContext) $("#limit").value = String(Math.min(10, Number($("#limit").value) || 10));
   limitField.classList.toggle("hidden", !isLive);
   importField.classList.toggle("hidden", !isImport);
   investigation.closest("label").classList.toggle("hidden", isImport);
@@ -119,12 +124,23 @@ async function loadSource() {
       return api("/api/snapshots/bluesky");
     case "import":
       return importedEvents();
+    case "context": {
+      const query = investigation.value.trim();
+      if (!query) throw new Error("Enter a topic or question to search the news.");
+      return api("/api/collect/context", {
+        method: "POST", headers: { "Content-Type": "application/json", "X-NoiseDecoder-Request": "1" },
+        body: JSON.stringify({ query, limit: Math.min(10, Math.max(1, Number($("#limit").value) || 10)), days: Number($("#context-days").value) }),
+      });
+    }
     default:
       throw new Error("Choose a data source.");
   }
 }
 
 function verdictCopy(status) {
+  if (status === "news_context") return {
+    title: "Related news collected", description: "Publisher coverage provides background context for your investigation.", icon: "newspaper",
+  };
   if (status === "suspicious") return {
     title: "Recurring relationship pattern identified",
     description: "The report contains recurring observed relationships that merit review. It does not establish bot identity, coordination intent, or propaganda intent.",
@@ -157,8 +173,10 @@ function renderVerdict(report) {
 
 function renderKpis(report) {
   const stats = report.statistics || {};
-  $("#kpi-posts").textContent = String(stats.events_observed ?? latestEvents.length ?? 0);
-  $("#kpi-posts-note").textContent = `Across ${stats.actors_observed ?? 0} observed actors`;
+  const isNews = report.status === "news_context";
+  $("#kpi-posts-label").textContent = isNews ? "News articles" : "Analyzed posts";
+  $("#kpi-posts").textContent = String((isNews ? stats.news_articles : stats.events_observed) ?? latestEvents.length ?? 0);
+  $("#kpi-posts-note").textContent = isNews ? `Across ${stats.news_publishers ?? 0} publishers` : `Across ${stats.actors_observed ?? 0} observed actors`;
   $("#kpi-relationships").textContent = String(stats.repeated_relationships ?? 0);
   $("#kpi-relationships-note").textContent = "Requires recurring shared-URL evidence";
   $("#kpi-urls").textContent = String(stats.relationship_groups ?? 0);
@@ -171,7 +189,8 @@ function renderStatistics(report) {
   const stats = report.statistics || {};
   const list = element("dl", "grid grid-cols-2 gap-x-3 gap-y-2");
   const entries = [
-    ["Posts", stats.events_observed], ["Actors", stats.actors_observed],
+    [report.status === "news_context" ? "Articles" : "Posts", report.status === "news_context" ? stats.news_articles : stats.events_observed],
+    [report.status === "news_context" ? "Publishers" : "Actors", report.status === "news_context" ? stats.news_publishers : stats.actors_observed],
     ["URL groups", stats.relationship_groups], ["Recurring", stats.repeated_relationships],
   ];
   for (const [label, value] of entries) {
@@ -205,6 +224,9 @@ function renderLimitations(report, sourceData) {
   const target = $("#limitations");
   clear(target);
   const notes = [...(sourceData.limitations || []), ...(report.limitations || [])];
+  if (sourceData.source === "context_news") notes.unshift(sourceData.cached
+    ? "This search used cached results and consumed no additional credits."
+    : `This search consumed ${sourceData.credits_consumed ?? "an unreported number of"} Context.dev credits.`);
   const unique = [...new Set(notes)];
   if (!unique.length) unique.push("No additional coverage notes were supplied.");
   const list = element("ul", "space-y-2");
@@ -214,7 +236,7 @@ function renderLimitations(report, sourceData) {
 
 function sourceLink(event) {
   if (!event?.source_url) return null;
-  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", event.platform === "news_rss" ? `Read at ${event.publisher || event.actor_id}` : "Open original public post");
+  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", ["news_rss", "news_context"].includes(event.platform) ? `Read at ${event.publisher || event.actor_id}` : "Open original public post");
   link.href = event.source_url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
@@ -228,7 +250,9 @@ function renderEvidence(report) {
   const evidence = Array.isArray(report.evidence) ? report.evidence : [];
   $("#evidence-count").textContent = `${evidence.length} relationship${evidence.length === 1 ? "" : "s"}`;
   if (!evidence.length) {
-    target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", "No shared-relationship evidence was returned for this input."));
+    target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", report.status === "news_context"
+      ? "Related publisher coverage. Open an original article to assess its relevance."
+      : "No shared-relationship evidence was returned for this input."));
     $("#evidence-count").textContent = `${latestEvents.length} source records`;
     latestEvents.slice(0, 16).forEach((event) => {
       const card = element("article", "rounded-xl bg-surface-container-lowest p-3");
@@ -322,7 +346,8 @@ function renderReport(report, sourceData) {
   latestReport = {
     ...report,
     limitations: [...new Set([...(sourceData.limitations || []), ...(report.limitations || [])])],
-    collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources },
+    collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources,
+      cached: sourceData.cached, credits_consumed: sourceData.credits_consumed, collected_at: sourceData.collected_at },
   };
   renderVerdict(report);
   renderKpis(report);
@@ -375,6 +400,16 @@ async function checkHealth() {
   }
 }
 
+async function checkSources() {
+  try {
+    const catalog = await api("/api/sources");
+    const context = catalog.sources.find((item) => item.id === "context");
+    const option = source.querySelector('option[value="context"]');
+    option.disabled = !context?.available;
+    option.textContent = context?.available ? "News: Context.dev search" : "News: Context.dev (unavailable)";
+  } catch (_) { /* Keep the optional source disabled if configuration is unknown. */ }
+}
+
 function initialiseExtensionInput() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("investigate");
@@ -402,3 +437,4 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") cl
 updateSourceFields();
 initialiseExtensionInput();
 checkHealth();
+checkSources();

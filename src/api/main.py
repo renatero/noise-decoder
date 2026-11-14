@@ -3,14 +3,16 @@
 import json
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, collect_posts
 from src.collectors.public import SOURCE_IDS, collect_source, source_catalog
+from src.collectors.context import ContextUnavailable, collect_news as collect_context_news
 from src.api.integration import analyze_events
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
@@ -32,6 +34,10 @@ class Event(BaseModel):
     text: str = Field(min_length=1)
     urls: list[str] = Field(default_factory=list)
     source_url: str | None = None
+    publisher: str | None = None
+    record_type: str | None = None
+    story_id: str | None = None
+    language: str | None = None
 
 
 class AnalyzeRequest(BaseModel):
@@ -52,7 +58,48 @@ def healthz() -> dict[str, str]:
 @app.post("/api/analyze")
 async def analyze(request: AnalyzeRequest) -> dict[str, Any]:
     """Run normalized events through the current Engineer A integration adapter."""
-    return await analyze_events([event.dict() for event in request.events])
+    news = [event for event in request.events if event.platform == "news_context"]
+    social = [event for event in request.events if event.platform != "news_context"]
+    report = await analyze_events([event.model_dump() for event in social])
+    if news:
+        report["news_context"] = [event.model_dump() for event in news]
+        report["statistics"]["news_articles"] = len(news)
+        report["statistics"]["news_publishers"] = len({event.actor_id for event in news})
+        report["limitations"].append("Context.dev publisher articles are excluded from account coordination analysis.")
+        if not social:
+            report["status"] = "news_context"
+            report["summary"] = f"{len(news)} news articles collected as background context. Publisher coverage is not evidence of coordinated accounts."
+    return report
+
+
+class ContextSearchRequest(BaseModel):
+    query: str = Field(min_length=1, max_length=512)
+    limit: int = Field(default=10, ge=1, le=10)
+    days: int = Field(default=7, ge=1, le=30)
+
+
+@app.post("/api/collect/context")
+def collect_context(payload: ContextSearchRequest, request: Request) -> dict[str, Any]:
+    # Custom header + no CORS opt-in prevents cross-site browser spending. This
+    # public demo also enforces a durable, global credit budget in the collector.
+    origin = request.headers.get("origin")
+    try:
+        parsed_origin = urlsplit(origin) if origin else None
+        foreign_origin = parsed_origin and (parsed_origin.netloc != request.url.netloc or parsed_origin.scheme != request.url.scheme)
+    except ValueError:
+        foreign_origin = True
+    if request.headers.get("x-noisedecoder-request") != "1" or foreign_origin:
+        raise HTTPException(status_code=403, detail="Start Context.dev searches from this dashboard.")
+    try:
+        return collect_context_news(payload.query, limit=payload.limit, days=payload.days)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from None
+    except ContextUnavailable as error:
+        raise HTTPException(status_code=503, detail=str(error)) from None
+    except CollectorRateLimitError as error:
+        raise HTTPException(status_code=429, detail=str(error)) from None
+    except CollectorError as error:
+        raise HTTPException(status_code=502, detail=str(error)) from None
 
 
 def collect_bluesky_or_error(query: str, limit: int) -> dict[str, Any]:
@@ -120,7 +167,7 @@ def import_normalized_events(request: ImportRequest) -> dict[str, Any]:
         "source": "normalized_json_import",
         "events_received": len(request.events),
         "deduplicated_events": len(request.events) - len(events_by_id),
-        "events": [event.dict() for event in events_by_id.values()],
+        "events": [event.model_dump() for event in events_by_id.values()],
         "limitations": ["Imported records are accepted as supplied; source collection coverage is not independently verified."],
     }
 

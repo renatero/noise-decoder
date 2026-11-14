@@ -224,3 +224,6 @@ __marimo__/
 
 # Local project progress article
 /progress-overview.html
+
+# Context.dev local cache and persistent request budget
+.context-state.sqlite3*

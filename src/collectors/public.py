@@ -6,15 +6,18 @@ from typing import Any
 
 from src.collectors.bluesky import CollectorError, collect_posts
 from src.collectors.news import FEEDS, collect_feed, collect_hackernews, _validate
+from src.collectors.context import configured as context_configured
 
 SOURCE_IDS = ("bluesky", "hackernews", *FEEDS)
 
 
-def source_catalog() -> list[dict[str, str]]:
+def source_catalog() -> list[dict[str, Any]]:
     return [
         {"id": "all", "name": "All live sources", "kind": "combined"},
         {"id": "bluesky", "name": "Bluesky", "kind": "social_search"},
         {"id": "hackernews", "name": "Hacker News", "kind": "discussion_search"},
+        {"id": "context", "name": "Context.dev news", "kind": "news_search", "available": context_configured(),
+         "method": "POST", "max_limit": 10, "default_days": 7, "included_in_all": False},
         *({"id": key, "name": name, "kind": "news_feed", "feed_url": url}
           for key, (name, url) in FEEDS.items()),
     ]

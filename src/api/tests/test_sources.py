@@ -16,7 +16,11 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_catalog_exposes_all_sources_and_dashboard_options(self):
         catalog = (await self.client.get("/api/sources")).json()["sources"]
-        self.assertEqual({source["id"] for source in catalog}, {"all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera"})
+        self.assertEqual({source["id"] for source in catalog}, {"all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"})
+        context = next(source for source in catalog if source["id"] == "context")
+        self.assertFalse(context["included_in_all"])
+        from src.collectors.public import SOURCE_IDS
+        self.assertNotIn("context", SOURCE_IDS)
         dashboard = (await self.client.get("/")).text
         for source in catalog:
             self.assertIn(f'value="{source["id"]}"', dashboard)
