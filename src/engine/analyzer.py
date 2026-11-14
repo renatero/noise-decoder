@@ -30,11 +30,10 @@ def discover_communities(
     graph_data = payload.get("actor_graph") or {}
     raw_nodes = graph_data.get("nodes") or []
     raw_edges = graph_data.get("edges") or []
-    events_by_id = {
-        str(event.get("post_id")): event
-        for event in payload.get("events", [])
-        if event.get("post_id") is not None
-    }
+    events_by_id: dict[str, Mapping[str, Any]] = {}
+    for event in payload.get("events", []):
+        if event.get("post_id") is not None:
+            events_by_id.setdefault(str(event["post_id"]), event)
 
     graph = nx.Graph()
     for node in raw_nodes:
@@ -198,8 +197,13 @@ def _representative_example(
 ) -> dict[str, Any]:
     post_ids_by_account = context.get("post_ids_by_account", {})
     posts: list[dict[str, Any]] = []
+    seen_post_ids: set[str] = set()
     for actor_id in (edge["source"], edge["target"]):
         for post_id in post_ids_by_account.get(actor_id, []):
+            post_id = str(post_id)
+            if post_id in seen_post_ids:
+                continue
+            seen_post_ids.add(post_id)
             event = events_by_id.get(str(post_id))
             if not event:
                 continue
@@ -267,12 +271,16 @@ def _explanation(
 def _duration_seconds(start: Any, end: Any) -> int | None:
     if not start or not end:
         return None
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     try:
         start_dt = datetime.fromisoformat(str(start).replace("Z", "+00:00"))
         end_dt = datetime.fromisoformat(str(end).replace("Z", "+00:00"))
-    except ValueError:
+        if start_dt.tzinfo is None:
+            start_dt = start_dt.replace(tzinfo=timezone.utc)
+        if end_dt.tzinfo is None:
+            end_dt = end_dt.replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError, OverflowError):
         return None
     return max(0, round((end_dt - start_dt).total_seconds()))
 
