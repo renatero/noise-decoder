@@ -1,9 +1,9 @@
 /**
- * Injected only after an explicit popup click. It is intentionally self-contained
- * because chrome.scripting.executeScript serializes this function.
+ * Injected only after an explicit popup click. It is self-contained because
+ * chrome.scripting.executeScript serializes this function.
  */
 export function extractVisibleEvents() {
-  const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
+  const clean = (value) => (value || "").replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, " ").trim();
   const isVisible = (element) => {
     const style = window.getComputedStyle(element);
     const rect = element.getBoundingClientRect();
@@ -42,9 +42,14 @@ export function extractVisibleEvents() {
     const normalized = clean(label).replace(/^@/, "").toLowerCase().replace(/\s+/g, "-");
     return normalized ? `${platform}:${normalized.slice(0, 180)}` : null;
   };
+  const linksFrom = (root, omit = []) => [...root.querySelectorAll("a[href]")]
+    .filter((anchor) => !omit.some((element) => element && (element === anchor || element.contains(anchor))))
+    .map((anchor) => absoluteUrl(anchor.getAttribute("href")))
+    .filter(Boolean)
+    .filter((url) => !omit.some((element) => element?.href === url));
 
-  // SS.LV category/search rows are public advertisements, not news articles.
-  // The page does not expose a seller identity or publication timestamp.
+  // SS.LV listing rows are public advertisements, not news articles. Their
+  // listing markup does not expose seller identity or publication time.
   if (host === "ss.lv" || host.endsWith(".ss.lv")) {
     const events = [...document.querySelectorAll('tr[id^="tr_"]')]
       .filter(isVisible)
@@ -54,7 +59,7 @@ export function extractVisibleEvents() {
         const text = clean(titleLink?.innerText);
         const url = absoluteUrl(titleLink?.getAttribute("href"));
         return postId && text && url ? {
-          post_id: `ss.lv:${postId}`, actor_id: null, text, url, timestamp: null, platform: "ss.lv"
+          post_id: `ss.lv:${postId}`, actor_id: null, text, url, links: [], timestamp: null, platform: "ss.lv"
         } : null;
       }).filter(Boolean);
     return {
@@ -65,8 +70,6 @@ export function extractVisibleEvents() {
     };
   }
 
-  // The research inventory's publisher domains. These sites use one generic,
-  // metadata-first article adapter rather than brittle per-site scrape rules.
   const newsDomains = [
     "yle.fi", "hs.fi", "is.fi", "iltalehti.fi", "mtvuutiset.fi", "sttinfo.fi", "hbl.fi", "aamulehti.fi", "ts.fi", "kaleva.fi", "verkkouutiset.fi", "faktabaari.fi", "valtioneuvosto.fi",
     "lsm.lv", "delfi.lv", "tvnet.lv", "jauns.lv", "apollo.lv", "tv3.lv", "la.lv", "ir.lv", "nra.lv", "rebaltica.lv", "mk.gov.lv", "vp.gov.lv",
@@ -83,29 +86,28 @@ export function extractVisibleEvents() {
     }
   };
   for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
-    try { addJsonLd(JSON.parse(script.textContent)); } catch { /* Ignore invalid publisher JSON-LD. */ }
+    try { addJsonLd(JSON.parse(script.textContent)); } catch { /* Ignore invalid JSON-LD. */ }
   }
   const schemaArticle = jsonLdRecords.find((item) => {
     const types = Array.isArray(item["@type"]) ? item["@type"] : [item["@type"]];
     return types.some((type) => /Article|NewsArticle|ReportageNewsArticle|LiveBlogPosting/i.test(type || ""));
   });
 
+  // Inventory publishers use a metadata-first article adapter instead of a
+  // brittle per-site scraper. It only handles the current article page.
   if (knownNewsSource) {
+    const article = document.querySelector("article");
     const title = clean(schemaArticle?.headline || document.querySelector('meta[property="og:title"]')?.content || document.querySelector("h1")?.innerText || document.title);
     const description = clean(schemaArticle?.description || document.querySelector('meta[name="description"]')?.content);
-    const articleText = clean(document.querySelector("article")?.innerText).slice(0, 12000);
+    const articleText = clean(article?.innerText).slice(0, 12000);
     const text = clean([title, description, articleText].filter(Boolean).join("\n\n")).slice(0, 14000);
     const author = schemaArticle?.author;
     const authorName = clean(Array.isArray(author) ? author[0]?.name || author[0] : author?.name || author);
-    const published = schemaArticle?.datePublished || document.querySelector('meta[property="article:published_time"]')?.content || document.querySelector("time[datetime]")?.dateTime || null;
+    const timestamp = schemaArticle?.datePublished || document.querySelector('meta[property="article:published_time"]')?.content || document.querySelector("time[datetime]")?.dateTime || null;
     const url = absoluteUrl(schemaArticle?.mainEntityOfPage?.["@id"] || schemaArticle?.url) || canonicalUrl();
     const event = text ? {
-      post_id: `${host}:${hash(url)}`,
-      actor_id: actorIdFor(authorName),
-      text,
-      url,
-      timestamp: published,
-      platform: host
+      post_id: `${host}:${hash(url)}`, actor_id: actorIdFor(authorName), text, url,
+      links: [...new Set(linksFrom(article || document).filter((link) => link !== url))], timestamp, platform: host
     } : null;
     return {
       page: location.href, platform: host, extracted_at: new Date().toISOString(), events: event ? [event] : [],
@@ -115,8 +117,8 @@ export function extractVisibleEvents() {
     };
   }
 
-  // Social platforms vary their DOM frequently. This adapter collects only
-  // visible post/comment cards; it never expands hidden replies or logs in.
+  // Social DOMs change frequently. Collect only cards already visible; never
+  // expand hidden replies, log in, or circumvent a platform's access controls.
   const selector = [
     '[data-testid="tweet"]', '[data-testid="feedItem"]', '[data-testid="postThreadItem"]', '[data-testid="post-container"]',
     "ytd-comment-thread-renderer", "ytd-comment-view-model", "shreddit-post", "shreddit-comment",
@@ -129,14 +131,15 @@ export function extractVisibleEvents() {
     const text = clean(textNode.innerText).slice(0, 12000);
     if (text.length < 2) continue;
     const timestamp = item.querySelector("time[datetime]")?.dateTime || item.querySelector("time[datetime]")?.getAttribute("datetime") || null;
-    const links = [...item.querySelectorAll("a[href]")].map((anchor) => absoluteUrl(anchor.getAttribute("href"))).filter(Boolean);
-    const url = links.find((link) => /\/status\/|\/post\/|\/comments\/|\/watch\?|\/r\/|\/video\//.test(link)) || canonicalUrl();
     const author = item.querySelector('[data-testid="User-Name"], [data-testid="postAuthor"], #author-text, [data-e2e="comment-username"], [rel="author"], a[href*="/@"], a[href*="/user/"], a[href*="/u/"]');
+    const allLinks = [...item.querySelectorAll("a[href]")].map((anchor) => absoluteUrl(anchor.getAttribute("href"))).filter(Boolean);
+    const url = allLinks.find((link) => /\/status\/|\/post\/|\/comments\/|\/watch\?|\/r\/|\/video\//.test(link)) || canonicalUrl();
+    const links = [...new Set(linksFrom(item, [author]).filter((link) => link !== url))];
     const actorId = actorIdFor(author?.innerText || author?.getAttribute("aria-label"));
     const postId = item.dataset.commentId || item.dataset.postId || item.dataset.tweetId || item.id || hash(`${actorId || "no-author"}|${timestamp || "no-time"}|${text}|${url}`);
     if (seen.has(postId)) continue;
     seen.add(postId);
-    events.push({ post_id: `${platform}:${postId}`, actor_id: actorId, text, url, timestamp, platform });
+    events.push({ post_id: `${platform}:${postId}`, actor_id: actorId, text, url, links, timestamp, platform });
   }
   return {
     page: location.href, platform, extracted_at: new Date().toISOString(), events,

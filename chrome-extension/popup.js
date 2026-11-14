@@ -1,4 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
+import { buildClusters, enrichEvents } from "./features.mjs";
 import { sourceForUrl } from "./sources.js";
 
 const DEFAULT_ENDPOINT = "http://127.0.0.1:8000/analyze";
@@ -12,38 +13,49 @@ const analysisMode = document.querySelector("#analysis-mode");
 const analysisResult = document.querySelector("#analysis-result");
 
 let collected = [];
+let clusters = [];
 
 function format(value) {
   return JSON.stringify(value, null, 2);
 }
 
-function mockAnalysis(events, reason) {
+function mockAnalysis(events, candidateClusters, reason) {
   const identifiedActors = events.filter((event) => event.actor_id);
   return {
     status: events.length < 2 ? "insufficient_data" : "inconclusive",
     nodes: [...new Map(identifiedActors.map((event) => [event.actor_id, { id: event.actor_id, platform: event.platform }])).values()],
     edges: [],
-    clusters: [],
+    clusters: candidateClusters,
     evidence: [],
-    statistics: { events_analyzed: events.length, actors_analyzed: new Set(identifiedActors.map((event) => event.actor_id)).size },
+    statistics: {
+      events_analyzed: events.length,
+      actors_analyzed: new Set(identifiedActors.map((event) => event.actor_id)).size,
+      groups_found: candidateClusters.length
+    },
     limitations: [
       "Mock response: the detector API is not available yet.",
+      "Groups are based only on shared canonical URLs or similar text; they are not evidence of coordination by themselves.",
       "Visible-page extraction is incomplete and should be reviewed before drawing conclusions.",
       reason
     ]
   };
 }
 
+function updateDerivedData(events) {
+  collected = enrichEvents(events);
+  clusters = buildClusters(collected);
+}
+
 function renderCollected() {
   review.hidden = collected.length === 0;
   eventCount.textContent = `${collected.length} event${collected.length === 1 ? "" : "s"}`;
-  payload.textContent = format({ events: collected });
+  payload.textContent = format({ events: collected, clusters });
 }
 
 async function loadPendingInspection() {
   const { pendingInspection } = await chrome.storage.local.get("pendingInspection");
   if (!pendingInspection?.event) return;
-  collected = [pendingInspection.event];
+  updateDerivedData([pendingInspection.event]);
   const source = pendingInspection.source?.source_name || pendingInspection.event.platform;
   inspectionStatus.textContent = `Right-click ${pendingInspection.kind} inspection loaded from ${source}. Review it, then send it for analysis.`;
   extractionStatus.textContent = "A context-menu inspection is ready.";
@@ -57,17 +69,16 @@ document.querySelector("#extract").addEventListener("click", async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab.id || !tab.url?.startsWith("http")) throw new Error("Open a public website in the active tab first.");
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
-    collected = result.result.events;
+    updateDerivedData(result.result.events);
     const source = sourceForUrl(tab.url);
-    inspectionStatus.textContent = source?.source_name
-      ? `Recognized source: ${source.source_name}.`
-      : "";
+    inspectionStatus.textContent = source?.source_name ? `Recognized source: ${source.source_name}.` : "";
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.${result.result.limitations?.length ? ` ${result.result.limitations[0]}` : ""}`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} candidate group${clusters.length === 1 ? "" : "s"}. Review the payload before sending.${result.result.limitations?.length ? ` ${result.result.limitations[0]}` : ""}`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
     collected = [];
+    clusters = [];
     renderCollected();
     extractionStatus.textContent = `Could not extract posts: ${error.message}`;
   }
@@ -75,6 +86,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
 
 document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
+  clusters = [];
   analysis.hidden = true;
   inspectionStatus.textContent = "";
   chrome.storage.local.remove("pendingInspection");
@@ -90,7 +102,7 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ events: collected })
+      body: JSON.stringify({ events: collected, clusters })
     });
     if (!response.ok) throw new Error(`API returned ${response.status}`);
     const report = await response.json();
@@ -98,7 +110,7 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     analysisResult.textContent = format(report);
   } catch (error) {
     analysisMode.textContent = "Showing a mock detector response — the API could not be reached.";
-    analysisResult.textContent = format(mockAnalysis(collected, error.message));
+    analysisResult.textContent = format(mockAnalysis(collected, clusters, error.message));
   }
 });
 
