@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 
 const listeners = {};
 const menus = [];
@@ -58,4 +59,12 @@ const toolbarUrl = new URL(openedTabs.at(-1).url);
 assert.equal(toolbarUrl.searchParams.get("investigate"), null);
 assert.equal(toolbarUrl.searchParams.get("input_type"), "page");
 
-console.log("background handoff tests: 4 passed");
+const [manifest, background] = await Promise.all([
+  readFile(new URL("../manifest.json", import.meta.url), "utf8"),
+  readFile(new URL("../background.js", import.meta.url), "utf8"),
+]);
+assert.equal(manifest.includes('"scripting"'), false);
+assert.equal(manifest.includes('"host_permissions"'), false);
+assert.equal(background.includes("fetch("), false);
+
+console.log("background handoff tests: 5 passed");
