@@ -5,24 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Coordination Radar</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <script defer src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+    <script defer src="/static/app.js"></script>
   </head>
   <body>
-    <main>
-      <p class="eyebrow">DEMO · MOCK ANALYSIS</p>
-      <h1>Coordination Radar</h1>
-      <p>Start an investigation from a phrase or URL. Collection and analysis are separate steps.</p>
-      <aside class="notice"><strong>Nothing has been collected or analysed yet.</strong> Opening this page from the extension only passes a reference for investigation.</aside>
-      <form id="investigation-form">
-        <label for="investigation">Investigation phrase or URL</label>
-        <textarea id="investigation" required></textarea>
-        <p id="input-note" class="note"></p>
-        <button type="submit">Prepare investigation</button>
-      </form>
-      <section aria-live="polite">
-        <p id="status">Ready.</p>
-        <pre id="report" hidden></pre>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">COORDINATION RADAR · DEMO</p>
+        <h1>Evidence-backed public-post investigation</h1>
+        <p>Explore reproducible demonstration data, bounded public Bluesky search, or normalized JSON imports.</p>
+      </header>
+
+      <section class="panel" aria-labelledby="investigation-heading">
+        <h2 id="investigation-heading">Investigation</h2>
+        <p id="handoff-notice" class="notice" hidden></p>
+        <form id="investigation-form">
+          <div class="fields">
+            <label>Source
+              <select id="source" name="source">
+                <option value="synthetic_coordinated">Synthetic coordinated scenario</option>
+                <option value="synthetic_benign">Synthetic benign scenario</option>
+                <option value="live_bluesky">Live public Bluesky search</option>
+                <option value="offline_bluesky">Offline Bluesky snapshot</option>
+                <option value="json_import">Normalized JSON import</option>
+              </select>
+            </label>
+            <label>Investigation phrase or URL
+              <textarea id="investigation" name="investigation" rows="3" placeholder="e.g. a phrase, public URL, or selected text"></textarea>
+            </label>
+            <label id="limit-field">Live-post limit
+              <input id="limit" type="number" min="1" max="100" value="50">
+            </label>
+            <label id="import-field" hidden>Normalized JSON file
+              <input id="import-file" type="file" accept="application/json,.json">
+            </label>
+          </div>
+          <p id="source-help" class="muted"></p>
+          <button id="investigate-button" type="submit">Investigate</button>
+        </form>
+        <p id="request-status" class="status" aria-live="polite">Ready.</p>
+      </section>
+
+      <section id="synthetic-banner" class="synthetic" hidden>
+        <strong>Synthetic demonstration data.</strong> Actors, posts, URLs, and source links in this result are fictional and must not be treated as real-world findings.
+      </section>
+
+      <section id="report-section" hidden>
+        <div class="report-heading">
+          <div>
+            <p class="eyebrow">INVESTIGATION REPORT</p>
+            <h2 id="report-title">Report</h2>
+            <p id="report-summary" class="muted"></p>
+          </div>
+          <span id="report-status" class="badge"></span>
+        </div>
+
+        <div class="report-grid">
+          <section class="panel"><h3>Statistics</h3><dl id="statistics" class="statistics"></dl></section>
+          <section class="panel"><h3>Clusters</h3><div id="clusters"></div></section>
+          <section class="panel"><h3>Limitations</h3><ul id="limitations"></ul></section>
+          <section class="panel"><h3>Evidence</h3><div id="evidence"></div></section>
+        </div>
+
+        <section class="panel graph-panel">
+          <div class="graph-heading">
+            <div><h3>Actor relationship graph</h3><p class="muted">Only recurring relationships are shown by default.</p></div>
+            <label>Cluster filter <select id="cluster-filter"><option value="all">All actors</option></select></label>
+          </div>
+          <div id="graph" role="img" aria-label="Actor relationship graph"></div>
+          <aside id="graph-detail" class="graph-detail">Select an actor or relationship to inspect its supporting public events.</aside>
+        </section>
       </section>
     </main>
-    <script src="/static/app.js"></script>
   </body>
 </html>

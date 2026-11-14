@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
@@ -10,9 +10,15 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, collect_posts
+from src.api.integration import analyze_events
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
 SNAPSHOT_PATH = Path(__file__).resolve().parents[2] / "datasets" / "bluesky_public_snapshot.json"
+DATASET_DIR = Path(__file__).resolve().parents[2] / "datasets"
+SYNTHETIC_DATASETS = {
+    "synthetic_coordinated": DATASET_DIR / "synthetic_coordinated.json",
+    "synthetic_benign": DATASET_DIR / "synthetic_benign.json",
+}
 app = FastAPI(title="Coordination Radar")
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
 
@@ -43,23 +49,9 @@ def healthz() -> dict[str, str]:
 
 
 @app.post("/api/analyze")
-def analyze(request: AnalyzeRequest) -> dict[str, Any]:
-    actors = sorted({event.actor_id for event in request.events})
-    status: Literal["inconclusive", "insufficient_data"] = (
-        "inconclusive" if len(request.events) >= 2 else "insufficient_data"
-    )
-    return {
-        "status": status,
-        "nodes": [{"id": actor, "label": actor} for actor in actors],
-        "edges": [],
-        "clusters": [],
-        "evidence": [],
-        "statistics": {"events_observed": len(request.events), "actors_observed": len(actors)},
-        "limitations": [
-            "Mock analysis response: the detector is not integrated yet.",
-            "This result does not identify bots or establish intent.",
-        ],
-    }
+async def analyze(request: AnalyzeRequest) -> dict[str, Any]:
+    """Run normalized events through the current Engineer A integration adapter."""
+    return await analyze_events([event.dict() for event in request.events])
 
 
 def collect_bluesky_or_error(query: str, limit: int) -> dict[str, Any]:
@@ -107,6 +99,36 @@ def import_normalized_events(request: ImportRequest) -> dict[str, Any]:
         "events": [event.dict() for event in events_by_id.values()],
         "limitations": ["Imported records are accepted as supplied; source collection coverage is not independently verified."],
     }
+
+
+@app.get("/api/datasets")
+def list_datasets() -> dict[str, Any]:
+    """List locally stored synthetic scenarios without loading every event."""
+    datasets = []
+    for identifier, path in SYNTHETIC_DATASETS.items():
+        if not path.exists():
+            continue
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        datasets.append(
+            {
+                "id": identifier,
+                "event_count": payload.get("event_count", 0),
+                "notice": payload.get("notice"),
+                "scenario": payload.get("scenario"),
+            }
+        )
+    return {"datasets": datasets}
+
+
+@app.get("/api/datasets/{dataset_id}")
+def load_dataset(dataset_id: str) -> dict[str, Any]:
+    """Load a reproducible offline synthetic scenario."""
+    path = SYNTHETIC_DATASETS.get(dataset_id)
+    if path is None:
+        raise HTTPException(status_code=404, detail="Unknown synthetic dataset.")
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Synthetic dataset file is missing.")
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 @app.get("/", include_in_schema=False)

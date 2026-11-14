@@ -28,6 +28,19 @@ limits return `429`; unavailable or malformed upstream responses return `502`.
 `POST /api/import` accepts an `events` array already in the normalized schema,
 allowing other platforms to be supplied without adding a collector.
 
+## Synthetic scenarios and analysis
+
+- `GET /api/datasets` lists the reproducible coordinated and benign scenarios.
+- `GET /api/datasets/synthetic_coordinated` and
+  `GET /api/datasets/synthetic_benign` load their labelled JSON events.
+- `POST /api/analyze` passes normalized events through the current
+  evidence-weighted graph adapter and Engineer A's community-discovery engine.
+
+The report status is `suspicious` only when the engine finds a recurring
+evidence-backed actor network. It is `inconclusive` for observed but one-off
+patterns, and `insufficient_data` for too little input. None of these states
+establishes bot identity or propaganda intent.
+
 Create an offline demo fallback from a trusted development machine, rather than
 through the public web service:
 
@@ -40,8 +53,7 @@ as a bounded public-search snapshot. `GET /api/snapshots/bluesky` loads it
 without needing internet access.
 
 The dashboard and API share one origin, so the extension only opens the
-dashboard; it does not make cross-origin API requests. The server currently
-returns a schema-valid mock analysis response until the detector is integrated.
+dashboard; it does not make cross-origin API requests.
 
 For internet-facing use, keep port `8000` allowed by the VPS/cloud firewall and
 place the application behind an HTTPS reverse proxy before a public demo.

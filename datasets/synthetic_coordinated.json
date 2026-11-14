@@ -1,0 +1,5048 @@
+{
+  "dataset_type": "synthetic_demonstration",
+  "scenario": "synthetic_coordinated",
+  "notice": "All actors, events, URLs, and source links in this file are synthetic demonstration data.",
+  "event_count": 336,
+  "events": [
+    {
+      "id": "demo-suspicious-0001",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-14T08:00:32Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0001",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0008",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-14T08:01:18Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0008",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0296",
+      "platform": "bluesky",
+      "actor_id": "demo:background-004",
+      "timestamp": "2026-11-14T08:02:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/223"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0296",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0012",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-14T08:03:14Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0012",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0007",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-14T08:03:40Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0007",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0006",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-14T08:03:44Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0006",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0005",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-14T08:04:14Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0005",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0004",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-14T08:04:18Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0004",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0002",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-14T08:04:43Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0002",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0011",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-14T08:05:34Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0011",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0010",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-14T08:07:06Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0010",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0009",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-14T08:07:14Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0009",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0003",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-14T08:07:55Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-1",
+      "urls": [
+        "https://demo.example/briefing/transport-1"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0003",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0315",
+      "platform": "bluesky",
+      "actor_id": "demo:background-047",
+      "timestamp": "2026-11-14T08:09:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/242"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0315",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0322",
+      "platform": "bluesky",
+      "actor_id": "demo:background-012",
+      "timestamp": "2026-11-14T08:12:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/249"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0322",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0093",
+      "platform": "bluesky",
+      "actor_id": "demo:background-084",
+      "timestamp": "2026-11-14T08:14:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/020"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0093",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0303",
+      "platform": "bluesky",
+      "actor_id": "demo:background-025",
+      "timestamp": "2026-11-14T08:23:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/230"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0303",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0073",
+      "platform": "bluesky",
+      "actor_id": "demo:background-048",
+      "timestamp": "2026-11-14T08:24:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/000"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0073",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0326",
+      "platform": "bluesky",
+      "actor_id": "demo:background-018",
+      "timestamp": "2026-11-14T08:30:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/253"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0326",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0188",
+      "platform": "bluesky",
+      "actor_id": "demo:background-002",
+      "timestamp": "2026-11-14T08:33:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/115"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0188",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0261",
+      "platform": "bluesky",
+      "actor_id": "demo:background-056",
+      "timestamp": "2026-11-14T08:36:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/188"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0261",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0165",
+      "platform": "bluesky",
+      "actor_id": "demo:background-006",
+      "timestamp": "2026-11-14T08:48:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/092"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0165",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0120",
+      "platform": "bluesky",
+      "actor_id": "demo:background-026",
+      "timestamp": "2026-11-14T08:54:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/047"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0120",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0098",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T09:02:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/025"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0098",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0244",
+      "platform": "bluesky",
+      "actor_id": "demo:background-043",
+      "timestamp": "2026-11-14T09:29:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/171"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0244",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0091",
+      "platform": "bluesky",
+      "actor_id": "demo:background-038",
+      "timestamp": "2026-11-14T09:32:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/018"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0091",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0235",
+      "platform": "bluesky",
+      "actor_id": "demo:background-084",
+      "timestamp": "2026-11-14T09:43:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/162"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0235",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0254",
+      "platform": "bluesky",
+      "actor_id": "demo:background-019",
+      "timestamp": "2026-11-14T09:45:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/181"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0254",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0214",
+      "platform": "bluesky",
+      "actor_id": "demo:background-048",
+      "timestamp": "2026-11-14T09:53:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/141"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0214",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0084",
+      "platform": "bluesky",
+      "actor_id": "demo:background-042",
+      "timestamp": "2026-11-14T09:57:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/011"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0084",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0250",
+      "platform": "bluesky",
+      "actor_id": "demo:background-011",
+      "timestamp": "2026-11-14T09:57:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/177"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0250",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0125",
+      "platform": "bluesky",
+      "actor_id": "demo:background-021",
+      "timestamp": "2026-11-14T10:17:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/052"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0125",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0281",
+      "platform": "bluesky",
+      "actor_id": "demo:background-019",
+      "timestamp": "2026-11-14T10:21:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/208"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0281",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0117",
+      "platform": "bluesky",
+      "actor_id": "demo:background-006",
+      "timestamp": "2026-11-14T10:30:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/044"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0117",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0230",
+      "platform": "bluesky",
+      "actor_id": "demo:background-053",
+      "timestamp": "2026-11-14T10:33:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/157"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0230",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0270",
+      "platform": "bluesky",
+      "actor_id": "demo:background-005",
+      "timestamp": "2026-11-14T10:44:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/197"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0270",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0136",
+      "platform": "bluesky",
+      "actor_id": "demo:background-050",
+      "timestamp": "2026-11-14T10:51:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/063"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0136",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0160",
+      "platform": "bluesky",
+      "actor_id": "demo:background-012",
+      "timestamp": "2026-11-14T11:00:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/087"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0160",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0089",
+      "platform": "bluesky",
+      "actor_id": "demo:background-072",
+      "timestamp": "2026-11-14T11:01:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/016"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0089",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0204",
+      "platform": "bluesky",
+      "actor_id": "demo:background-060",
+      "timestamp": "2026-11-14T11:01:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/131"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0204",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0208",
+      "platform": "bluesky",
+      "actor_id": "demo:background-087",
+      "timestamp": "2026-11-14T11:01:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/135"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0208",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0187",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T11:27:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/114"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0187",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0162",
+      "platform": "bluesky",
+      "actor_id": "demo:background-048",
+      "timestamp": "2026-11-14T11:28:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/089"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0162",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0262",
+      "platform": "bluesky",
+      "actor_id": "demo:background-065",
+      "timestamp": "2026-11-14T11:31:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/189"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0262",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0196",
+      "platform": "bluesky",
+      "actor_id": "demo:background-025",
+      "timestamp": "2026-11-14T11:32:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/123"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0196",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0267",
+      "platform": "bluesky",
+      "actor_id": "demo:background-016",
+      "timestamp": "2026-11-14T11:33:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/194"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0267",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0194",
+      "platform": "bluesky",
+      "actor_id": "demo:background-063",
+      "timestamp": "2026-11-14T11:43:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/121"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0194",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0156",
+      "platform": "bluesky",
+      "actor_id": "demo:background-054",
+      "timestamp": "2026-11-14T11:50:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/083"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0156",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0283",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T11:50:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/210"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0283",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0227",
+      "platform": "bluesky",
+      "actor_id": "demo:background-054",
+      "timestamp": "2026-11-14T11:51:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/154"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0227",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0022",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-14T12:01:03Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0022",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0023",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-14T12:01:34Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0023",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0014",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-14T12:01:52Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0014",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0193",
+      "platform": "bluesky",
+      "actor_id": "demo:background-069",
+      "timestamp": "2026-11-14T12:02:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/120"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0193",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0021",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-14T12:02:29Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0021",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0020",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-14T12:03:22Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0020",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0015",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-14T12:03:53Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0015",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0017",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-14T12:04:49Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0017",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0133",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T12:05:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/060"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0133",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0016",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-14T12:05:35Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0016",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0013",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-14T12:05:56Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0013",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0019",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-14T12:07:12Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0019",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0018",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-14T12:07:33Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0018",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0024",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-14T12:07:44Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-2",
+      "urls": [
+        "https://demo.example/briefing/energy-2"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0024",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0140",
+      "platform": "bluesky",
+      "actor_id": "demo:background-050",
+      "timestamp": "2026-11-14T12:13:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/067"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0140",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0142",
+      "platform": "bluesky",
+      "actor_id": "demo:background-012",
+      "timestamp": "2026-11-14T12:15:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/069"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0142",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0240",
+      "platform": "bluesky",
+      "actor_id": "demo:background-013",
+      "timestamp": "2026-11-14T12:20:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/167"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0240",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0209",
+      "platform": "bluesky",
+      "actor_id": "demo:background-040",
+      "timestamp": "2026-11-14T12:21:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/136"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0209",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0325",
+      "platform": "bluesky",
+      "actor_id": "demo:background-002",
+      "timestamp": "2026-11-14T12:22:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/252"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0325",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0173",
+      "platform": "bluesky",
+      "actor_id": "demo:background-076",
+      "timestamp": "2026-11-14T12:34:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/100"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0173",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0206",
+      "platform": "bluesky",
+      "actor_id": "demo:background-037",
+      "timestamp": "2026-11-14T12:44:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/133"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0206",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0170",
+      "platform": "bluesky",
+      "actor_id": "demo:background-007",
+      "timestamp": "2026-11-14T12:47:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/097"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0170",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0237",
+      "platform": "bluesky",
+      "actor_id": "demo:background-059",
+      "timestamp": "2026-11-14T12:50:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/164"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0237",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0276",
+      "platform": "bluesky",
+      "actor_id": "demo:background-083",
+      "timestamp": "2026-11-14T12:56:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/203"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0276",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0333",
+      "platform": "bluesky",
+      "actor_id": "demo:background-076",
+      "timestamp": "2026-11-14T13:13:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/260"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0333",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0316",
+      "platform": "bluesky",
+      "actor_id": "demo:background-081",
+      "timestamp": "2026-11-14T13:20:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/243"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0316",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0288",
+      "platform": "bluesky",
+      "actor_id": "demo:background-032",
+      "timestamp": "2026-11-14T13:31:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/215"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0288",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0174",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T13:39:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/101"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0174",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0205",
+      "platform": "bluesky",
+      "actor_id": "demo:background-070",
+      "timestamp": "2026-11-14T13:39:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/132"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0205",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0314",
+      "platform": "bluesky",
+      "actor_id": "demo:background-080",
+      "timestamp": "2026-11-14T13:39:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/241"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0314",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0169",
+      "platform": "bluesky",
+      "actor_id": "demo:background-080",
+      "timestamp": "2026-11-14T13:42:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/096"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0169",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0078",
+      "platform": "bluesky",
+      "actor_id": "demo:background-027",
+      "timestamp": "2026-11-14T13:45:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/005"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0078",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0111",
+      "platform": "bluesky",
+      "actor_id": "demo:background-051",
+      "timestamp": "2026-11-14T13:46:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/038"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0111",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0157",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T13:49:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/084"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0157",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0095",
+      "platform": "bluesky",
+      "actor_id": "demo:background-038",
+      "timestamp": "2026-11-14T13:58:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/022"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0095",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0074",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T14:00:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/001"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0074",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0181",
+      "platform": "bluesky",
+      "actor_id": "demo:background-077",
+      "timestamp": "2026-11-14T14:09:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/108"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0181",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0096",
+      "platform": "bluesky",
+      "actor_id": "demo:background-023",
+      "timestamp": "2026-11-14T14:15:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/023"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0096",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0253",
+      "platform": "bluesky",
+      "actor_id": "demo:background-005",
+      "timestamp": "2026-11-14T14:40:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/180"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0253",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0190",
+      "platform": "bluesky",
+      "actor_id": "demo:background-068",
+      "timestamp": "2026-11-14T14:41:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/117"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0190",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0310",
+      "platform": "bluesky",
+      "actor_id": "demo:background-026",
+      "timestamp": "2026-11-14T14:45:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/237"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0310",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0113",
+      "platform": "bluesky",
+      "actor_id": "demo:background-014",
+      "timestamp": "2026-11-14T14:56:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/040"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0113",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0191",
+      "platform": "bluesky",
+      "actor_id": "demo:background-019",
+      "timestamp": "2026-11-14T15:12:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/118"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0191",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0247",
+      "platform": "bluesky",
+      "actor_id": "demo:background-084",
+      "timestamp": "2026-11-14T15:23:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/174"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0247",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0203",
+      "platform": "bluesky",
+      "actor_id": "demo:background-071",
+      "timestamp": "2026-11-14T15:27:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/130"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0203",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0300",
+      "platform": "bluesky",
+      "actor_id": "demo:background-024",
+      "timestamp": "2026-11-14T15:29:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/227"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0300",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0222",
+      "platform": "bluesky",
+      "actor_id": "demo:background-023",
+      "timestamp": "2026-11-14T15:36:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/149"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0222",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0274",
+      "platform": "bluesky",
+      "actor_id": "demo:background-057",
+      "timestamp": "2026-11-14T15:47:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/201"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0274",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0273",
+      "platform": "bluesky",
+      "actor_id": "demo:background-064",
+      "timestamp": "2026-11-14T15:49:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/200"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0273",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0280",
+      "platform": "bluesky",
+      "actor_id": "demo:background-041",
+      "timestamp": "2026-11-14T15:49:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/207"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0280",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0207",
+      "platform": "bluesky",
+      "actor_id": "demo:background-079",
+      "timestamp": "2026-11-14T15:54:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/134"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0207",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0030",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-14T16:00:37Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0030",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0029",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-14T16:01:12Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0029",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0033",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-14T16:01:31Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0033",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0031",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-14T16:01:33Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0031",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0076",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T16:02:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/003"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0076",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0034",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-14T16:02:51Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0034",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0097",
+      "platform": "bluesky",
+      "actor_id": "demo:background-077",
+      "timestamp": "2026-11-14T16:03:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/024"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0097",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0032",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-14T16:03:06Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0032",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0026",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-14T16:03:54Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0026",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0291",
+      "platform": "bluesky",
+      "actor_id": "demo:background-013",
+      "timestamp": "2026-11-14T16:05:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/218"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0291",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0028",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-14T16:05:24Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0028",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0036",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-14T16:06:59Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0036",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0025",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-14T16:07:01Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0025",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0027",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-14T16:07:39Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0027",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0035",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-14T16:07:53Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-3",
+      "urls": [
+        "https://demo.example/briefing/transport-3"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0035",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0293",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T16:09:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/220"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0293",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0146",
+      "platform": "bluesky",
+      "actor_id": "demo:background-088",
+      "timestamp": "2026-11-14T16:12:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/073"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0146",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0159",
+      "platform": "bluesky",
+      "actor_id": "demo:background-086",
+      "timestamp": "2026-11-14T16:19:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/086"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0159",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0149",
+      "platform": "bluesky",
+      "actor_id": "demo:background-024",
+      "timestamp": "2026-11-14T16:23:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/076"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0149",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0177",
+      "platform": "bluesky",
+      "actor_id": "demo:background-052",
+      "timestamp": "2026-11-14T16:24:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/104"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0177",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0328",
+      "platform": "bluesky",
+      "actor_id": "demo:background-037",
+      "timestamp": "2026-11-14T16:33:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/255"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0328",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0132",
+      "platform": "bluesky",
+      "actor_id": "demo:background-018",
+      "timestamp": "2026-11-14T16:40:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/059"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0132",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0134",
+      "platform": "bluesky",
+      "actor_id": "demo:background-011",
+      "timestamp": "2026-11-14T16:51:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/061"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0134",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0279",
+      "platform": "bluesky",
+      "actor_id": "demo:background-067",
+      "timestamp": "2026-11-14T16:51:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/206"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0279",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0289",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-14T16:54:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/216"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0289",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0124",
+      "platform": "bluesky",
+      "actor_id": "demo:background-081",
+      "timestamp": "2026-11-14T16:56:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/051"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0124",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0161",
+      "platform": "bluesky",
+      "actor_id": "demo:background-006",
+      "timestamp": "2026-11-14T17:00:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/088"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0161",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0085",
+      "platform": "bluesky",
+      "actor_id": "demo:background-085",
+      "timestamp": "2026-11-14T17:04:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/012"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0085",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0189",
+      "platform": "bluesky",
+      "actor_id": "demo:background-022",
+      "timestamp": "2026-11-14T17:07:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/116"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0189",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0094",
+      "platform": "bluesky",
+      "actor_id": "demo:background-073",
+      "timestamp": "2026-11-14T17:12:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/021"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0094",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0080",
+      "platform": "bluesky",
+      "actor_id": "demo:background-036",
+      "timestamp": "2026-11-14T17:16:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/007"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0080",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0232",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T17:16:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/159"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0232",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0101",
+      "platform": "bluesky",
+      "actor_id": "demo:background-005",
+      "timestamp": "2026-11-14T17:18:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/028"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0101",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0123",
+      "platform": "bluesky",
+      "actor_id": "demo:background-040",
+      "timestamp": "2026-11-14T17:23:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/050"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0123",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0255",
+      "platform": "bluesky",
+      "actor_id": "demo:background-072",
+      "timestamp": "2026-11-14T17:25:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/182"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0255",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0251",
+      "platform": "bluesky",
+      "actor_id": "demo:background-038",
+      "timestamp": "2026-11-14T17:50:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/178"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0251",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0088",
+      "platform": "bluesky",
+      "actor_id": "demo:background-062",
+      "timestamp": "2026-11-14T17:59:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/015"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0088",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0082",
+      "platform": "bluesky",
+      "actor_id": "demo:background-008",
+      "timestamp": "2026-11-14T18:01:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/009"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0082",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0152",
+      "platform": "bluesky",
+      "actor_id": "demo:background-037",
+      "timestamp": "2026-11-14T18:09:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/079"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0152",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0219",
+      "platform": "bluesky",
+      "actor_id": "demo:background-059",
+      "timestamp": "2026-11-14T18:10:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/146"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0219",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0105",
+      "platform": "bluesky",
+      "actor_id": "demo:background-053",
+      "timestamp": "2026-11-14T18:13:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/032"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0105",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0100",
+      "platform": "bluesky",
+      "actor_id": "demo:background-033",
+      "timestamp": "2026-11-14T18:14:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/027"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0100",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0285",
+      "platform": "bluesky",
+      "actor_id": "demo:background-034",
+      "timestamp": "2026-11-14T18:19:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/212"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0285",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0108",
+      "platform": "bluesky",
+      "actor_id": "demo:background-048",
+      "timestamp": "2026-11-14T18:23:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/035"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0108",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0192",
+      "platform": "bluesky",
+      "actor_id": "demo:background-064",
+      "timestamp": "2026-11-14T18:25:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/119"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0192",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0141",
+      "platform": "bluesky",
+      "actor_id": "demo:background-008",
+      "timestamp": "2026-11-14T18:26:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/068"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0141",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0137",
+      "platform": "bluesky",
+      "actor_id": "demo:background-026",
+      "timestamp": "2026-11-14T18:47:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/064"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0137",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0171",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T18:47:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/098"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0171",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0145",
+      "platform": "bluesky",
+      "actor_id": "demo:background-045",
+      "timestamp": "2026-11-14T18:53:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/072"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0145",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0242",
+      "platform": "bluesky",
+      "actor_id": "demo:background-036",
+      "timestamp": "2026-11-14T18:56:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/169"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0242",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0323",
+      "platform": "bluesky",
+      "actor_id": "demo:background-060",
+      "timestamp": "2026-11-14T19:18:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/250"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0323",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0119",
+      "platform": "bluesky",
+      "actor_id": "demo:background-010",
+      "timestamp": "2026-11-14T19:35:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/046"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0119",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0154",
+      "platform": "bluesky",
+      "actor_id": "demo:background-085",
+      "timestamp": "2026-11-14T19:37:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/081"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0154",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0211",
+      "platform": "bluesky",
+      "actor_id": "demo:background-031",
+      "timestamp": "2026-11-14T19:53:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/138"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0211",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0129",
+      "platform": "bluesky",
+      "actor_id": "demo:background-009",
+      "timestamp": "2026-11-14T19:55:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/056"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0129",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0199",
+      "platform": "bluesky",
+      "actor_id": "demo:background-088",
+      "timestamp": "2026-11-14T19:55:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/126"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0199",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0210",
+      "platform": "bluesky",
+      "actor_id": "demo:background-064",
+      "timestamp": "2026-11-14T19:57:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/137"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0210",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0313",
+      "platform": "bluesky",
+      "actor_id": "demo:background-023",
+      "timestamp": "2026-11-14T19:59:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/240"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0313",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0042",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-14T20:00:31Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0042",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0038",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-14T20:01:16Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0038",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0041",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-14T20:01:55Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0041",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0302",
+      "platform": "bluesky",
+      "actor_id": "demo:background-017",
+      "timestamp": "2026-11-14T20:02:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/229"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0302",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0037",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-14T20:02:24Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0037",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0047",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-14T20:02:50Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0047",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0048",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-14T20:03:00Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0048",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0045",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-14T20:03:02Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0045",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0043",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-14T20:03:36Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0043",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0044",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-14T20:04:18Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0044",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0046",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-14T20:05:09Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0046",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0039",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-14T20:06:16Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0039",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0040",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-14T20:06:57Z",
+      "text": "New energy briefing is worth sharing: https://demo.example/briefing/energy-4",
+      "urls": [
+        "https://demo.example/briefing/energy-4"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0040",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0179",
+      "platform": "bluesky",
+      "actor_id": "demo:background-007",
+      "timestamp": "2026-11-14T20:07:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/106"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0179",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0258",
+      "platform": "bluesky",
+      "actor_id": "demo:background-036",
+      "timestamp": "2026-11-14T20:08:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/185"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0258",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0287",
+      "platform": "bluesky",
+      "actor_id": "demo:background-075",
+      "timestamp": "2026-11-14T20:09:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/214"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0287",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0182",
+      "platform": "bluesky",
+      "actor_id": "demo:background-078",
+      "timestamp": "2026-11-14T20:19:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/109"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0182",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0090",
+      "platform": "bluesky",
+      "actor_id": "demo:background-056",
+      "timestamp": "2026-11-14T20:26:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/017"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0090",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0202",
+      "platform": "bluesky",
+      "actor_id": "demo:background-077",
+      "timestamp": "2026-11-14T20:38:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/129"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0202",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0104",
+      "platform": "bluesky",
+      "actor_id": "demo:background-007",
+      "timestamp": "2026-11-14T20:39:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/031"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0104",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0234",
+      "platform": "bluesky",
+      "actor_id": "demo:background-044",
+      "timestamp": "2026-11-14T20:42:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/161"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0234",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0305",
+      "platform": "bluesky",
+      "actor_id": "demo:background-071",
+      "timestamp": "2026-11-14T20:44:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/232"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0305",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0183",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-14T20:50:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/110"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0183",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0115",
+      "platform": "bluesky",
+      "actor_id": "demo:background-021",
+      "timestamp": "2026-11-14T20:51:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/042"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0115",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0246",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T20:51:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/173"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0246",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0334",
+      "platform": "bluesky",
+      "actor_id": "demo:background-086",
+      "timestamp": "2026-11-14T20:58:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/261"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0334",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0166",
+      "platform": "bluesky",
+      "actor_id": "demo:background-077",
+      "timestamp": "2026-11-14T21:02:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/093"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0166",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0271",
+      "platform": "bluesky",
+      "actor_id": "demo:background-055",
+      "timestamp": "2026-11-14T21:02:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/198"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0271",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0184",
+      "platform": "bluesky",
+      "actor_id": "demo:background-068",
+      "timestamp": "2026-11-14T21:07:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/111"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0184",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0195",
+      "platform": "bluesky",
+      "actor_id": "demo:background-031",
+      "timestamp": "2026-11-14T21:12:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/122"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0195",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0298",
+      "platform": "bluesky",
+      "actor_id": "demo:background-090",
+      "timestamp": "2026-11-14T21:13:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/225"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0298",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0268",
+      "platform": "bluesky",
+      "actor_id": "demo:background-033",
+      "timestamp": "2026-11-14T21:20:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/195"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0268",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0286",
+      "platform": "bluesky",
+      "actor_id": "demo:background-071",
+      "timestamp": "2026-11-14T21:21:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/213"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0286",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0299",
+      "platform": "bluesky",
+      "actor_id": "demo:background-005",
+      "timestamp": "2026-11-14T21:21:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/226"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0299",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0308",
+      "platform": "bluesky",
+      "actor_id": "demo:background-072",
+      "timestamp": "2026-11-14T21:21:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/235"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0308",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0336",
+      "platform": "bluesky",
+      "actor_id": "demo:background-085",
+      "timestamp": "2026-11-14T21:22:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/263"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0336",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0107",
+      "platform": "bluesky",
+      "actor_id": "demo:background-074",
+      "timestamp": "2026-11-14T21:23:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/034"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0107",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0236",
+      "platform": "bluesky",
+      "actor_id": "demo:background-003",
+      "timestamp": "2026-11-14T21:26:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/163"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0236",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0143",
+      "platform": "bluesky",
+      "actor_id": "demo:background-058",
+      "timestamp": "2026-11-14T21:37:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/070"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0143",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0178",
+      "platform": "bluesky",
+      "actor_id": "demo:background-085",
+      "timestamp": "2026-11-14T21:39:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/105"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0178",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0241",
+      "platform": "bluesky",
+      "actor_id": "demo:background-051",
+      "timestamp": "2026-11-14T21:39:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/168"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0241",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0185",
+      "platform": "bluesky",
+      "actor_id": "demo:background-021",
+      "timestamp": "2026-11-14T21:47:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/112"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0185",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0127",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-14T21:59:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/054"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0127",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0164",
+      "platform": "bluesky",
+      "actor_id": "demo:background-068",
+      "timestamp": "2026-11-14T22:07:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/091"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0164",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0112",
+      "platform": "bluesky",
+      "actor_id": "demo:background-059",
+      "timestamp": "2026-11-14T22:10:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/039"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0112",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0212",
+      "platform": "bluesky",
+      "actor_id": "demo:background-063",
+      "timestamp": "2026-11-14T22:11:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/139"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0212",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0260",
+      "platform": "bluesky",
+      "actor_id": "demo:background-046",
+      "timestamp": "2026-11-14T22:12:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/187"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0260",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0229",
+      "platform": "bluesky",
+      "actor_id": "demo:background-072",
+      "timestamp": "2026-11-14T22:22:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/156"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0229",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0311",
+      "platform": "bluesky",
+      "actor_id": "demo:background-046",
+      "timestamp": "2026-11-14T22:42:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/238"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0311",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0075",
+      "platform": "bluesky",
+      "actor_id": "demo:background-085",
+      "timestamp": "2026-11-14T22:46:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/002"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0075",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0167",
+      "platform": "bluesky",
+      "actor_id": "demo:background-044",
+      "timestamp": "2026-11-14T22:49:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/094"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0167",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0330",
+      "platform": "bluesky",
+      "actor_id": "demo:background-080",
+      "timestamp": "2026-11-14T22:55:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/257"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0330",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0216",
+      "platform": "bluesky",
+      "actor_id": "demo:background-059",
+      "timestamp": "2026-11-14T22:56:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/143"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0216",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0231",
+      "platform": "bluesky",
+      "actor_id": "demo:background-055",
+      "timestamp": "2026-11-14T22:56:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/158"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0231",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0223",
+      "platform": "bluesky",
+      "actor_id": "demo:background-072",
+      "timestamp": "2026-11-14T23:01:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/150"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0223",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0224",
+      "platform": "bluesky",
+      "actor_id": "demo:background-001",
+      "timestamp": "2026-11-14T23:05:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/151"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0224",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0332",
+      "platform": "bluesky",
+      "actor_id": "demo:background-044",
+      "timestamp": "2026-11-14T23:06:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/259"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0332",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0150",
+      "platform": "bluesky",
+      "actor_id": "demo:background-067",
+      "timestamp": "2026-11-14T23:07:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/077"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0150",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0248",
+      "platform": "bluesky",
+      "actor_id": "demo:background-024",
+      "timestamp": "2026-11-14T23:07:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/175"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0248",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0264",
+      "platform": "bluesky",
+      "actor_id": "demo:background-089",
+      "timestamp": "2026-11-14T23:07:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/191"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0264",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0083",
+      "platform": "bluesky",
+      "actor_id": "demo:background-047",
+      "timestamp": "2026-11-14T23:08:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/010"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0083",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0329",
+      "platform": "bluesky",
+      "actor_id": "demo:background-073",
+      "timestamp": "2026-11-14T23:09:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/256"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0329",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0263",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-14T23:21:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/190"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0263",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0215",
+      "platform": "bluesky",
+      "actor_id": "demo:background-040",
+      "timestamp": "2026-11-14T23:29:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/142"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0215",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0144",
+      "platform": "bluesky",
+      "actor_id": "demo:background-011",
+      "timestamp": "2026-11-14T23:33:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/071"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0144",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0220",
+      "platform": "bluesky",
+      "actor_id": "demo:background-066",
+      "timestamp": "2026-11-14T23:39:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/147"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0220",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0151",
+      "platform": "bluesky",
+      "actor_id": "demo:background-044",
+      "timestamp": "2026-11-14T23:43:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/078"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0151",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0131",
+      "platform": "bluesky",
+      "actor_id": "demo:background-061",
+      "timestamp": "2026-11-14T23:44:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/058"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0131",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0126",
+      "platform": "bluesky",
+      "actor_id": "demo:background-013",
+      "timestamp": "2026-11-14T23:45:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/053"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0126",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0239",
+      "platform": "bluesky",
+      "actor_id": "demo:background-057",
+      "timestamp": "2026-11-14T23:51:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/166"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0239",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0110",
+      "platform": "bluesky",
+      "actor_id": "demo:background-065",
+      "timestamp": "2026-11-14T23:56:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/037"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0110",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0335",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-14T23:56:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/262"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0335",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0118",
+      "platform": "bluesky",
+      "actor_id": "demo:background-058",
+      "timestamp": "2026-11-14T23:57:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/045"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0118",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0051",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-15T00:01:45Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0051",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0058",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-15T00:02:04Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0058",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0060",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-15T00:02:10Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0060",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0053",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-15T00:02:44Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0053",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0052",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-15T00:04:12Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0052",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0056",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-15T00:04:22Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0056",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0059",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-15T00:04:25Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0059",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0057",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-15T00:06:22Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0057",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0049",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-15T00:06:30Z",
+      "text": "Please read this transport update and pass it on: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0049",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0050",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-15T00:06:41Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0050",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0054",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-15T00:06:50Z",
+      "text": "New transport briefing is worth sharing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0054",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0055",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-15T00:06:50Z",
+      "text": "Useful transport context in this briefing: https://demo.example/briefing/transport-5",
+      "urls": [
+        "https://demo.example/briefing/transport-5"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0055",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0331",
+      "platform": "bluesky",
+      "actor_id": "demo:background-086",
+      "timestamp": "2026-11-15T00:08:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/258"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0331",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0158",
+      "platform": "bluesky",
+      "actor_id": "demo:background-009",
+      "timestamp": "2026-11-15T00:11:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/085"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0158",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0249",
+      "platform": "bluesky",
+      "actor_id": "demo:background-035",
+      "timestamp": "2026-11-15T00:15:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/176"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0249",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0259",
+      "platform": "bluesky",
+      "actor_id": "demo:background-059",
+      "timestamp": "2026-11-15T00:17:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/186"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0259",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0186",
+      "platform": "bluesky",
+      "actor_id": "demo:background-022",
+      "timestamp": "2026-11-15T00:19:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/113"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0186",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0269",
+      "platform": "bluesky",
+      "actor_id": "demo:background-047",
+      "timestamp": "2026-11-15T00:22:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/196"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0269",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0121",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-15T00:27:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/048"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0121",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0086",
+      "platform": "bluesky",
+      "actor_id": "demo:background-006",
+      "timestamp": "2026-11-15T00:38:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/013"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0086",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0217",
+      "platform": "bluesky",
+      "actor_id": "demo:background-037",
+      "timestamp": "2026-11-15T00:40:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/144"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0217",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0304",
+      "platform": "bluesky",
+      "actor_id": "demo:background-032",
+      "timestamp": "2026-11-15T00:57:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/231"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0304",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0319",
+      "platform": "bluesky",
+      "actor_id": "demo:background-041",
+      "timestamp": "2026-11-15T01:01:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/246"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0319",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0139",
+      "platform": "bluesky",
+      "actor_id": "demo:background-056",
+      "timestamp": "2026-11-15T01:04:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/066"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0139",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0175",
+      "platform": "bluesky",
+      "actor_id": "demo:background-008",
+      "timestamp": "2026-11-15T01:13:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/102"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0175",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0135",
+      "platform": "bluesky",
+      "actor_id": "demo:background-083",
+      "timestamp": "2026-11-15T01:23:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/062"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0135",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0320",
+      "platform": "bluesky",
+      "actor_id": "demo:background-075",
+      "timestamp": "2026-11-15T01:27:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/247"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0320",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0200",
+      "platform": "bluesky",
+      "actor_id": "demo:background-009",
+      "timestamp": "2026-11-15T01:28:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/127"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0200",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0233",
+      "platform": "bluesky",
+      "actor_id": "demo:background-011",
+      "timestamp": "2026-11-15T01:38:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/160"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0233",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0077",
+      "platform": "bluesky",
+      "actor_id": "demo:background-057",
+      "timestamp": "2026-11-15T01:42:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/004"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0077",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0266",
+      "platform": "bluesky",
+      "actor_id": "demo:background-022",
+      "timestamp": "2026-11-15T01:53:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/193"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0266",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0277",
+      "platform": "bluesky",
+      "actor_id": "demo:background-027",
+      "timestamp": "2026-11-15T01:55:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/204"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0277",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0201",
+      "platform": "bluesky",
+      "actor_id": "demo:background-057",
+      "timestamp": "2026-11-15T02:05:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/128"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0201",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0122",
+      "platform": "bluesky",
+      "actor_id": "demo:background-016",
+      "timestamp": "2026-11-15T02:09:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/049"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0122",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0218",
+      "platform": "bluesky",
+      "actor_id": "demo:background-069",
+      "timestamp": "2026-11-15T02:26:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/145"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0218",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0252",
+      "platform": "bluesky",
+      "actor_id": "demo:background-050",
+      "timestamp": "2026-11-15T02:26:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/179"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0252",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0168",
+      "platform": "bluesky",
+      "actor_id": "demo:background-039",
+      "timestamp": "2026-11-15T02:59:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/095"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0168",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0092",
+      "platform": "bluesky",
+      "actor_id": "demo:background-039",
+      "timestamp": "2026-11-15T03:00:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/019"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0092",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0114",
+      "platform": "bluesky",
+      "actor_id": "demo:background-087",
+      "timestamp": "2026-11-15T03:18:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/041"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0114",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0257",
+      "platform": "bluesky",
+      "actor_id": "demo:background-078",
+      "timestamp": "2026-11-15T03:35:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/184"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0257",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0297",
+      "platform": "bluesky",
+      "actor_id": "demo:background-088",
+      "timestamp": "2026-11-15T03:38:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/224"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0297",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0099",
+      "platform": "bluesky",
+      "actor_id": "demo:background-082",
+      "timestamp": "2026-11-15T03:43:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/026"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0099",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0153",
+      "platform": "bluesky",
+      "actor_id": "demo:background-029",
+      "timestamp": "2026-11-15T03:45:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/080"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0153",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0103",
+      "platform": "bluesky",
+      "actor_id": "demo:background-005",
+      "timestamp": "2026-11-15T03:50:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/030"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0103",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0238",
+      "platform": "bluesky",
+      "actor_id": "demo:background-041",
+      "timestamp": "2026-11-15T03:53:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/165"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0238",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0065",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-05",
+      "timestamp": "2026-11-15T04:00:14Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0065",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0070",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-10",
+      "timestamp": "2026-11-15T04:01:19Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0070",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0068",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-08",
+      "timestamp": "2026-11-15T04:01:37Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0068",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0064",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-04",
+      "timestamp": "2026-11-15T04:01:40Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0064",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0301",
+      "platform": "bluesky",
+      "actor_id": "demo:background-083",
+      "timestamp": "2026-11-15T04:02:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/228"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0301",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0071",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-11",
+      "timestamp": "2026-11-15T04:02:11Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0071",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0067",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-07",
+      "timestamp": "2026-11-15T04:03:16Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0067",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0062",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-02",
+      "timestamp": "2026-11-15T04:04:13Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0062",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0063",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-03",
+      "timestamp": "2026-11-15T04:05:06Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0063",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0061",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-01",
+      "timestamp": "2026-11-15T04:05:11Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0061",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0069",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-09",
+      "timestamp": "2026-11-15T04:05:46Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0069",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0066",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-06",
+      "timestamp": "2026-11-15T04:06:43Z",
+      "text": "Useful energy context in this briefing: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0066",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0072",
+      "platform": "bluesky",
+      "actor_id": "demo:coordinated-12",
+      "timestamp": "2026-11-15T04:06:57Z",
+      "text": "Please read this energy update and pass it on: https://demo.example/briefing/energy-6",
+      "urls": [
+        "https://demo.example/briefing/energy-6"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0072",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0275",
+      "platform": "bluesky",
+      "actor_id": "demo:background-083",
+      "timestamp": "2026-11-15T04:12:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/202"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0275",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0318",
+      "platform": "bluesky",
+      "actor_id": "demo:background-062",
+      "timestamp": "2026-11-15T04:16:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/245"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0318",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0198",
+      "platform": "bluesky",
+      "actor_id": "demo:background-008",
+      "timestamp": "2026-11-15T04:23:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/125"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0198",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0306",
+      "platform": "bluesky",
+      "actor_id": "demo:background-030",
+      "timestamp": "2026-11-15T04:35:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/233"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0306",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0213",
+      "platform": "bluesky",
+      "actor_id": "demo:background-019",
+      "timestamp": "2026-11-15T04:39:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/140"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0213",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0163",
+      "platform": "bluesky",
+      "actor_id": "demo:background-026",
+      "timestamp": "2026-11-15T04:46:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/090"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0163",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0294",
+      "platform": "bluesky",
+      "actor_id": "demo:background-081",
+      "timestamp": "2026-11-15T04:49:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/221"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0294",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0147",
+      "platform": "bluesky",
+      "actor_id": "demo:background-063",
+      "timestamp": "2026-11-15T04:52:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/074"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0147",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0130",
+      "platform": "bluesky",
+      "actor_id": "demo:background-050",
+      "timestamp": "2026-11-15T04:56:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/057"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0130",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0278",
+      "platform": "bluesky",
+      "actor_id": "demo:background-032",
+      "timestamp": "2026-11-15T04:56:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/205"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0278",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0282",
+      "platform": "bluesky",
+      "actor_id": "demo:background-019",
+      "timestamp": "2026-11-15T04:56:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/209"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0282",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0116",
+      "platform": "bluesky",
+      "actor_id": "demo:background-090",
+      "timestamp": "2026-11-15T04:57:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/043"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0116",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0221",
+      "platform": "bluesky",
+      "actor_id": "demo:background-065",
+      "timestamp": "2026-11-15T04:58:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/148"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0221",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0292",
+      "platform": "bluesky",
+      "actor_id": "demo:background-076",
+      "timestamp": "2026-11-15T04:58:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/219"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0292",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0138",
+      "platform": "bluesky",
+      "actor_id": "demo:background-012",
+      "timestamp": "2026-11-15T05:05:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/065"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0138",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0106",
+      "platform": "bluesky",
+      "actor_id": "demo:background-033",
+      "timestamp": "2026-11-15T05:21:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/033"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0106",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0087",
+      "platform": "bluesky",
+      "actor_id": "demo:background-058",
+      "timestamp": "2026-11-15T05:28:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/014"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0087",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0225",
+      "platform": "bluesky",
+      "actor_id": "demo:background-033",
+      "timestamp": "2026-11-15T05:30:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/152"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0225",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0155",
+      "platform": "bluesky",
+      "actor_id": "demo:background-050",
+      "timestamp": "2026-11-15T05:37:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/082"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0155",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0197",
+      "platform": "bluesky",
+      "actor_id": "demo:background-068",
+      "timestamp": "2026-11-15T05:47:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/124"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0197",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0081",
+      "platform": "bluesky",
+      "actor_id": "demo:background-058",
+      "timestamp": "2026-11-15T05:53:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/008"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0081",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0176",
+      "platform": "bluesky",
+      "actor_id": "demo:background-070",
+      "timestamp": "2026-11-15T05:55:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/103"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0176",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0148",
+      "platform": "bluesky",
+      "actor_id": "demo:background-045",
+      "timestamp": "2026-11-15T05:57:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/075"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0148",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0317",
+      "platform": "bluesky",
+      "actor_id": "demo:background-049",
+      "timestamp": "2026-11-15T05:59:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/244"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0317",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0180",
+      "platform": "bluesky",
+      "actor_id": "demo:background-033",
+      "timestamp": "2026-11-15T06:05:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/107"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0180",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0265",
+      "platform": "bluesky",
+      "actor_id": "demo:background-061",
+      "timestamp": "2026-11-15T06:05:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/192"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0265",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0312",
+      "platform": "bluesky",
+      "actor_id": "demo:background-032",
+      "timestamp": "2026-11-15T06:22:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/239"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0312",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0295",
+      "platform": "bluesky",
+      "actor_id": "demo:background-043",
+      "timestamp": "2026-11-15T06:26:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/222"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0295",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0272",
+      "platform": "bluesky",
+      "actor_id": "demo:background-040",
+      "timestamp": "2026-11-15T06:38:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/199"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0272",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0284",
+      "platform": "bluesky",
+      "actor_id": "demo:background-012",
+      "timestamp": "2026-11-15T06:39:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/211"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0284",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0243",
+      "platform": "bluesky",
+      "actor_id": "demo:background-015",
+      "timestamp": "2026-11-15T06:43:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/170"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0243",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0102",
+      "platform": "bluesky",
+      "actor_id": "demo:background-056",
+      "timestamp": "2026-11-15T06:46:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/029"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0102",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0228",
+      "platform": "bluesky",
+      "actor_id": "demo:background-014",
+      "timestamp": "2026-11-15T06:55:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/155"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0228",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0327",
+      "platform": "bluesky",
+      "actor_id": "demo:background-018",
+      "timestamp": "2026-11-15T06:55:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/254"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0327",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0307",
+      "platform": "bluesky",
+      "actor_id": "demo:background-064",
+      "timestamp": "2026-11-15T06:58:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/234"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0307",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0128",
+      "platform": "bluesky",
+      "actor_id": "demo:background-034",
+      "timestamp": "2026-11-15T07:15:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/055"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0128",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0321",
+      "platform": "bluesky",
+      "actor_id": "demo:background-089",
+      "timestamp": "2026-11-15T07:15:00Z",
+      "text": "An independent note about local sport from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/local-sport/248"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0321",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0245",
+      "platform": "bluesky",
+      "actor_id": "demo:background-041",
+      "timestamp": "2026-11-15T07:18:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/172"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0245",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0290",
+      "platform": "bluesky",
+      "actor_id": "demo:background-035",
+      "timestamp": "2026-11-15T07:27:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/217"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0290",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0172",
+      "platform": "bluesky",
+      "actor_id": "demo:background-057",
+      "timestamp": "2026-11-15T07:28:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/099"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0172",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0109",
+      "platform": "bluesky",
+      "actor_id": "demo:background-062",
+      "timestamp": "2026-11-15T07:32:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/036"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0109",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0309",
+      "platform": "bluesky",
+      "actor_id": "demo:background-030",
+      "timestamp": "2026-11-15T07:40:00Z",
+      "text": "An independent note about weather from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/weather/236"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0309",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0324",
+      "platform": "bluesky",
+      "actor_id": "demo:background-088",
+      "timestamp": "2026-11-15T07:46:00Z",
+      "text": "An independent note about culture from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/culture/251"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0324",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0226",
+      "platform": "bluesky",
+      "actor_id": "demo:background-080",
+      "timestamp": "2026-11-15T07:54:00Z",
+      "text": "An independent note about science from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/science/153"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0226",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0079",
+      "platform": "bluesky",
+      "actor_id": "demo:background-066",
+      "timestamp": "2026-11-15T07:56:00Z",
+      "text": "An independent note about music from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/music/006"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0079",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    },
+    {
+      "id": "demo-suspicious-0256",
+      "platform": "bluesky",
+      "actor_id": "demo:background-064",
+      "timestamp": "2026-11-15T07:56:00Z",
+      "text": "An independent note about community from a synthetic demonstration account.",
+      "urls": [
+        "https://demo.example/independent/community/183"
+      ],
+      "source_url": "https://demo.invalid/coordinated/demo-suspicious-0256",
+      "demo": {
+        "synthetic": true,
+        "scenario": "coordinated"
+      }
+    }
+  ]
+}
