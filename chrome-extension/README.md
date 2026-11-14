@@ -31,6 +31,8 @@ The extension sends this body (with extraction features attached to each event, 
 
 `permutation_analysis` repeats the actor-cluster discovery procedure in all 199 simulated assignments: it finds connected components using repeated co-activity edges and selects the component with the largest sum of edge weights. This max-statistic comparison accounts for selecting the strongest cluster and avoids interpreting thousands of uncorrected pairwise tests. Actor IDs are shuffled only among identified posts with the same platform, dominant non-stopword topic token, and fixed UTC time bucket; each post's content, URL, timestamp, and group membership stays fixed. The upper-tail plus-one p-value uses simulated maximum cluster scores, giving 0.005 resolution. This is enough to demonstrate the null-model comparison and flag broad departures, but not fine-grained ranking or strong inference. The heuristic suspicion score (summed graph edge weights) is a separate, uncalibrated score, not a probability. The report carries the random seed, null distribution summaries, and shuffleable-strata counts. The p-value is null if no observed cluster exists, no strata can be shuffled, or the maximum score does not vary across permutations.
 
+The Python engine consumes `actor_graph` to discover communities from repeated weighted edges and adds their sizes, repeated event counts, participating platforms, examples, and explanations to its report.
+
 The detector should return a JSON report with `status`, `nodes`, `edges`, `clusters`, `evidence`, `statistics`, and `limitations`. Extraction is intentionally conservative and page structure varies across platforms, so users must review the payload before submitting it.
 
 ## Feature tests
