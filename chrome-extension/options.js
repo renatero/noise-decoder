@@ -1,4 +1,4 @@
-const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
+import { getApiEndpoint } from "./settings.js";
 const DEFAULT_WINDOW_MINUTES = 60;
 const DEFAULT_MINIMUM_ACCOUNTS = 2;
 const input = document.querySelector("#endpoint");
@@ -6,8 +6,8 @@ const windowMinutesInput = document.querySelector("#window-minutes");
 const minimumAccountsInput = document.querySelector("#minimum-accounts");
 const saved = document.querySelector("#saved");
 
-const { endpoint, windowMinutes, minimumAccounts } = await chrome.storage.sync.get({
-  endpoint: DEFAULT_ENDPOINT,
+const endpoint = await getApiEndpoint();
+const { windowMinutes, minimumAccounts } = await chrome.storage.sync.get({
   windowMinutes: DEFAULT_WINDOW_MINUTES,
   minimumAccounts: DEFAULT_MINIMUM_ACCOUNTS
 });
@@ -34,7 +34,7 @@ document.querySelector("#save").addEventListener("click", async () => {
       const granted = await chrome.permissions.request({ origins: [origin] });
       if (!granted) throw new Error("Permission to contact that API was not granted.");
     }
-    await chrome.storage.sync.set({ endpoint: url.href, windowMinutes, minimumAccounts });
+    await chrome.storage.sync.set({ endpoint: url.href, endpointDefaultMigrationVersion: 1, windowMinutes, minimumAccounts });
     saved.textContent = "Saved.";
   } catch (error) {
     saved.textContent = `Invalid endpoint: ${error.message}`;

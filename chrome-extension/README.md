@@ -9,7 +9,7 @@ This is a Manifest V3 extension for user-initiated collection of **visible publi
 3. Select **Load unpacked** and choose this `chrome-extension` directory.
 4. Open a supported public feed, use the extension, review its payload, and select **Send for analysis**.
 
-The default endpoint is `http://localhost:8000/analyze`. Start the local FastAPI service from the repository root with `python -m src.api.server`; Uvicorn listens on loopback port 8000 and FastAPI CORS middleware supports the extension's preflight. Interactive API docs are at `http://localhost:8000/docs`. Change the endpoint through **Configure API endpoint**. The extension asks for permission only when you save a non-local API origin. If the API is unavailable or a request fails, the extension shows a clearly marked mock response.
+The default endpoint is the deployed API at `http://2.24.173.100/analyze`; existing installs migrate from the previous localhost default on first use. To run a local API instead, set the endpoint through **Configure API endpoint** (local address: `http://localhost:8000/analyze`). Interactive docs for the deployed service are at `http://2.24.173.100/docs`; for local development they are at `http://localhost:8000/docs`. If the API is unavailable or a request fails, the extension shows a clearly marked mock response.
 
 ## API handoff
 
@@ -37,8 +37,8 @@ The detector should return a JSON report with `status`, `nodes`, `edges`, `clust
 
 ## Feature tests
 
-Run the feature extraction unit tests with Node.js:
+Run the extension unit tests with Node.js:
 
 ```sh
-node chrome-extension/tests/features.test.mjs
+node --test chrome-extension/tests/*.test.mjs
 ```
