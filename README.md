@@ -35,3 +35,21 @@ Report the cluster's `heuristic_suspicion_score` (the summed edge weights) separ
 ### Connected actor communities
 
 The Python engine consumes the extension's evidence-weighted `actor_graph` and uses NetworkX greedy modularity to partition connected networks formed by repeated edges. It reports community size, repeated content-group and burst counts, participating platforms, weighted support, representative post excerpts, and a generated explanation. Example wording uses measurable language such as “7 accounts shared 4 distinct canonical URLs across 3 content groups”; it does not label links unrelated or claim coordination. The max-statistic permutation p-value and the heuristic suspicion score remain separate fields.
+
+### Run the engine with the sample payload
+
+Edit [`payload.json`](payload.json) in the repository root with the request body you want to analyze. Install dependencies once with `python -m pip install -r requirements.txt`, then run:
+
+```sh
+python - <<'PY'
+import asyncio
+import json
+from src.engine.analyzer import analyze
+
+with open("payload.json", encoding="utf-8") as payload_file:
+    payload = json.load(payload_file)
+
+report = asyncio.run(analyze(payload))
+print(json.dumps(report, indent=2))
+PY
+```
