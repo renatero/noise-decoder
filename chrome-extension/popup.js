@@ -1,7 +1,6 @@
 import { extractVisibleEvents } from "./extractor.js";
 import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "./features.mjs";
-
-const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
+import { getApiEndpoint } from "./settings.js";
 const extractionStatus = document.querySelector("#extraction-status");
 const review = document.querySelector("#review");
 const eventCount = document.querySelector("#event-count");
@@ -93,7 +92,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
     const visibleEvents = result.result.events;
     visiblePostCount = visibleEvents.length;
     relatedPostCount = 0;
-    const { endpoint = DEFAULT_ENDPOINT } = await chrome.storage.sync.get({ endpoint: DEFAULT_ENDPOINT });
+    const endpoint = await getApiEndpoint();
     const discoveryUrl = new URL(endpoint);
     discoveryUrl.pathname = discoveryUrl.pathname.replace(/\/analyze\/?$/, "/discover");
     let discoveryLimitations = [];
@@ -163,7 +162,7 @@ document.querySelector("#clear").addEventListener("click", () => {
 });
 
 document.querySelector("#analyze").addEventListener("click", async () => {
-  const { endpoint = DEFAULT_ENDPOINT } = await chrome.storage.sync.get({ endpoint: DEFAULT_ENDPOINT });
+  const endpoint = await getApiEndpoint();
   analysis.hidden = false;
   analysisMode.textContent = "Sending events to the configured detector…";
   try {
