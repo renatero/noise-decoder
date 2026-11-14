@@ -1,4 +1,4 @@
-const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
+const DEFAULT_ENDPOINT = "http://127.0.0.1:8000/analyze";
 const input = document.querySelector("#endpoint");
 const saved = document.querySelector("#saved");
 

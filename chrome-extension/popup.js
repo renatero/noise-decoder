@@ -1,7 +1,9 @@
 import { extractVisibleEvents } from "./extractor.js";
+import { sourceForUrl } from "./sources.js";
 
-const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
+const DEFAULT_ENDPOINT = "http://127.0.0.1:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
+const inspectionStatus = document.querySelector("#inspection-status");
 const review = document.querySelector("#review");
 const eventCount = document.querySelector("#event-count");
 const payload = document.querySelector("#payload");
@@ -38,6 +40,16 @@ function renderCollected() {
   payload.textContent = format({ events: collected });
 }
 
+async function loadPendingInspection() {
+  const { pendingInspection } = await chrome.storage.local.get("pendingInspection");
+  if (!pendingInspection?.event) return;
+  collected = [pendingInspection.event];
+  const source = pendingInspection.source?.source_name || pendingInspection.event.platform;
+  inspectionStatus.textContent = `Right-click ${pendingInspection.kind} inspection loaded from ${source}. Review it, then send it for analysis.`;
+  extractionStatus.textContent = "A context-menu inspection is ready.";
+  renderCollected();
+}
+
 document.querySelector("#extract").addEventListener("click", async () => {
   extractionStatus.textContent = "Extracting visible posts…";
   analysis.hidden = true;
@@ -46,6 +58,10 @@ document.querySelector("#extract").addEventListener("click", async () => {
     if (!tab.id || !tab.url?.startsWith("http")) throw new Error("Open a public website in the active tab first.");
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
     collected = result.result.events;
+    const source = sourceForUrl(tab.url);
+    inspectionStatus.textContent = source?.source_name
+      ? `Recognized source: ${source.source_name}.`
+      : "";
     extractionStatus.textContent = collected.length
       ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.${result.result.limitations?.length ? ` ${result.result.limitations[0]}` : ""}`
       : "No supported visible posts were found on this page.";
@@ -60,6 +76,8 @@ document.querySelector("#extract").addEventListener("click", async () => {
 document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
   analysis.hidden = true;
+  inspectionStatus.textContent = "";
+  chrome.storage.local.remove("pendingInspection");
   extractionStatus.textContent = "Collected events cleared.";
   renderCollected();
 });
@@ -83,3 +101,5 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     analysisResult.textContent = format(mockAnalysis(collected, error.message));
   }
 });
+
+loadPendingInspection();
