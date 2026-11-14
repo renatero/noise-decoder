@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Noise Decoder settings</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <h1>Noise Decoder settings</h1>
+      <label for="endpoint">Detector API endpoint</label>
+      <input id="endpoint" type="url" placeholder="http://localhost:8000/analyze">
+      <p class="status">When the endpoint is unreachable, the extension displays a clearly labelled mock report.</p>
+      <button id="save" class="primary">Save</button>
+      <p id="saved" class="status" aria-live="polite"></p>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>
