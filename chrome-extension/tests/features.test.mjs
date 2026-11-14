@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildClusters, canonicalizeUrl, detectTimeBursts, enrichEvents } from "../features.mjs";
+import { buildClusters, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity } from "../features.mjs";
 
 function event(postId, text, links = []) {
   return { post_id: postId, actor_id: `actor:${postId}`, platform: "demo", timestamp: null, text, url: `https://social.example/posts/${postId}`, links };
@@ -118,4 +118,68 @@ test("minimum account setting suppresses bursts below the configured threshold",
 
   assert.equal(result.config.minimum_accounts, 3);
   assert.equal(result.bursts.length, 0);
+});
+
+test("co-activity marks a pair repeated across distinct content groups", () => {
+  const events = [
+    { ...event("a1", "First message"), actor_id: "account:a" },
+    { ...event("b1", "Second message"), actor_id: "account:b" },
+    { ...event("a2", "Third message"), actor_id: "account:a" },
+    { ...event("b2", "Fourth message"), actor_id: "account:b" }
+  ];
+  const clusters = [
+    { id: "group-one", post_ids: ["a1", "b1"], evidence: [] },
+    { id: "group-two", post_ids: ["a2", "b2"], evidence: [] }
+  ];
+
+  const result = recordCoActivity(events, clusters, { bursts: [] });
+
+  assert.equal(result.statistics.account_pairs_seen, 1);
+  assert.equal(result.statistics.repeated_pairs_found, 1);
+  assert.deepEqual(result.repeated_pairs[0].account_ids, ["account:a", "account:b"]);
+  assert.equal(result.repeated_pairs[0].content_group_count, 2);
+  assert.deepEqual(result.repeated_pairs[0].content_groups.map((group) => group.id), ["group-one", "group-two"]);
+});
+
+test("co-activity marks a pair repeated across separate publication bursts", () => {
+  const events = [
+    { ...event("a1", "First message"), actor_id: "account:a" },
+    { ...event("b1", "Second message"), actor_id: "account:b" },
+    { ...event("a2", "Third message"), actor_id: "account:a" },
+    { ...event("b2", "Fourth message"), actor_id: "account:b" }
+  ];
+  const clusters = [{ id: "group-one", post_ids: ["a1", "b1", "a2", "b2"], evidence: [] }];
+  const timeAnalysis = {
+    bursts: [
+      { id: "burst-one", cluster_id: "group-one", post_ids: ["a1", "b1"], evidence: [] },
+      { id: "burst-two", cluster_id: "group-one", post_ids: ["a2", "b2"], evidence: [] }
+    ]
+  };
+
+  const result = recordCoActivity(events, clusters, timeAnalysis);
+  const pair = result.repeated_pairs[0];
+
+  assert.equal(result.repeated_pairs.length, 1);
+  assert.equal(pair.content_group_count, 1);
+  assert.equal(pair.publication_burst_count, 2);
+  assert.deepEqual(pair.publication_bursts.map((burst) => burst.id), ["burst-one", "burst-two"]);
+});
+
+test("one content group and a burst derived from it do not count as repeated co-activity", () => {
+  const events = [
+    { ...event("a1", "First message"), actor_id: "account:a" },
+    { ...event("b1", "Second message"), actor_id: "account:b" }
+  ];
+  const clusters = [{ id: "group-one", post_ids: ["a1", "b1"], evidence: [] }];
+  const timeAnalysis = {
+    bursts: [{ id: "burst-one", cluster_id: "group-one", post_ids: ["a1", "b1"], evidence: [] }]
+  };
+
+  const result = recordCoActivity(events, clusters, timeAnalysis);
+
+  assert.equal(result.account_pairs.length, 1);
+  assert.equal(result.account_pairs[0].content_group_count, 1);
+  assert.equal(result.account_pairs[0].publication_burst_count, 1);
+  assert.equal(result.account_pairs[0].repeated, false);
+  assert.deepEqual(result.repeated_pairs, []);
 });
