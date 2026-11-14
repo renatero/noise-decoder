@@ -1,6 +1,6 @@
 # Noise Decoder Chrome extension
 
-This is a Manifest V3 extension for user-initiated collection of **visible public posts** from the active tab. It does not run in the background or collect page data until the user selects **Extract visible posts**.
+This is a Manifest V3 extension for user-initiated collection of **visible public posts** from the active tab, followed by a bounded search of public Bluesky posts for related content. It does not run in the background or collect page data until the user selects **Extract visible posts**. The search is disclosed in the popup and can be reviewed before sending the resulting payload for analysis.
 
 ## Load locally
 
@@ -9,7 +9,7 @@ This is a Manifest V3 extension for user-initiated collection of **visible publi
 3. Select **Load unpacked** and choose this `chrome-extension` directory.
 4. Open a supported public feed, use the extension, review its payload, and select **Send for analysis**.
 
-The default endpoint is `http://localhost:8000/analyze`. Change it through **Configure API endpoint**. The extension asks for permission only when you save a non-local API origin. Until the API is available, failed requests show a clearly marked mock response.
+The default endpoint is `http://localhost:8000/analyze`. Start the local FastAPI service from the repository root with `python -m src.api.server`; Uvicorn listens on loopback port 8000 and FastAPI CORS middleware supports the extension's preflight. Interactive API docs are at `http://localhost:8000/docs`. Change the endpoint through **Configure API endpoint**. The extension asks for permission only when you save a non-local API origin. If the API is unavailable or a request fails, the extension shows a clearly marked mock response.
 
 ## API handoff
 

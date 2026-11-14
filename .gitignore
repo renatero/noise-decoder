@@ -221,3 +221,6 @@ __marimo__/
 
 # Local analysis payload (may contain user data)
 /payload.json
+
+# Local project progress article
+/progress-overview.html

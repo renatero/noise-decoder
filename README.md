@@ -53,3 +53,13 @@ report = asyncio.run(analyze(payload))
 print(json.dumps(report, indent=2))
 PY
 ```
+
+### Run the local FastAPI service
+
+In another terminal, start the loopback-only endpoint used by the extension:
+
+```sh
+python -m src.api.server
+```
+
+Check readiness at `http://localhost:8000/health`, inspect the OpenAPI docs at `http://localhost:8000/docs`, and send requests to `http://localhost:8000/analyze`. The extension's **Send for analysis** button uses that endpoint. See [`src/api/README.md`](src/api/README.md) for request details.

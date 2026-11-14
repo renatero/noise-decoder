@@ -1,5 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
-import { buildClusters, buildWeightedActorGraph, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "./features.mjs";
+import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "./features.mjs";
 
 const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
@@ -11,6 +11,8 @@ const analysisMode = document.querySelector("#analysis-mode");
 const analysisResult = document.querySelector("#analysis-result");
 
 let collected = [];
+let visiblePostCount = 0;
+let blueskyPostCount = 0;
 let clusters = [];
 let timeWindowAnalysis = {
   config: { window_minutes: 60, minimum_accounts: 2 },
@@ -82,13 +84,46 @@ function renderCollected() {
 }
 
 document.querySelector("#extract").addEventListener("click", async () => {
-  extractionStatus.textContent = "Extracting visible posts…";
+  extractionStatus.textContent = "Extracting visible posts and searching public Bluesky posts…";
   analysis.hidden = true;
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab.id || !tab.url?.startsWith("http")) throw new Error("Open a public website in the active tab first.");
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
-    collected = enrichEvents(result.result.events);
+    const visibleEvents = result.result.events;
+    visiblePostCount = visibleEvents.length;
+    blueskyPostCount = 0;
+    const { endpoint = DEFAULT_ENDPOINT } = await chrome.storage.sync.get({ endpoint: DEFAULT_ENDPOINT });
+    const discoveryUrl = new URL(endpoint);
+    discoveryUrl.pathname = discoveryUrl.pathname.replace(/\/analyze\/?$/, "/discover");
+    let discoveryLimitations = [];
+    try {
+      const discoveryResponse = await fetch(discoveryUrl.href, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ events: visibleEvents })
+      });
+      if (!discoveryResponse.ok) throw new Error(`Public search returned ${discoveryResponse.status}`);
+      const discovery = await discoveryResponse.json();
+      const seedUrls = new Set(visibleEvents.map((event) => canonicalizeUrl(event.url)).filter(Boolean));
+      const candidates = (Array.isArray(discovery.events) ? discovery.events : [])
+        .filter((event) => !seedUrls.has(canonicalizeUrl(event.url)));
+      const expanded = enrichEvents([...visibleEvents, ...candidates]);
+      const seedIds = new Set(visibleEvents.map((event) => event.post_id));
+      const relevantIds = new Set(seedIds);
+      for (const cluster of buildClusters(expanded)) {
+        if (cluster.post_ids.some((postId) => seedIds.has(postId))) {
+          cluster.post_ids.forEach((postId) => relevantIds.add(postId));
+        }
+      }
+      const seedIdSet = new Set(visibleEvents.map((event) => event.post_id));
+      blueskyPostCount = [...relevantIds].filter((postId) => !seedIdSet.has(postId)).length;
+      collected = enrichEvents(expanded.filter((event) => relevantIds.has(event.post_id)));
+      discoveryLimitations = discovery.limitations || [];
+    } catch (error) {
+      collected = enrichEvents(visibleEvents);
+      discoveryLimitations = [`Bluesky public search was unavailable: ${error.message}`];
+    }
     clusters = buildClusters(collected);
     const { windowMinutes = 60, minimumAccounts = 2 } = await chrome.storage.sync.get({ windowMinutes: 60, minimumAccounts: 2 });
     timeWindowAnalysis = detectTimeBursts(collected, clusters, { windowMinutes, minimumAccounts });
@@ -96,11 +131,13 @@ document.querySelector("#extract").addEventListener("click", async () => {
     actorGraph = buildWeightedActorGraph(collected, clusters, timeWindowAnalysis, coActivity);
     permutationAnalysis = runPermutationNullModel(collected, clusters, timeWindowAnalysis, coActivity, actorGraph);
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared the strongest actor cluster against 199 permutations; p-value ${permutationAnalysis.permutation_p_value ?? "unavailable"}. Review the evidence before sending.`
+      ? `Collected ${visiblePostCount} visible posts from ${result.result.platform} and found ${blueskyPostCount} related public Bluesky posts. Found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared the strongest actor cluster against 199 permutations; p-value ${permutationAnalysis.permutation_p_value ?? "unavailable"}. Review the evidence before sending. ${discoveryLimitations.join(" ")}`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
     collected = [];
+    visiblePostCount = 0;
+    blueskyPostCount = 0;
     clusters = [];
     timeWindowAnalysis = detectTimeBursts([], [], {});
     coActivity = recordCoActivity([], [], timeWindowAnalysis);
@@ -113,6 +150,8 @@ document.querySelector("#extract").addEventListener("click", async () => {
 
 document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
+  visiblePostCount = 0;
+  blueskyPostCount = 0;
   clusters = [];
   timeWindowAnalysis = detectTimeBursts([], [], {});
   coActivity = recordCoActivity([], [], timeWindowAnalysis);
