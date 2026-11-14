@@ -13,10 +13,10 @@ The default endpoint is `http://localhost:8000/analyze`. Change it through **Con
 
 ## API handoff
 
-The extension sends this body (with extraction features attached to each event, related posts grouped into clusters, and time-window results):
+The extension sends this body (with extraction features attached to each event, related posts grouped into clusters, and coordination signals):
 
 ```json
-{ "events": [{ "post_id": "…", "actor_id": "…", "text": "…", "url": "…", "timestamp": "…", "platform": "…" }], "clusters": [{ "id": "group-…", "post_ids": ["…", "…"], "evidence": [] }], "time_window_analysis": { "config": { "window_minutes": 60, "minimum_accounts": 2 }, "bursts": [], "statistics": {} } }
+{ "events": [{ "post_id": "…", "actor_id": "…", "text": "…", "url": "…", "timestamp": "…", "platform": "…" }], "clusters": [{ "id": "group-…", "post_ids": ["…", "…"], "evidence": [] }], "time_window_analysis": { "config": { "window_minutes": 60, "minimum_accounts": 2 }, "bursts": [], "statistics": {} }, "co_activity": { "account_pairs": [], "repeated_pairs": [], "statistics": {} } }
 ```
 
 `post_id` is the platform post ID where available (otherwise a stable page-derived ID), and `url` is the permalink for the post where one can be found. Events retain the visible `text` and also include `normalized_text`, Unicode-aware `tokens`, normalized outgoing `links`, and `features`. URL normalization removes fragments and common analytics parameters (such as `utm_*`, `fbclid`, and `gclid`), sorts remaining query parameters, and canonicalizes the host and trailing slash. `features.shared_urls` lists links found in multiple extracted posts. `features.near_duplicates` lists matching post IDs and the reason for each match: `canonical_url` means an exact normalized outgoing URL match; `token_similarity` means token-set Jaccard similarity of at least 0.8, with at least three unique tokens on each side. An inverted index narrows comparisons to pairs that share a token or URL.
@@ -24,6 +24,8 @@ The extension sends this body (with extraction features attached to each event, 
 `clusters` groups connected posts when any pair shares a canonical outgoing URL or meets the token-similarity threshold. Each cluster includes its member post IDs and pairwise evidence. These groups are candidate relationships for later analysis; shared links or similar text alone do not establish coordination.
 
 `time_window_analysis` evaluates each related-post cluster using rolling windows. The settings page lets the user set the window duration (1–10,080 minutes; default 60) and minimum distinct accounts (2–100; default 2). A burst includes its time range, counts, post/account IDs, and within-window relationship evidence. Invalid timestamps are counted and excluded; posts without a usable account ID do not count toward the distinct-account threshold. The calculation reports observed patterns and does not infer intent.
+
+`co_activity` records account pairs appearing together in content groups and publication bursts. Each pair contains its context IDs, per-account post IDs, and direct relationship evidence when available. `repeated_pairs` includes pairs seen in at least two distinct content groups or at least two distinct bursts; appearing in a group and a burst derived from that same group does not alone count as repeated. Pairs with evidence confined to one content group are labeled `limited`, including repeated bursts within that group, since a shared breaking-news event or another common cause may explain the activity. Only recurrence across distinct content groups is labeled `recurring_pattern`; no result establishes coordination.
 
 The detector should return a JSON report with `status`, `nodes`, `edges`, `clusters`, `evidence`, `statistics`, and `limitations`. Extraction is intentionally conservative and page structure varies across platforms, so users must review the payload before submitting it.
 

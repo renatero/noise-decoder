@@ -285,3 +285,117 @@ function hasAccountId(value) {
   const actorId = typeof value === "string" ? value.trim() : "";
   return Boolean(actorId) && actorId.toLowerCase() !== "unknown" && !/:unknown$/i.test(actorId);
 }
+
+/** Record account pairs that recur in separate related-content groups or burst windows. */
+export function recordCoActivity(events, clusters, timeWindowAnalysis) {
+  const eventsById = new Map(events.map((event) => [event.post_id, event]));
+  const pairRecords = new Map();
+
+  const getPair = (firstActor, secondActor) => {
+    const accountIds = [firstActor, secondActor].sort();
+    const key = JSON.stringify(accountIds);
+    if (!pairRecords.has(key)) {
+      pairRecords.set(key, {
+        account_ids: accountIds,
+        content_groups: new Map(),
+        publication_bursts: new Map()
+      });
+    }
+    return pairRecords.get(key);
+  };
+
+  const addContextPairs = (membersByActor, type, context) => {
+    const actors = [...membersByActor.keys()].filter(hasAccountId).sort();
+    for (let left = 0; left < actors.length; left += 1) {
+      for (let right = left + 1; right < actors.length; right += 1) {
+        const firstActor = actors[left];
+        const secondActor = actors[right];
+        const record = getPair(firstActor, secondActor);
+        const support = {
+          ...context,
+          post_ids_by_account: {
+            [firstActor]: membersByActor.get(firstActor),
+            [secondActor]: membersByActor.get(secondActor)
+          },
+          evidence: (context.evidence || []).filter((edge) => {
+            const source = eventsById.get(edge.source_post_id);
+            const target = eventsById.get(edge.target_post_id);
+            return source && target && new Set([source.actor_id, target.actor_id]).size === 2 &&
+              [source.actor_id, target.actor_id].includes(firstActor) &&
+              [source.actor_id, target.actor_id].includes(secondActor);
+          })
+        };
+        if (type === "content_group") record.content_groups.set(context.id, support);
+        else record.publication_bursts.set(context.id, support);
+      }
+    }
+  };
+
+  for (const cluster of clusters) {
+    const membersByActor = new Map();
+    for (const postId of cluster.post_ids) {
+      const event = eventsById.get(postId);
+      if (!event || !hasAccountId(event.actor_id)) continue;
+      if (!membersByActor.has(event.actor_id)) membersByActor.set(event.actor_id, []);
+      membersByActor.get(event.actor_id).push(postId);
+    }
+    const memberPostIds = new Set(cluster.post_ids);
+    const pairEvidence = cluster.evidence.filter((edge) => {
+      const source = eventsById.get(edge.source_post_id);
+      const target = eventsById.get(edge.target_post_id);
+      return source && target && source.actor_id !== target.actor_id &&
+        memberPostIds.has(edge.source_post_id) && memberPostIds.has(edge.target_post_id);
+    });
+    addContextPairs(membersByActor, "content_group", {
+      id: cluster.id,
+      cluster_id: cluster.id,
+      evidence: pairEvidence
+    });
+  }
+
+  for (const burst of timeWindowAnalysis?.bursts || []) {
+    const membersByActor = new Map();
+    for (const postId of burst.post_ids) {
+      const event = eventsById.get(postId);
+      if (!event || !hasAccountId(event.actor_id)) continue;
+      if (!membersByActor.has(event.actor_id)) membersByActor.set(event.actor_id, []);
+      membersByActor.get(event.actor_id).push(postId);
+    }
+    addContextPairs(membersByActor, "publication_burst", {
+      id: burst.id,
+      cluster_id: burst.cluster_id,
+      window_start: burst.window_start,
+      window_end: burst.window_end,
+      evidence: burst.evidence
+    });
+  }
+
+  const records = [...pairRecords.values()].map((record) => {
+    const contentGroups = [...record.content_groups.values()];
+    const publicationBursts = [...record.publication_bursts.values()];
+    return {
+      account_ids: record.account_ids,
+      content_group_count: contentGroups.length,
+      publication_burst_count: publicationBursts.length,
+      repeated: contentGroups.length >= 2 || publicationBursts.length >= 2,
+      evidence_assessment: contentGroups.length >= 2 ? "recurring_pattern" : "limited",
+      interpretation: contentGroups.length >= 2
+        ? "This pair recurs across distinct content groups; the pattern alone does not establish coordination."
+        : publicationBursts.length >= 2
+          ? "This pair recurs across bursts within one content group; a shared breaking-news event or other common cause may explain it."
+          : "This pair appears in one content group or burst; a simultaneous response to breaking news may explain it.",
+      content_groups: contentGroups,
+      publication_bursts: publicationBursts
+    };
+  }).sort((left, right) => left.account_ids.join("\u0000").localeCompare(right.account_ids.join("\u0000")));
+  const repeatedPairs = records.filter((record) => record.repeated);
+
+  return {
+    account_pairs: records,
+    repeated_pairs: repeatedPairs,
+    statistics: {
+      account_pairs_seen: records.length,
+      repeated_pairs_found: repeatedPairs.length
+    }
+  };
+}

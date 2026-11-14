@@ -162,6 +162,8 @@ test("co-activity marks a pair repeated across separate publication bursts", () 
   assert.equal(result.repeated_pairs.length, 1);
   assert.equal(pair.content_group_count, 1);
   assert.equal(pair.publication_burst_count, 2);
+  assert.equal(pair.evidence_assessment, "limited");
+  assert.match(pair.interpretation, /breaking-news event or other common cause/);
   assert.deepEqual(pair.publication_bursts.map((burst) => burst.id), ["burst-one", "burst-two"]);
 });
 
@@ -181,5 +183,7 @@ test("one content group and a burst derived from it do not count as repeated co-
   assert.equal(result.account_pairs[0].content_group_count, 1);
   assert.equal(result.account_pairs[0].publication_burst_count, 1);
   assert.equal(result.account_pairs[0].repeated, false);
+  assert.equal(result.account_pairs[0].evidence_assessment, "limited");
+  assert.match(result.account_pairs[0].interpretation, /simultaneous response to breaking news/);
   assert.deepEqual(result.repeated_pairs, []);
 });

@@ -15,3 +15,9 @@ The first time-based signal looks for accounts publishing posts that are already
 6. Describe the result as an observed timing pattern, not an attribution of intent. Account IDs and timestamps depend on the fields exposed by each platform; display-name-based actor IDs may not uniquely identify accounts.
 
 The extension settings page exposes both the window duration (1–10,080 minutes) and minimum distinct accounts (2–100). Invalid or missing publication timestamps are excluded and counted; posts without an identifiable account ID can contribute to the post count but not the distinct-account threshold.
+
+### Repeated co-activity
+
+After finding candidate content groups and time-window bursts, enumerate distinct account pairs in each context. For every pair, record the content-group IDs and publication-burst IDs where both accounts appear, the posts contributed by each account, and direct pairwise relationship evidence when available. Mark the pair as repeated when it appears in at least two distinct content groups or at least two distinct publication bursts. A single group and a burst derived from that same group do not alone count as repetition.
+
+Keep both the full account-pair records and the repeated-pair subset in the output. This makes the recurrence count inspectable and preserves one-off co-activity for context. A single group or burst is labeled limited. Repeated bursts within one content group remain limited because a shared breaking-news event or another common cause may explain them; only recurrence across distinct content groups is labeled a recurring pattern. The system does not detect breaking news directly, so none of these signals proves coordination. Actor IDs may be display-name-derived, and bursts are based on visible posts only.

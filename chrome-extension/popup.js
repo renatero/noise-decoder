@@ -1,5 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
-import { buildClusters, detectTimeBursts, enrichEvents } from "./features.mjs";
+import { buildClusters, detectTimeBursts, enrichEvents, recordCoActivity } from "./features.mjs";
 
 const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
@@ -17,30 +17,35 @@ let timeWindowAnalysis = {
   bursts: [],
   statistics: { events_with_valid_timestamps: 0, excluded_invalid_timestamps: 0, posts_without_account_id: 0 }
 };
+let coActivity = { account_pairs: [], repeated_pairs: [], statistics: { account_pairs_seen: 0, repeated_pairs_found: 0 } };
 
 function format(value) {
   return JSON.stringify(value, null, 2);
 }
 
-function mockAnalysis(events, clusters, timeAnalysis, reason) {
+function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, reason) {
   return {
     status: events.length < 2 ? "insufficient_data" : "inconclusive",
     nodes: [...new Map(events.map((event) => [event.actor_id, { id: event.actor_id, platform: event.platform }])).values()],
     edges: [],
     clusters,
     time_window_analysis: timeAnalysis,
+    co_activity: coActivityAnalysis,
     evidence: [],
     statistics: {
       events_analyzed: events.length,
       actors_analyzed: new Set(events.map((event) => event.actor_id)).size,
       groups_found: clusters.length,
       time_bursts_found: timeAnalysis.bursts.length,
+      repeated_co_activity_pairs: coActivityAnalysis.statistics.repeated_pairs_found,
       excluded_invalid_timestamps: timeAnalysis.statistics.excluded_invalid_timestamps
     },
     limitations: [
       "Mock response: the detector API is not available yet.",
       "Groups are based only on shared canonical URLs or similar text; they are not evidence of coordination by themselves.",
       "Time-window bursts describe observed timing and account patterns; they do not establish coordination or intent.",
+      "Repeated co-activity is an observed recurrence across content groups or publication bursts; it does not establish coordination or intent.",
+      "A single simultaneous response may reflect breaking news or another shared cause and is treated as limited evidence.",
       "Account identifiers may be derived from visible display names and may not uniquely identify accounts.",
       "Visible-page extraction is incomplete and should be reviewed before drawing conclusions.",
       reason
@@ -51,7 +56,7 @@ function mockAnalysis(events, clusters, timeAnalysis, reason) {
 function renderCollected() {
   review.hidden = collected.length === 0;
   eventCount.textContent = `${collected.length} event${collected.length === 1 ? "" : "s"}`;
-  payload.textContent = format({ events: collected, clusters, time_window_analysis: timeWindowAnalysis });
+  payload.textContent = format({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity });
 }
 
 document.querySelector("#extract").addEventListener("click", async () => {
@@ -65,14 +70,16 @@ document.querySelector("#extract").addEventListener("click", async () => {
     clusters = buildClusters(collected);
     const { windowMinutes = 60, minimumAccounts = 2 } = await chrome.storage.sync.get({ windowMinutes: 60, minimumAccounts: 2 });
     timeWindowAnalysis = detectTimeBursts(collected, clusters, { windowMinutes, minimumAccounts });
+    coActivity = recordCoActivity(collected, clusters, timeWindowAnalysis);
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"} and ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}. Review the payload before sending.`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Review the payload before sending.`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
     collected = [];
     clusters = [];
     timeWindowAnalysis = detectTimeBursts([], [], {});
+    coActivity = recordCoActivity([], [], timeWindowAnalysis);
     renderCollected();
     extractionStatus.textContent = `Could not extract posts: ${error.message}`;
   }
@@ -82,6 +89,7 @@ document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
   clusters = [];
   timeWindowAnalysis = detectTimeBursts([], [], {});
+  coActivity = recordCoActivity([], [], timeWindowAnalysis);
   analysis.hidden = true;
   extractionStatus.textContent = "Collected events cleared.";
   renderCollected();
@@ -95,7 +103,7 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ events: collected, clusters, time_window_analysis: timeWindowAnalysis })
+      body: JSON.stringify({ events: collected, clusters, time_window_analysis: timeWindowAnalysis, co_activity: coActivity })
     });
     if (!response.ok) throw new Error(`API returned ${response.status}`);
     const report = await response.json();
@@ -103,6 +111,6 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     analysisResult.textContent = format(report);
   } catch (error) {
     analysisMode.textContent = "Showing a mock detector response — the API could not be reached.";
-    analysisResult.textContent = format(mockAnalysis(collected, clusters, timeWindowAnalysis, error.message));
+    analysisResult.textContent = format(mockAnalysis(collected, clusters, timeWindowAnalysis, coActivity, error.message));
   }
 });
