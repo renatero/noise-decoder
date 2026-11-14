@@ -1,5 +1,5 @@
 import { extractVisibleEvents } from "./extractor.js";
-import { enrichEvents } from "./features.mjs";
+import { buildClusters, enrichEvents } from "./features.mjs";
 
 const DEFAULT_ENDPOINT = "http://localhost:8000/analyze";
 const extractionStatus = document.querySelector("#extraction-status");
@@ -11,21 +11,27 @@ const analysisMode = document.querySelector("#analysis-mode");
 const analysisResult = document.querySelector("#analysis-result");
 
 let collected = [];
+let clusters = [];
 
 function format(value) {
   return JSON.stringify(value, null, 2);
 }
 
-function mockAnalysis(events, reason) {
+function mockAnalysis(events, clusters, reason) {
   return {
     status: events.length < 2 ? "insufficient_data" : "inconclusive",
     nodes: [...new Map(events.map((event) => [event.actor_id, { id: event.actor_id, platform: event.platform }])).values()],
     edges: [],
-    clusters: [],
+    clusters,
     evidence: [],
-    statistics: { events_analyzed: events.length, actors_analyzed: new Set(events.map((event) => event.actor_id)).size },
+    statistics: {
+      events_analyzed: events.length,
+      actors_analyzed: new Set(events.map((event) => event.actor_id)).size,
+      groups_found: clusters.length
+    },
     limitations: [
       "Mock response: the detector API is not available yet.",
+      "Groups are based only on shared canonical URLs or similar text; they are not evidence of coordination by themselves.",
       "Visible-page extraction is incomplete and should be reviewed before drawing conclusions.",
       reason
     ]
@@ -35,7 +41,7 @@ function mockAnalysis(events, reason) {
 function renderCollected() {
   review.hidden = collected.length === 0;
   eventCount.textContent = `${collected.length} event${collected.length === 1 ? "" : "s"}`;
-  payload.textContent = format({ events: collected });
+  payload.textContent = format({ events: collected, clusters });
 }
 
 document.querySelector("#extract").addEventListener("click", async () => {
@@ -46,8 +52,9 @@ document.querySelector("#extract").addEventListener("click", async () => {
     if (!tab.id || !tab.url?.startsWith("http")) throw new Error("Open a public website in the active tab first.");
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
     collected = enrichEvents(result.result.events);
+    clusters = buildClusters(collected);
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}. Review the payload before sending.`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} candidate group${clusters.length === 1 ? "" : "s"}. Review the payload before sending.`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
@@ -59,6 +66,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
 
 document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
+  clusters = [];
   analysis.hidden = true;
   extractionStatus.textContent = "Collected events cleared.";
   renderCollected();
@@ -72,7 +80,7 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ events: collected })
+      body: JSON.stringify({ events: collected, clusters })
     });
     if (!response.ok) throw new Error(`API returned ${response.status}`);
     const report = await response.json();
@@ -80,6 +88,6 @@ document.querySelector("#analyze").addEventListener("click", async () => {
     analysisResult.textContent = format(report);
   } catch (error) {
     analysisMode.textContent = "Showing a mock detector response — the API could not be reached.";
-    analysisResult.textContent = format(mockAnalysis(collected, error.message));
+    analysisResult.textContent = format(mockAnalysis(collected, clusters, error.message));
   }
 });

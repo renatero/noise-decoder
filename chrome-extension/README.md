@@ -13,13 +13,15 @@ The default endpoint is `http://localhost:8000/analyze`. Change it through **Con
 
 ## API handoff
 
-The extension sends this body (with extraction features attached to each event):
+The extension sends this body (with extraction features attached to each event and related posts grouped into clusters):
 
 ```json
-{ "events": [{ "post_id": "…", "actor_id": "…", "text": "…", "url": "…", "timestamp": "…", "platform": "…" }] }
+{ "events": [{ "post_id": "…", "actor_id": "…", "text": "…", "url": "…", "timestamp": "…", "platform": "…" }], "clusters": [{ "id": "group-…", "post_ids": ["…", "…"], "evidence": [] }] }
 ```
 
 `post_id` is the platform post ID where available (otherwise a stable page-derived ID), and `url` is the permalink for the post where one can be found. Events retain the visible `text` and also include `normalized_text`, Unicode-aware `tokens`, normalized outgoing `links`, and `features`. URL normalization removes fragments and common analytics parameters (such as `utm_*`, `fbclid`, and `gclid`), sorts remaining query parameters, and canonicalizes the host and trailing slash. `features.shared_urls` lists links found in multiple extracted posts. `features.near_duplicates` lists matching post IDs and the reason for each match: `canonical_url` means an exact normalized outgoing URL match; `token_similarity` means token-set Jaccard similarity of at least 0.8, with at least three unique tokens on each side. An inverted index narrows comparisons to pairs that share a token or URL.
+
+`clusters` groups connected posts when any pair shares a canonical outgoing URL or meets the token-similarity threshold. Each cluster includes its member post IDs and pairwise evidence. These groups are candidate relationships for later analysis; shared links or similar text alone do not establish coordination.
 
 The detector should return a JSON report with `status`, `nodes`, `edges`, `clusters`, `evidence`, `statistics`, and `limitations`. Extraction is intentionally conservative and page structure varies across platforms, so users must review the payload before submitting it.
 

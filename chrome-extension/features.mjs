@@ -128,3 +128,64 @@ export function enrichEvents(rawEvents) {
     }
   }));
 }
+
+/** Group posts connected by a shared canonical URL or near-duplicate text. */
+export function buildClusters(events) {
+  const byId = new Map(events.map((event) => [event.post_id, event]));
+  const adjacency = new Map(events.map((event) => [event.post_id, new Set()]));
+  const evidenceByPair = new Map();
+
+  for (const event of events) {
+    for (const match of event.features?.near_duplicates || []) {
+      if (!byId.has(match.post_id)) continue;
+      adjacency.get(event.post_id).add(match.post_id);
+      adjacency.get(match.post_id).add(event.post_id);
+
+      const [first, second] = [event.post_id, match.post_id].sort();
+      const key = `${first}\u0000${second}`;
+      if (!evidenceByPair.has(key)) {
+        evidenceByPair.set(key, {
+          source_post_id: first,
+          target_post_id: second,
+          matched_by: [...match.matched_by].sort(),
+          token_similarity: match.token_similarity,
+          shared_urls: [...match.shared_urls]
+        });
+      }
+    }
+  }
+
+  const visited = new Set();
+  const clusters = [];
+  for (const event of events) {
+    if (visited.has(event.post_id) || !adjacency.get(event.post_id).size) continue;
+    const pending = [event.post_id];
+    const memberIds = [];
+    visited.add(event.post_id);
+    while (pending.length) {
+      const postId = pending.pop();
+      memberIds.push(postId);
+      for (const neighbor of adjacency.get(postId)) {
+        if (visited.has(neighbor)) continue;
+        visited.add(neighbor);
+        pending.push(neighbor);
+      }
+    }
+
+    const memberSet = new Set(memberIds);
+    const evidence = [...evidenceByPair.values()].filter((edge) => memberSet.has(edge.source_post_id) && memberSet.has(edge.target_post_id));
+    const seed = [...memberIds].sort().join("\u0000");
+    let hash = 2166136261;
+    for (let index = 0; index < seed.length; index += 1) {
+      hash ^= seed.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+    clusters.push({
+      id: `group-${(hash >>> 0).toString(36)}`,
+      post_ids: memberIds,
+      evidence
+    });
+  }
+
+  return clusters;
+}
