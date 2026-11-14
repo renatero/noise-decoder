@@ -1,0 +1,65 @@
+{
+  "snapshot_type": "public_bluesky_search",
+  "created_at": "2026-11-14T18:55:45.614159Z",
+  "source_endpoint": "https://api.bsky.app/xrpc/app.bsky.feed.searchPosts",
+  "notice": "Public, bounded search snapshot for an offline demo; it is not a complete account or platform record.",
+  "source": "bluesky_public_appview",
+  "query": "Finland",
+  "requested_limit": 5,
+  "fetched_posts": 5,
+  "deduplicated_posts": 0,
+  "skipped_posts": 0,
+  "events": [
+    {
+      "id": "at://did:plc:i7tzom3s6ppycbp7rnoanti6/app.bsky.feed.post/3n2c6acq75k2j",
+      "platform": "bluesky",
+      "actor_id": "bluesky:did:plc:i7tzom3s6ppycbp7rnoanti6",
+      "timestamp": "2026-11-14T18:52:39.842Z",
+      "text": "Do you have OCs from Nordic countries? (Finland, Sweden, Norway, etc)\n\nI have a few myself. Here are mine:\n- Miina and Kalevi Nykänen are half Finnish from their father's side.\n- Aina Jansson is Swedish\n- Kristin Henningsen is Norwegian\n- Satu (from my Flora project) is Finnish",
+      "urls": [],
+      "source_url": "https://bsky.app/profile/starsylveon11.bsky.social/post/3n2c6acq75k2j"
+    },
+    {
+      "id": "at://did:plc:cql4bphb5fvfblfrd4qlx5r5/app.bsky.feed.post/3n2c64mrk3k2n",
+      "platform": "bluesky",
+      "actor_id": "bluesky:did:plc:cql4bphb5fvfblfrd4qlx5r5",
+      "timestamp": "2026-11-14T18:50:36.159Z",
+      "text": "All 3 Finns on the Canes each have at least a point during this trip to Finland! How awesome.",
+      "urls": [],
+      "source_url": "https://bsky.app/profile/kitsuneteej.bsky.social/post/3n2c64mrk3k2n"
+    },
+    {
+      "id": "at://did:plc:igm5bm7akhh23ckx645ewo5y/app.bsky.feed.post/3n2c63kjvk22x",
+      "platform": "bluesky",
+      "actor_id": "bluesky:did:plc:igm5bm7akhh23ckx645ewo5y",
+      "timestamp": "2026-11-14T18:50:00.257Z",
+      "text": "Fact checked and completely accurate. Finland is widely seen as having the greatest education system in the entire world.",
+      "urls": [],
+      "source_url": "https://bsky.app/profile/wyldefire.bsky.social/post/3n2c63kjvk22x"
+    },
+    {
+      "id": "at://did:plc:gia6fkjy7gi5n7g24nhct4zw/app.bsky.feed.post/3n2c5xqmygs25",
+      "platform": "bluesky",
+      "actor_id": "bluesky:did:plc:gia6fkjy7gi5n7g24nhct4zw",
+      "timestamp": "2026-11-14T18:47:52.431Z",
+      "text": "I've just found Lesley's film \"Finland\" on YouTube\nI'm going to watch it later on this evening\nI'm really looking forward to finding out what she found there\n\nyoutu.be/J1mpytgMIBU?...",
+      "urls": [
+        "https://youtu.be/J1mpytgMIBU?is=UZtrHWNFtEloHxoQ"
+      ],
+      "source_url": "https://bsky.app/profile/toplandscaper.eurosky.social/post/3n2c5xqmygs25"
+    },
+    {
+      "id": "at://did:plc:ts7kb5igfqpmhwot3dirdc76/app.bsky.feed.post/3n2c5wr3lnsfw",
+      "platform": "bluesky",
+      "actor_id": "bluesky:did:plc:ts7kb5igfqpmhwot3dirdc76",
+      "timestamp": "2026-11-14T18:47:19.355Z",
+      "text": "Jesperi Kotkaniemi with the primary assist, so now all three of the Carolina Finns have made their way onto the scoresheet in Finland",
+      "urls": [],
+      "source_url": "https://bsky.app/profile/ryanhenkel.bsky.social/post/3n2c5wr3lnsfw"
+    }
+  ],
+  "limitations": [
+    "Public Bluesky search is bounded and may not represent all posts, accounts, or languages.",
+    "This collection records public search results only; it does not establish coordination, identity, or intent."
+  ]
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Coordination Radar</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">DEMO · MOCK ANALYSIS</p>
+      <h1>Coordination Radar</h1>
+      <p>Start an investigation from a phrase or URL. Collection and analysis are separate steps.</p>
+      <aside class="notice"><strong>Nothing has been collected or analysed yet.</strong> Opening this page from the extension only passes a reference for investigation.</aside>
+      <form id="investigation-form">
+        <label for="investigation">Investigation phrase or URL</label>
+        <textarea id="investigation" required></textarea>
+        <p id="input-note" class="note"></p>
+        <button type="submit">Prepare investigation</button>
+      </form>
+      <section aria-live="polite">
+        <p id="status">Ready.</p>
+        <pre id="report" hidden></pre>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

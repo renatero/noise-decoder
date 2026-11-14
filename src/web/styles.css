@@ -1,0 +1,9 @@
+:root { color-scheme: dark; font: 16px/1.5 system-ui, sans-serif; background: #0e1626; color: #edf4ff; }
+body { margin: 0; }
+main { max-width: 680px; margin: 4rem auto; padding: 2rem; border: 1px solid #405170; border-radius: 12px; background: #172238; }
+.eyebrow, .note { color: #8dd9ff; font-size: .85rem; }
+.notice { margin: 1.25rem 0; padding: .8rem 1rem; border-left: 3px solid #f7c66a; background: #2a2631; color: #f8e8bd; }
+label, textarea { display: block; width: 100%; }
+textarea { min-height: 7rem; margin-top: .5rem; box-sizing: border-box; padding: .75rem; color: inherit; background: #0e1626; border: 1px solid #536786; border-radius: 6px; }
+button { margin-top: 1rem; padding: .7rem 1rem; border: 0; border-radius: 6px; background: #75d6bb; color: #061c1c; font-weight: 700; cursor: pointer; }
+pre { overflow: auto; padding: 1rem; background: #0a101d; border-radius: 6px; white-space: pre-wrap; }
