@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildClusters, canonicalizeUrl, enrichEvents } from "../features.mjs";
+import { buildClusters, canonicalizeUrl, detectTimeBursts, enrichEvents } from "../features.mjs";
 
 function event(postId, text, links = []) {
   return { post_id: postId, actor_id: `actor:${postId}`, platform: "demo", timestamp: null, text, url: `https://social.example/posts/${postId}`, links };
@@ -67,4 +67,55 @@ test("clusters posts by shared canonical URL and similar text, excluding unrelat
   assert.ok(memberSets.some((members) => members.size === 2 && members.has("text-one") && members.has("text-two")));
   assert.ok(clusters.every((cluster) => !cluster.post_ids.includes("unrelated")));
   assert.ok(clusters.every((cluster) => cluster.evidence.length === 1));
+});
+
+test("time bursts include posts exactly on the configured rolling-window boundary", () => {
+  const relatedEvents = enrichEvents([
+    { ...event("first", "A local post about gardening", ["https://example.com/shared"]), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("second", "A separate post about music", ["https://example.com/shared"]), actor_id: "account:b", timestamp: "2026-05-01T13:00:00Z" }
+  ]);
+  const result = detectTimeBursts(relatedEvents, buildClusters(relatedEvents), { windowMinutes: 60, minimumAccounts: 2 });
+
+  assert.equal(result.bursts.length, 1);
+  assert.deepEqual(result.bursts[0].post_ids, ["first", "second"]);
+  assert.equal(result.bursts[0].distinct_account_count, 2);
+  assert.equal(result.bursts[0].window_minutes, 60);
+});
+
+test("time bursts require distinct identified accounts and exclude invalid timestamps", () => {
+  const sharedUrl = "https://example.com/shared";
+  const relatedEvents = enrichEvents([
+    { ...event("known-a", "Post one on the shared topic", [sharedUrl]), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("unknown", "Post two on the shared topic", [sharedUrl]), actor_id: "platform:unknown", timestamp: "2026-05-01T12:01:00Z" },
+    { ...event("invalid-time", "Post three on the shared topic", [sharedUrl]), actor_id: "account:b", timestamp: "not-a-date" }
+  ]);
+  const clusters = buildClusters(relatedEvents);
+  const insufficient = detectTimeBursts(relatedEvents, clusters, { windowMinutes: 60, minimumAccounts: 2 });
+
+  assert.equal(insufficient.bursts.length, 0);
+  assert.equal(insufficient.statistics.excluded_invalid_timestamps, 1);
+  assert.equal(insufficient.statistics.posts_without_account_id, 1);
+
+  const withSecondKnownAccount = enrichEvents([
+    ...relatedEvents,
+    { ...event("known-b", "Post four on the shared topic", [sharedUrl]), actor_id: "account:b", timestamp: "2026-05-01T12:02:00Z" }
+  ]);
+  const qualifying = detectTimeBursts(withSecondKnownAccount, buildClusters(withSecondKnownAccount), {
+    windowMinutes: 60,
+    minimumAccounts: 2
+  });
+  assert.equal(qualifying.bursts.length, 1);
+  assert.deepEqual(qualifying.bursts[0].post_ids, ["known-a", "unknown", "known-b"]);
+  assert.equal(qualifying.bursts[0].distinct_account_count, 2);
+});
+
+test("minimum account setting suppresses bursts below the configured threshold", () => {
+  const relatedEvents = enrichEvents([
+    { ...event("first", "A local post about gardening", ["https://example.com/shared"]), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
+    { ...event("second", "A separate post about music", ["https://example.com/shared"]), actor_id: "account:b", timestamp: "2026-05-01T12:05:00Z" }
+  ]);
+  const result = detectTimeBursts(relatedEvents, buildClusters(relatedEvents), { windowMinutes: 60, minimumAccounts: 3 });
+
+  assert.equal(result.config.minimum_accounts, 3);
+  assert.equal(result.bursts.length, 0);
 });

@@ -11,6 +11,12 @@
       <h1>Noise Decoder settings</h1>
       <label for="endpoint">Detector API endpoint</label>
       <input id="endpoint" type="url" placeholder="http://localhost:8000/analyze">
+      <label for="window-minutes">Related-post time window (minutes)</label>
+      <input id="window-minutes" type="number" min="1" max="10080" step="1">
+      <p class="status">Maximum time span for a candidate burst. Default: 60 minutes.</p>
+      <label for="minimum-accounts">Minimum distinct accounts</label>
+      <input id="minimum-accounts" type="number" min="2" max="100" step="1">
+      <p class="status">A burst must include posts from at least this many identified accounts. Default: 2.</p>
       <p class="status">When the endpoint is unreachable, the extension displays a clearly labelled mock report.</p>
       <button id="save" class="primary">Save</button>
       <p id="saved" class="status" aria-live="polite"></p>

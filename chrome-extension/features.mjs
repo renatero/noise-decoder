@@ -189,3 +189,99 @@ export function buildClusters(events) {
 
   return clusters;
 }
+
+/** Find related-post bursts that fit inside a rolling window. */
+export function detectTimeBursts(events, clusters, { windowMinutes = 60, minimumAccounts = 2 } = {}) {
+  const safeWindowMinutes = Number.isInteger(windowMinutes) && windowMinutes > 0 ? windowMinutes : 60;
+  const safeMinimumAccounts = Number.isInteger(minimumAccounts) && minimumAccounts >= 2 ? minimumAccounts : 2;
+  const windowMs = safeWindowMinutes * 60_000;
+  const eventById = new Map(events.map((event) => [event.post_id, event]));
+  const validEvents = events.map((event) => ({ event, timestampMs: Date.parse(event.timestamp || "") }));
+  const excludedTimestampCount = validEvents.filter(({ timestampMs }) => !Number.isFinite(timestampMs)).length;
+  const unidentifiableAccountCount = validEvents.filter(({ event, timestampMs }) =>
+    Number.isFinite(timestampMs) && !hasAccountId(event.actor_id)
+  ).length;
+  const bursts = [];
+
+  for (const cluster of clusters) {
+    const posts = cluster.post_ids
+      .map((postId) => eventById.get(postId))
+      .filter(Boolean)
+      .map((event) => ({ event, timestampMs: Date.parse(event.timestamp || "") }))
+      .filter(({ timestampMs }) => Number.isFinite(timestampMs))
+      .sort((left, right) => left.timestampMs - right.timestampMs);
+    if (posts.length < safeMinimumAccounts) continue;
+
+    // Sliding frequencies make each cluster scan linear after timestamp sorting.
+    let right = 0;
+    const accountCounts = new Map();
+    let distinctAccounts = 0;
+    const qualifyingWindowsByEnd = new Map();
+    for (let left = 0; left < posts.length; left += 1) {
+      if (right < left) right = left;
+      while (right < posts.length && posts[right].timestampMs - posts[left].timestampMs <= windowMs) {
+        const actorId = posts[right].event.actor_id;
+        if (hasAccountId(actorId)) {
+          const nextCount = (accountCounts.get(actorId) || 0) + 1;
+          accountCounts.set(actorId, nextCount);
+          if (nextCount === 1) distinctAccounts += 1;
+        }
+        right += 1;
+      }
+
+      if (distinctAccounts >= safeMinimumAccounts) {
+        const endIndex = right - 1;
+        // Keep the widest qualifying window for each end point; later starts are contained in it.
+        if (!qualifyingWindowsByEnd.has(endIndex)) qualifyingWindowsByEnd.set(endIndex, { start: left, end: endIndex });
+      }
+
+      const actorId = posts[left].event.actor_id;
+      if (hasAccountId(actorId)) {
+        const nextCount = accountCounts.get(actorId) - 1;
+        if (nextCount === 0) {
+          accountCounts.delete(actorId);
+          distinctAccounts -= 1;
+        } else {
+          accountCounts.set(actorId, nextCount);
+        }
+      }
+    }
+
+    for (const { start, end } of qualifyingWindowsByEnd.values()) {
+      const windowPosts = posts.slice(start, end + 1);
+      const postIds = windowPosts.map(({ event }) => event.post_id);
+      const postIdSet = new Set(postIds);
+      const accountIds = [...new Set(windowPosts.map(({ event }) => event.actor_id).filter(hasAccountId))];
+      const evidence = cluster.evidence.filter((edge) =>
+        postIdSet.has(edge.source_post_id) && postIdSet.has(edge.target_post_id)
+      );
+      bursts.push({
+        id: `${cluster.id}:burst:${postIds[0]}:${postIds[postIds.length - 1]}`,
+        cluster_id: cluster.id,
+        window_start: new Date(windowPosts[0].timestampMs).toISOString(),
+        window_end: new Date(windowPosts[windowPosts.length - 1].timestampMs).toISOString(),
+        window_minutes: safeWindowMinutes,
+        post_count: postIds.length,
+        distinct_account_count: accountIds.length,
+        post_ids: postIds,
+        account_ids: accountIds,
+        evidence
+      });
+    }
+  }
+
+  return {
+    config: { window_minutes: safeWindowMinutes, minimum_accounts: safeMinimumAccounts },
+    bursts,
+    statistics: {
+      events_with_valid_timestamps: events.length - excludedTimestampCount,
+      excluded_invalid_timestamps: excludedTimestampCount,
+      posts_without_account_id: unidentifiableAccountCount
+    }
+  };
+}
+
+function hasAccountId(value) {
+  const actorId = typeof value === "string" ? value.trim() : "";
+  return Boolean(actorId) && actorId.toLowerCase() !== "unknown" && !/:unknown$/i.test(actorId);
+}
