@@ -62,6 +62,24 @@ attribution, access considerations and reasons for selection.
 `POST /api/import` accepts an `events` array already in the normalized schema,
 allowing other platforms to be supplied without adding a collector.
 
+## Bounded news and discussion sources
+
+`GET /api/sources` returns the live source catalog. The dashboard currently
+offers a bounded combined search plus these public sources:
+
+- Bluesky public search;
+- Hacker News story search through its public Algolia index;
+- BBC World RSS;
+- The Guardian World RSS; and
+- Al Jazeera RSS.
+
+Use `GET /api/collect/<source>?query=<phrase>&limit=50` for an individual
+source, or `/api/collect/all` for an interleaved, bounded result across the
+available sources. RSS collection uses publisher-provided headlines and
+summaries only; it does not fetch article pages. Publisher actor IDs identify
+the publishing source rather than a journalist or social account, and shared
+coverage alone does not establish coordination.
+
 ## Synthetic scenarios and analysis
 
 - `GET /api/datasets` lists the reproducible coordinated and benign scenarios.
