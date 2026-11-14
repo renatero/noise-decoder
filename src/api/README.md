@@ -8,9 +8,9 @@ python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 
 The current demo is reachable at:
 
-- Dashboard: `http://188.166.112.226:8000/`
-- Health: `http://188.166.112.226:8000/healthz`
-- Analysis: `POST http://188.166.112.226:8000/api/analyze`
+- Dashboard: `https://radar.188.166.112.226.nip.io/`
+- Health: `https://radar.188.166.112.226.nip.io/healthz`
+- Analysis: `POST https://radar.188.166.112.226.nip.io/api/analyze`
 
 ## Public-data collection
 

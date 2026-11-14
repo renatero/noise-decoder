@@ -1,4 +1,4 @@
-const DEFAULT_DASHBOARD_URL = "http://188.166.112.226:8000/";
+const DEFAULT_DASHBOARD_URL = "https://radar.188.166.112.226.nip.io/";
 const MENU_ID = "investigate-with-coordination-radar";
 const SETTINGS_MENU_ID = "open-coordination-radar-settings";
 
