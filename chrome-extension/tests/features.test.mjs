@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildClusters, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity } from "../features.mjs";
+import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity } from "../features.mjs";
 
 function event(postId, text, links = []) {
   return { post_id: postId, actor_id: `actor:${postId}`, platform: "demo", timestamp: null, text, url: `https://social.example/posts/${postId}`, links };
@@ -186,4 +186,28 @@ test("one content group and a burst derived from it do not count as repeated co-
   assert.equal(result.account_pairs[0].evidence_assessment, "limited");
   assert.match(result.account_pairs[0].interpretation, /simultaneous response to breaking news/);
   assert.deepEqual(result.repeated_pairs, []);
+});
+
+test("weighted actor graph returns identified nodes and explainable co-activity edge weights", () => {
+  const events = [
+    { ...event("a1", "First message"), actor_id: "account:a", platform: "demo" },
+    { ...event("b1", "Second message"), actor_id: "account:b", platform: "demo" },
+    { ...event("unknown", "Unidentified message"), actor_id: "platform:unknown", platform: "demo" }
+  ];
+  const clusters = [{ id: "group-one", post_ids: ["a1", "b1", "unknown"], evidence: [] }];
+  const timeAnalysis = {
+    bursts: [
+      { id: "burst-one", cluster_id: "group-one", post_ids: ["a1", "b1"], evidence: [] },
+      { id: "burst-two", cluster_id: "group-one", post_ids: ["a1", "b1"], evidence: [] }
+    ]
+  };
+  const coActivity = recordCoActivity(events, clusters, timeAnalysis);
+  const graph = buildWeightedActorGraph(events, clusters, timeAnalysis, coActivity);
+
+  assert.equal(graph.directed, false);
+  assert.equal(graph.nodes.length, 2);
+  assert.equal(graph.edges.length, 1);
+  assert.equal(graph.edges[0].weight, 1.25);
+  assert.equal(graph.edges[0].evidence_assessment, "limited");
+  assert.equal(graph.statistics.excluded_posts_without_account_id, 1);
 });

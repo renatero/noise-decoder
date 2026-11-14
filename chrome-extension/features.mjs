@@ -399,3 +399,93 @@ export function recordCoActivity(events, clusters, timeWindowAnalysis) {
     }
   };
 }
+
+/** Build an undirected actor graph with inspectable, co-activity-based edge weights. */
+export function buildWeightedActorGraph(events, clusters, timeWindowAnalysis, coActivity) {
+  const nodesByActor = new Map();
+  const eventsById = new Map(events.map((event) => [event.post_id, event]));
+  const groupIdsByActor = new Map();
+  const burstIdsByActor = new Map();
+
+  for (const event of events) {
+    if (!hasAccountId(event.actor_id)) continue;
+    if (!nodesByActor.has(event.actor_id)) {
+      nodesByActor.set(event.actor_id, {
+        id: event.actor_id,
+        platforms: new Set(),
+        post_ids: []
+      });
+    }
+    const node = nodesByActor.get(event.actor_id);
+    node.platforms.add(event.platform);
+    node.post_ids.push(event.post_id);
+  }
+
+  for (const cluster of clusters) {
+    for (const postId of cluster.post_ids) {
+      const event = eventsById.get(postId);
+      if (!event || !hasAccountId(event.actor_id)) continue;
+      if (!groupIdsByActor.has(event.actor_id)) groupIdsByActor.set(event.actor_id, new Set());
+      groupIdsByActor.get(event.actor_id).add(cluster.id);
+    }
+  }
+  for (const burst of timeWindowAnalysis?.bursts || []) {
+    for (const postId of burst.post_ids) {
+      const event = eventsById.get(postId);
+      if (!event || !hasAccountId(event.actor_id)) continue;
+      if (!burstIdsByActor.has(event.actor_id)) burstIdsByActor.set(event.actor_id, new Set());
+      burstIdsByActor.get(event.actor_id).add(burst.id);
+    }
+  }
+
+  const nodes = [...nodesByActor.values()].map((node) => ({
+    id: node.id,
+    platforms: [...node.platforms].sort(),
+    post_count: node.post_ids.length,
+    post_ids: node.post_ids,
+    content_group_ids: [...(groupIdsByActor.get(node.id) || [])],
+    content_group_count: (groupIdsByActor.get(node.id) || new Set()).size,
+    publication_burst_ids: [...(burstIdsByActor.get(node.id) || [])],
+    publication_burst_count: (burstIdsByActor.get(node.id) || new Set()).size
+  }));
+
+  const edges = (coActivity?.account_pairs || []).map((pair) => {
+    const burstCountsByGroup = new Map();
+    for (const burst of pair.publication_bursts) {
+      const groupId = burst.cluster_id || "unassigned";
+      burstCountsByGroup.set(groupId, (burstCountsByGroup.get(groupId) || 0) + 1);
+    }
+    const additionalBurstWeight = [...burstCountsByGroup.values()]
+      .reduce((total, count) => total + Math.max(0, count - 1) * 0.25, 0);
+    const baseWeight = pair.content_group_count || (pair.publication_burst_count ? 0.5 : 0);
+    return {
+      source: pair.account_ids[0],
+      target: pair.account_ids[1],
+      weight: Number((baseWeight + additionalBurstWeight).toFixed(3)),
+      content_group_count: pair.content_group_count,
+      publication_burst_count: pair.publication_burst_count,
+      evidence_assessment: pair.evidence_assessment,
+      repeated: pair.repeated,
+      content_groups: pair.content_groups,
+      publication_bursts: pair.publication_bursts
+    };
+  });
+
+  return {
+    directed: false,
+    weight_method: {
+      content_group_weight: 1,
+      first_burst_additional_weight: 0,
+      additional_burst_weight_within_same_group: 0.25,
+      standalone_burst_weight: 0.5,
+      explanation: "A first burst within a content group adds no extra weight, reducing double-counting of one shared event. Repeated bursts add modest weight; edge weights are support scores, not probabilities of coordination."
+    },
+    nodes,
+    edges,
+    statistics: {
+      identified_actors: nodes.length,
+      weighted_edges: edges.length,
+      excluded_posts_without_account_id: events.filter((event) => !hasAccountId(event.actor_id)).length
+    }
+  };
+}
