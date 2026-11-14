@@ -69,15 +69,16 @@ export function extractVisibleEvents() {
     const time = item.querySelector("time[datetime]");
     const timestamp = time?.dateTime || time?.getAttribute("datetime") || null;
     const actorNode = item.querySelector('[data-testid="User-Name"], [data-testid="postAuthor"], [rel="author"], a[href*="/profile/"]');
+    const anchors = [...item.querySelectorAll("a[href]")];
+    const postLink = anchors
+      .map((anchor) => normalizeUrl(anchor.getAttribute("href")))
+      .find((url) => url && /\/(?:status|post|comments)\//.test(new URL(url).pathname));
     const links = [...item.querySelectorAll("a[href]")]
       .filter((anchor) => !actorNode?.contains(anchor) && anchor !== actorNode)
       .map((anchor) => normalizeUrl(anchor.getAttribute("href")))
       .filter(Boolean)
-      .filter((url) => !/\/(?:status|post|comments)\//.test(new URL(url).pathname));
+      .filter((url) => url !== postLink);
     const uniqueLinks = [...new Set(links)];
-    const postLink = [...item.querySelectorAll("a[href]")]
-      .map((anchor) => normalizeUrl(anchor.getAttribute("href")))
-      .find((url) => url && /\/(?:status|post|comments)\//.test(new URL(url).pathname));
     const postUrl = postLink || normalizeUrl(location.href);
     const actorLabel = clean(actorNode?.innerText || actorNode?.getAttribute("aria-label") || "unknown");
     const actorId = `${platform}:${actorLabel.replace(/^@/, "").toLowerCase().replace(/\s+/g, "-") || "unknown"}`;
@@ -114,25 +115,77 @@ export function extractVisibleEvents() {
   }
 
   const tokenSets = events.map((event) => new Set(event.tokens));
-  const similarities = events.map(() => []);
-  for (let left = 0; left < events.length; left += 1) {
-    for (let right = left + 1; right < events.length; right += 1) {
-      const a = tokenSets[left];
-      const b = tokenSets[right];
-      if (Math.min(a.size, b.size) < 3) continue;
-      let intersection = 0;
-      for (const token of a) if (b.has(token)) intersection += 1;
-      const score = intersection / (a.size + b.size - intersection);
-      if (score >= 0.8) {
-        similarities[left].push({ post_id: events[right].post_id, score: Number(score.toFixed(3)) });
-        similarities[right].push({ post_id: events[left].post_id, score: Number(score.toFixed(3)) });
+  const candidates = new Map();
+  const addCandidate = (left, right, reason, url = null) => {
+    if (left === right) return;
+    const first = Math.min(left, right);
+    const second = Math.max(left, right);
+    const key = `${first}:${second}`;
+    if (!candidates.has(key)) candidates.set(key, { left: first, right: second, reasons: new Set(), urls: new Set() });
+    const candidate = candidates.get(key);
+    candidate.reasons.add(reason);
+    if (url) candidate.urls.add(url);
+  };
+
+  // Inverted indexes generate only pairs that share a token or a canonical outgoing URL.
+  const tokenPosts = new Map();
+  const urlPosts = new Map();
+  events.forEach((event, index) => {
+    for (const token of tokenSets[index]) {
+      if (!tokenPosts.has(token)) tokenPosts.set(token, []);
+      tokenPosts.get(token).push(index);
+    }
+    for (const url of new Set(event.links)) {
+      if (!urlPosts.has(url)) urlPosts.set(url, []);
+      urlPosts.get(url).push(index);
+    }
+  });
+  for (const postIndexes of tokenPosts.values()) {
+    for (let left = 0; left < postIndexes.length; left += 1) {
+      for (let right = left + 1; right < postIndexes.length; right += 1) {
+        addCandidate(postIndexes[left], postIndexes[right], "token_similarity");
       }
     }
+  }
+  for (const [url, postIndexes] of urlPosts) {
+    for (let left = 0; left < postIndexes.length; left += 1) {
+      for (let right = left + 1; right < postIndexes.length; right += 1) {
+        addCandidate(postIndexes[left], postIndexes[right], "canonical_url", url);
+      }
+    }
+  }
+
+  const nearDuplicates = events.map(() => []);
+  for (const candidate of candidates.values()) {
+    const { left, right } = candidate;
+    const a = tokenSets[left];
+    const b = tokenSets[right];
+    let intersection = 0;
+    for (const token of a) if (b.has(token)) intersection += 1;
+    const score = a.size && b.size ? intersection / (a.size + b.size - intersection) : 0;
+    if (candidate.reasons.has("token_similarity") && (Math.min(a.size, b.size) < 3 || score < 0.8)) {
+      candidate.reasons.delete("token_similarity");
+    }
+    if (!candidate.reasons.size) continue;
+    const leftMatch = {
+      post_id: events[right].post_id,
+      matched_by: [...candidate.reasons],
+      token_similarity: Number(score.toFixed(3)),
+      shared_urls: [...candidate.urls]
+    };
+    const rightMatch = {
+      post_id: events[left].post_id,
+      matched_by: [...candidate.reasons],
+      token_similarity: Number(score.toFixed(3)),
+      shared_urls: [...candidate.urls]
+    };
+    nearDuplicates[left].push(leftMatch);
+    nearDuplicates[right].push(rightMatch);
   }
   events.forEach((event, index) => {
     event.features = {
       shared_urls: sharedByPost.get(event.post_id),
-      similar_messages: similarities[index]
+      near_duplicates: nearDuplicates[index]
     };
   });
 
