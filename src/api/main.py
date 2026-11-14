@@ -68,6 +68,7 @@ async def analyze(request: AnalyzeRequest) -> dict[str, Any]:
         report["limitations"].append("Context.dev publisher articles are excluded from account coordination analysis.")
         if not social:
             report["status"] = "news_context"
+            report["limitations"] = ["Publisher articles provide background context for a separate account investigation."]
             report["summary"] = f"{len(news)} news articles collected as background context. Publisher coverage is not evidence of coordinated accounts."
     return report
 
