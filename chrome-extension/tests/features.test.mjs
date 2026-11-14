@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, enrichEvents, recordCoActivity, runPermutationNullModel } from "../features.mjs";
+import { buildClusters, buildWeightedActorGraph, canonicalizeUrl, detectTimeBursts, discoverRepeatedActorClusters, enrichEvents, recordCoActivity, runPermutationNullModel } from "../features.mjs";
 
 function event(postId, text, links = []) {
   return { post_id: postId, actor_id: `actor:${postId}`, platform: "demo", timestamp: null, text, url: `https://social.example/posts/${postId}`, links };
@@ -212,7 +212,7 @@ test("weighted actor graph returns identified nodes and explainable co-activity 
   assert.equal(graph.statistics.excluded_posts_without_account_id, 1);
 });
 
-test("permutation null model compares repeated pairs with 199 reproducible topic-time shuffles", () => {
+test("max-cluster permutation model repeats discovery across 199 reproducible topic-time shuffles", () => {
   const events = [
     { ...event("a1", "Climate report from local researchers"), actor_id: "account:a", timestamp: "2026-05-01T12:00:00Z" },
     { ...event("b1", "Climate update from local researchers"), actor_id: "account:b", timestamp: "2026-05-01T12:02:00Z" },
@@ -233,11 +233,16 @@ test("permutation null model compares repeated pairs with 199 reproducible topic
   assert.equal(firstRun.strata.shuffleable_strata, 1);
   assert.equal(firstRun.strata.shuffleable_posts, 4);
   assert.equal(firstRun.statistics.p_value_resolution, 0.005);
-  assert.equal(firstRun.results.length, 1);
-  assert.equal(firstRun.results[0].testable, true);
-  assert.ok(firstRun.results[0].p_value >= 0.005 && firstRun.results[0].p_value <= 1);
-  assert.equal(firstRun.results[0].p_value, Number(((firstRun.results[0].exceedances + 1) / 200).toFixed(4)));
-  assert.deepEqual(firstRun.results, secondRun.results);
+  assert.equal(firstRun.strongest_cluster.actor_ids.length, 2);
+  assert.equal(firstRun.strongest_cluster.heuristic_suspicion_score, 2);
+  assert.equal(firstRun.heuristic_suspicion_score, firstRun.strongest_cluster.heuristic_suspicion_score);
+  assert.equal(firstRun.statistics.strongest_cluster_testable, true);
+  assert.ok(firstRun.permutation_p_value >= 0.005 && firstRun.permutation_p_value <= 1);
+  assert.equal(firstRun.permutation_p_value, Number(((firstRun.null_max_cluster_score.exceedances + 1) / 200).toFixed(4)));
+  assert.equal("results" in firstRun, false);
+  assert.deepEqual(firstRun.strongest_cluster, secondRun.strongest_cluster);
+  assert.deepEqual(firstRun.null_max_cluster_score, secondRun.null_max_cluster_score);
+  assert.equal(firstRun.permutation_p_value, secondRun.permutation_p_value);
 });
 
 test("permutation model marks actor pairs untestable when no stratum can be shuffled", () => {
@@ -257,9 +262,9 @@ test("permutation model marks actor pairs untestable when no stratum can be shuf
   const result = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 42 });
 
   assert.equal(result.strata.shuffleable_strata, 0);
-  assert.equal(result.results.length, 1);
-  assert.equal(result.results[0].testable, false);
-  assert.equal(result.results[0].p_value, null);
+  assert.ok(result.strongest_cluster);
+  assert.equal(result.statistics.strongest_cluster_testable, false);
+  assert.equal(result.permutation_p_value, null);
 });
 
 test("permutation model marks pair-specific invariant null weights untestable", () => {
@@ -281,7 +286,22 @@ test("permutation model marks pair-specific invariant null weights untestable", 
   const result = runPermutationNullModel(events, clusters, timeAnalysis, coActivity, graph, { seed: 52 });
 
   assert.ok(result.strata.shuffleable_strata > 0);
-  assert.equal(result.results.length, 1);
-  assert.equal(result.results[0].testable, false);
-  assert.equal(result.results[0].p_value, null);
+  assert.ok(result.strongest_cluster);
+  assert.equal(result.statistics.strongest_cluster_testable, false);
+  assert.equal(result.permutation_p_value, null);
+});
+
+test("actor-cluster discovery selects the component with the largest repeated-edge weight", () => {
+  const discovered = discoverRepeatedActorClusters({
+    nodes: [{ id: "a" }, { id: "b" }, { id: "c" }, { id: "d" }],
+    edges: [
+      { source: "a", target: "b", weight: 1, repeated: true },
+      { source: "c", target: "d", weight: 2, repeated: true },
+      { source: "a", target: "c", weight: 100, repeated: false }
+    ]
+  });
+
+  assert.equal(discovered.length, 2);
+  assert.deepEqual(discovered[0].actor_ids, ["c", "d"]);
+  assert.equal(discovered[0].heuristic_suspicion_score, 2);
 });

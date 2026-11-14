@@ -490,7 +490,51 @@ export function buildWeightedActorGraph(events, clusters, timeWindowAnalysis, co
   };
 }
 
-/** Compare repeated observed actor-pair weights with a stratified permutation null. */
+/** Find connected actor clusters using repeated co-activity edges. */
+export function discoverRepeatedActorClusters(actorGraph) {
+  const repeatedEdges = (actorGraph.edges || []).filter((edge) => edge.repeated);
+  const adjacency = new Map((actorGraph.nodes || []).map((node) => [node.id, new Set()]));
+  for (const edge of repeatedEdges) {
+    if (!adjacency.has(edge.source)) adjacency.set(edge.source, new Set());
+    if (!adjacency.has(edge.target)) adjacency.set(edge.target, new Set());
+    adjacency.get(edge.source).add(edge.target);
+    adjacency.get(edge.target).add(edge.source);
+  }
+
+  const visited = new Set();
+  const clusters = [];
+  for (const [actorId, neighbors] of adjacency) {
+    if (visited.has(actorId) || !neighbors.size) continue;
+    const pending = [actorId];
+    const actorIds = [];
+    visited.add(actorId);
+    while (pending.length) {
+      const current = pending.pop();
+      actorIds.push(current);
+      for (const neighbor of adjacency.get(current)) {
+        if (visited.has(neighbor)) continue;
+        visited.add(neighbor);
+        pending.push(neighbor);
+      }
+    }
+    actorIds.sort();
+    const memberSet = new Set(actorIds);
+    const edges = repeatedEdges.filter((edge) => memberSet.has(edge.source) && memberSet.has(edge.target));
+    const score = edges.reduce((total, edge) => total + edge.weight, 0);
+    clusters.push({
+      id: `actor-cluster:${actorIds.join("|")}`,
+      actor_ids: actorIds,
+      edge_count: edges.length,
+      heuristic_suspicion_score: Number(score.toFixed(3)),
+      edges
+    });
+  }
+  return clusters.sort((left, right) =>
+    right.heuristic_suspicion_score - left.heuristic_suspicion_score || left.id.localeCompare(right.id)
+  );
+}
+
+/** Compare the strongest discovered repeated-co-activity cluster with a max-statistic null. */
 export function runPermutationNullModel(
   events,
   clusters,
@@ -521,13 +565,10 @@ export function runPermutationNullModel(
     indexes.length > 1 && new Set(indexes.map((index) => events[index].actor_id)).size > 1
   );
   const shuffleablePosts = shuffleableStrata.reduce((sum, indexes) => sum + indexes.length, 0);
-  const observedRepeatedPairs = coActivity.repeated_pairs || [];
-  const observedEdges = new Map((observedGraph.edges || []).map((edge) => [pairKey(edge.source, edge.target), edge]));
-  const scoresByPair = new Map(observedRepeatedPairs.map((pair) => {
-    const key = pairKey(pair.account_ids[0], pair.account_ids[1]);
-    const edge = observedEdges.get(key);
-    return [key, { pair, observedWeight: edge?.weight || 0, nullWeights: [] }];
-  }));
+  const observedClusters = discoverRepeatedActorClusters(observedGraph);
+  const strongestCluster = observedClusters[0] || null;
+  const nullMaximumScores = [];
+  const nullCandidateCounts = [];
 
   for (let permutation = 0; permutation < permutationCount; permutation += 1) {
     const shuffledActorIds = events.map((event) => event.actor_id);
@@ -539,36 +580,37 @@ export function runPermutationNullModel(
     const permutedEvents = events.map((event, index) => ({ ...event, actor_id: shuffledActorIds[index] }));
     const permutedCoActivity = recordCoActivity(permutedEvents, clusters, timeWindowAnalysis);
     const permutedGraph = buildWeightedActorGraph(permutedEvents, clusters, timeWindowAnalysis, permutedCoActivity);
-    const permutedEdges = new Map(permutedGraph.edges.map((edge) => [pairKey(edge.source, edge.target), edge.weight]));
-    for (const [key, record] of scoresByPair) record.nullWeights.push(permutedEdges.get(key) || 0);
+    const discoveredClusters = discoverRepeatedActorClusters(permutedGraph);
+    nullMaximumScores.push(discoveredClusters[0]?.heuristic_suspicion_score || 0);
+    nullCandidateCounts.push(discoveredClusters.length);
   }
 
-  const results = [...scoresByPair.values()].map(({ pair, observedWeight, nullWeights }) => {
-    const exceedances = nullWeights.filter((weight) => weight >= observedWeight).length;
-    const testable = shuffleableStrata.length > 0 && new Set(nullWeights).size > 1;
-    const mean = nullWeights.reduce((sum, weight) => sum + weight, 0) / permutationCount;
-    const variance = nullWeights.reduce((sum, weight) => sum + (weight - mean) ** 2, 0) / permutationCount;
-    const sorted = [...nullWeights].sort((left, right) => left - right);
-    const percentileIndex = Math.max(0, Math.ceil(0.95 * sorted.length) - 1);
-    return {
-      account_ids: pair.account_ids,
-      observed_weight: observedWeight,
-      null_mean_weight: Number(mean.toFixed(3)),
-      null_standard_deviation: Number(Math.sqrt(variance).toFixed(3)),
-      null_95th_percentile_weight: Number(sorted[percentileIndex].toFixed(3)),
-      exceedances,
-      p_value: testable
-        ? Number(((exceedances + 1) / (permutationCount + 1)).toFixed(4))
-        : null,
-      testable,
-      evidence_assessment: pair.evidence_assessment
-    };
-  });
+  const sortedMaximumScores = [...nullMaximumScores].sort((left, right) => left - right);
+  const nullMean = nullMaximumScores.reduce((sum, score) => sum + score, 0) / permutationCount;
+  const nullVariance = nullMaximumScores.reduce((sum, score) => sum + (score - nullMean) ** 2, 0) / permutationCount;
+  const nullPercentileIndex = Math.max(0, Math.ceil(0.95 * sortedMaximumScores.length) - 1);
+  const exceedances = strongestCluster
+    ? nullMaximumScores.filter((score) => score >= strongestCluster.heuristic_suspicion_score).length
+    : null;
+  const testable = Boolean(strongestCluster) && shuffleableStrata.length > 0 && new Set(nullMaximumScores).size > 1;
+  const permutationPValue = testable
+    ? Number(((exceedances + 1) / (permutationCount + 1)).toFixed(4))
+    : null;
 
   return {
-    method: "stratified_actor_assignment_permutation",
+    method: "stratified_actor_assignment_max_cluster_permutation",
     permutations: permutationCount,
     seed: seed >>> 0,
+    discovery_procedure: "Find connected components using repeated actor-pair edges, then select the component with the largest sum of edge weights.",
+    strongest_cluster: strongestCluster,
+    heuristic_suspicion_score: strongestCluster?.heuristic_suspicion_score ?? null,
+    permutation_p_value: permutationPValue,
+    null_max_cluster_score: {
+      mean: Number(nullMean.toFixed(3)),
+      standard_deviation: Number(Math.sqrt(nullVariance).toFixed(3)),
+      percentile_95: Number(sortedMaximumScores[nullPercentileIndex].toFixed(3)),
+      exceedances
+    },
     strata: {
       topic_proxy: "most common non-stopword token in the extracted batch",
       time_bucket_minutes: windowMinutes,
@@ -579,19 +621,21 @@ export function runPermutationNullModel(
       fixed_eligible_posts: eligiblePosts - shuffleablePosts
     },
     statistics: {
-      repeated_pairs_tested: results.length,
-      untestable_pairs: results.filter((result) => !result.testable).length,
+      observed_actor_clusters: observedClusters.length,
+      strongest_cluster_testable: testable,
+      mean_null_actor_clusters: Number((nullCandidateCounts.reduce((sum, count) => sum + count, 0) / permutationCount).toFixed(3)),
       minimum_p_value: Number((1 / (permutationCount + 1)).toFixed(4)),
       p_value_resolution: Number((1 / (permutationCount + 1)).toFixed(4))
     },
-    results,
     limitations: [
       "The dominant non-stopword token is a coarse topic proxy; actor labels are shuffled only within the same platform, topic proxy, and fixed time bucket.",
       "With 199 permutations, p-values have 0.005 resolution; this is for demonstrating the method, not high-resolution inference.",
-      "Results do not adjust for testing many actor pairs and do not establish coordination or intent.",
+      "The max-statistic compares the strongest discovered cluster per permutation, accounting for the same cluster discovery step in the null model.",
+      "The heuristic suspicion score is an uncalibrated support score, not a probability; the permutation p-value is reported separately.",
+      "The test does not establish coordination or intent.",
       ...(shuffleableStrata.length ? [] : ["No strata contained multiple distinct identified accounts, so the null comparison is not testable for this sample."]),
-      ...(results.some((result) => !result.testable) && shuffleableStrata.length
-        ? ["Some pair-specific null distributions did not vary across permutations; their p-values are null."]
+      ...(strongestCluster && shuffleableStrata.length && new Set(nullMaximumScores).size <= 1
+        ? ["The maximum cluster statistic did not vary across permutations; its p-value is null."]
         : [])
     ]
   };
@@ -612,10 +656,6 @@ function topicProxyForEvents(events) {
   return tokenSets.map((tokens) => [...tokens]
     .filter((token) => token.length >= 4 && !commonWords.has(token))
     .sort((left, right) => (frequencies.get(right) || 0) - (frequencies.get(left) || 0) || left.localeCompare(right))[0] || "unclassified");
-}
-
-function pairKey(firstActor, secondActor) {
-  return JSON.stringify([firstActor, secondActor].sort());
 }
 
 function seededRandom(seed) {

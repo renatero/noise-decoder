@@ -27,12 +27,15 @@ function format(value) {
 
 function emptyPermutationAnalysis() {
   return {
-    method: "stratified_actor_assignment_permutation",
+    method: "stratified_actor_assignment_max_cluster_permutation",
     permutations: 199,
     seed: null,
+    strongest_cluster: null,
+    heuristic_suspicion_score: null,
+    permutation_p_value: null,
+    null_max_cluster_score: { mean: 0, standard_deviation: 0, percentile_95: 0, exceedances: null },
     strata: {},
-    statistics: { repeated_pairs_tested: 0, untestable_pairs: 0, minimum_p_value: 0.005, p_value_resolution: 0.005 },
-    results: [],
+    statistics: { observed_actor_clusters: 0, strongest_cluster_testable: false, minimum_p_value: 0.005, p_value_resolution: 0.005 },
     limitations: []
   };
 }
@@ -55,7 +58,7 @@ function mockAnalysis(events, clusters, timeAnalysis, coActivityAnalysis, actorG
       time_bursts_found: timeAnalysis.bursts.length,
       repeated_co_activity_pairs: coActivityAnalysis.statistics.repeated_pairs_found,
       weighted_actor_edges: actorGraphResult.statistics.weighted_edges,
-      repeated_pairs_tested: permutationResult.statistics.repeated_pairs_tested,
+      observed_actor_clusters: permutationResult.statistics.observed_actor_clusters,
       excluded_invalid_timestamps: timeAnalysis.statistics.excluded_invalid_timestamps
     },
     limitations: [
@@ -92,16 +95,8 @@ document.querySelector("#extract").addEventListener("click", async () => {
     coActivity = recordCoActivity(collected, clusters, timeWindowAnalysis);
     actorGraph = buildWeightedActorGraph(collected, clusters, timeWindowAnalysis, coActivity);
     permutationAnalysis = runPermutationNullModel(collected, clusters, timeWindowAnalysis, coActivity, actorGraph);
-    const permutationByPair = new Map(permutationAnalysis.results.map((result) => [JSON.stringify([...result.account_ids].sort()), result]));
-    actorGraph = {
-      ...actorGraph,
-      edges: actorGraph.edges.map((edge) => ({
-        ...edge,
-        permutation_evidence: permutationByPair.get(JSON.stringify([edge.source, edge.target].sort())) || null
-      }))
-    };
     extractionStatus.textContent = collected.length
-      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared ${permutationAnalysis.statistics.repeated_pairs_tested} repeated pair${permutationAnalysis.statistics.repeated_pairs_tested === 1 ? "" : "s"} against 199 permutations. Review the evidence before sending.`
+      ? `Collected ${collected.length} visible posts from ${result.result.platform}; found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared the strongest actor cluster against 199 permutations; p-value ${permutationAnalysis.permutation_p_value ?? "unavailable"}. Review the evidence before sending.`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
