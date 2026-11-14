@@ -1,81 +1,98 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Coordination Radar</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <script defer src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
-    <script defer src="/static/app.js"></script>
-  </head>
-  <body>
-    <main class="shell">
-      <header class="hero">
-        <p class="eyebrow">COORDINATION RADAR · DEMO</p>
-        <h1>Evidence-backed public-post investigation</h1>
-        <p>Explore reproducible demonstration data, bounded public Bluesky search, or normalized JSON imports.</p>
-      </header>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coordination Radar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = { darkMode: "class", theme: { extend: {
+      colors: { primary: "#4cd7f6", "primary-container": "#06b6d4", "on-primary": "#003640", background: "#0e1321", surface: "#0e1321", "surface-container-lowest": "#090e1c", "surface-container-low": "#161b2a", "surface-container": "#1a1f2e", "surface-container-high": "#252a39", "surface-container-highest": "#303444", "surface-bright": "#343948", "on-surface": "#dee2f6", "on-surface-variant": "#bcc9cd", outline: "#869397", "outline-variant": "#3d494c", error: "#ffb4ab", "error-container": "#93000a", tertiary: "#ffb95f" },
+      borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+      fontFamily: { body: ["Inter", "sans-serif"], label: ["JetBrains Mono", "monospace"], headline: ["Plus Jakarta Sans", "sans-serif"] },
+      fontSize: { "body-sm": ["12px", { lineHeight: "18px" }], "body-md": ["13px", { lineHeight: "20px" }], "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.06em" }], "label-md": ["11px", { lineHeight: "16px", letterSpacing: "0.04em" }], "headline-sm": ["16px", { lineHeight: "24px" }], "headline-md": ["20px", { lineHeight: "28px" }], "headline-lg": ["28px", { lineHeight: "36px" }], display: ["36px", { lineHeight: "44px" }] }
+    }}};
+  </script>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script defer src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+  <script defer src="/static/app.js"></script>
+</head>
+<body class="min-h-screen bg-background font-body text-body-md text-on-surface selection:bg-primary-container selection:text-on-primary">
+  <header class="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between bg-surface-container-lowest/90 px-4 shadow-[0_1px_8px_rgba(0,0,0,0.4)] backdrop-blur-md md:px-6">
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/20 text-primary shadow-[0_0_16px_rgba(6,182,212,0.35)]"><span class="material-symbols-outlined text-[20px]">radar</span></div>
+        <span class="font-headline text-headline-sm font-bold tracking-tight">Coordination Radar</span>
+      </div>
+      <div class="hidden h-4 w-px bg-surface-container-highest sm:block"></div>
+      <div class="hidden items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 sm:flex"><span id="service-indicator" class="h-2 w-2 rounded-full bg-outline"></span><span id="service-label" class="font-label text-label-sm font-medium">Checking service</span></div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button type="button" data-scroll-target="investigation-section" aria-label="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">troubleshoot</span></button>
+      <button type="button" data-scroll-target="limitations-section" aria-label="View limits" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">settings</span></button>
+      <div class="grid h-9 w-9 place-items-center rounded-full border-l-2 border-primary bg-surface-container-high font-bold"><span class="material-symbols-outlined text-[18px]">person</span></div>
+    </div>
+  </header>
 
-      <section class="panel" aria-labelledby="investigation-heading">
-        <h2 id="investigation-heading">Investigation</h2>
-        <p id="handoff-notice" class="notice" hidden></p>
-        <form id="investigation-form">
-          <div class="fields">
-            <label>Source
-              <select id="source" name="source">
-                <option value="synthetic_coordinated">Synthetic coordinated scenario</option>
-                <option value="synthetic_benign">Synthetic benign scenario</option>
-                <option value="live_bluesky">Live public Bluesky search</option>
-                <option value="offline_bluesky">Offline Bluesky snapshot</option>
-                <option value="json_import">Normalized JSON import</option>
-              </select>
-            </label>
-            <label>Investigation phrase or URL
-              <textarea id="investigation" name="investigation" rows="3" placeholder="e.g. a phrase, public URL, or selected text"></textarea>
-            </label>
-            <label id="limit-field">Live-post limit
-              <input id="limit" type="number" min="1" max="100" value="50">
-            </label>
-            <label id="import-field" hidden>Normalized JSON file
-              <input id="import-file" type="file" accept="application/json,.json">
-            </label>
-          </div>
-          <p id="source-help" class="muted"></p>
-          <button id="investigate-button" type="submit">Investigate</button>
-        </form>
-        <p id="request-status" class="status" aria-live="polite">Ready.</p>
-      </section>
+  <aside class="fixed bottom-0 left-0 top-16 z-40 hidden w-64 flex-col justify-between bg-surface-container-low/95 py-3 backdrop-blur-md md:flex">
+    <div class="px-2">
+      <div class="mb-1 px-3 py-1"><span class="font-label text-label-sm font-semibold uppercase tracking-wider text-outline">Forensic workspace</span></div>
+      <nav class="flex flex-col gap-1" aria-label="Dashboard sections">
+        <a href="#investigation-section" class="flex items-center gap-3 rounded-lg border-l-2 border-primary bg-surface-container-high px-3 py-2 text-primary"><span class="material-symbols-outlined text-[20px]">troubleshoot</span><span class="font-label text-label-md font-semibold text-on-surface">Investigation</span></a>
+        <a href="#graph-section" class="side-link"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label text-label-md">Network Graph</span></a>
+        <a href="#clusters-section" class="side-link"><span class="material-symbols-outlined text-[20px]">bubble_chart</span><span class="font-label text-label-md">Cluster Analysis</span></a>
+        <a href="#evidence-section" class="side-link"><span class="material-symbols-outlined text-[20px]">lock</span><span class="font-label text-label-md">Evidence</span></a>
+      </nav>
+    </div>
+    <div class="mx-3 flex items-center justify-between rounded-xl bg-surface-container-high/40 p-2 text-on-surface-variant"><div class="flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-primary"></span><span class="font-label text-label-sm text-outline">Stream status</span></div><span class="font-label text-label-sm font-semibold text-primary">Ready</span></div>
+  </aside>
 
-      <section id="synthetic-banner" class="synthetic" hidden>
-        <strong>Synthetic demonstration data.</strong> Actors, posts, URLs, and source links in this result are fictional and must not be treated as real-world findings.
-      </section>
+  <div class="md:pl-64"><main class="min-h-screen bg-surface pt-16"><div class="mx-auto flex max-w-6xl flex-col gap-5 p-4 md:p-6">
+    <section id="investigation-section" class="rounded-2xl bg-surface-container-low p-4 shadow-[0_4px_24px_rgba(0,0,0,0.25)] md:p-5">
+      <div class="mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">manage_search</span><div><h1 class="font-headline text-headline-md font-bold">Open an investigation</h1><p class="text-body-sm text-on-surface-variant">Collect bounded data or load an offline source, then inspect the observed relationships.</p></div></div>
+      <form id="investigation-form" class="grid gap-3 lg:grid-cols-[180px_1fr_auto] lg:items-end">
+        <label class="field-label">Source<select id="source" class="field-control mt-1"><option value="synthetic_coordinated">Synthetic: coordinated</option><option value="synthetic_benign">Synthetic: benign</option><option value="bluesky">Live: Bluesky public search</option><option value="snapshot">Offline: Bluesky snapshot</option><option value="import">Normalized JSON import</option></select></label>
+        <label class="field-label">Investigation phrase or URL<textarea id="investigation" rows="2" class="field-control mt-1 resize-none" placeholder="Search phrase, URL, or context passed from the extension"></textarea></label>
+        <button id="investigate-button" type="submit" class="flex h-10 items-center justify-center gap-2 rounded-xl bg-primary-container px-4 font-label text-label-md font-bold text-on-primary transition hover:brightness-110"><span class="material-symbols-outlined text-[18px]">radar</span>Investigate</button>
+        <label id="limit-field" class="field-label lg:col-start-1">Live result limit<input id="limit" class="field-control mt-1" type="number" value="50" min="1" max="100"></label>
+        <div class="lg:col-span-2"><p id="source-help" class="text-body-sm text-on-surface-variant">Synthetic data is reproducible, labelled demonstration data and works offline.</p><p id="handoff-notice" class="mt-1 hidden text-body-sm text-tertiary"></p></div>
+        <label id="import-field" class="field-label hidden lg:col-span-3">Normalized events JSON<input id="import-file" class="field-control mt-1 block" type="file" accept="application/json,.json"></label>
+      </form>
+      <p id="request-status" role="status" class="mt-3 hidden rounded-xl bg-surface-container-high px-3 py-2 text-body-sm text-on-surface-variant"></p>
+    </section>
 
-      <section id="report-section" hidden>
-        <div class="report-heading">
-          <div>
-            <p class="eyebrow">INVESTIGATION REPORT</p>
-            <h2 id="report-title">Report</h2>
-            <p id="report-summary" class="muted"></p>
-          </div>
-          <span id="report-status" class="badge"></span>
-        </div>
+    <section id="report-section" aria-live="polite" class="flex flex-col gap-4">
+      <div class="flex flex-col justify-between gap-4 rounded-2xl bg-surface-container-low p-5 shadow-[0_4px_24px_rgba(0,0,0,0.3)] md:flex-row md:items-center">
+        <div class="flex items-start gap-3"><div class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-surface-container-high text-primary"><span id="verdict-icon" class="material-symbols-outlined text-[28px]">saved_search</span></div><div><div class="flex flex-wrap items-center gap-2"><h2 id="verdict-title" class="font-headline text-headline-md font-bold">Awaiting investigation</h2><span id="verdict-badge" class="rounded-full bg-surface-container-highest px-2.5 py-0.5 font-label text-label-sm font-medium">No report</span></div><p id="verdict-summary" class="mt-1 max-w-2xl text-body-md text-on-surface-variant">Choose a source and run an investigation. Results describe observed data and do not establish identity or intent.</p></div></div>
+        <div class="flex shrink-0 items-center gap-3 self-end md:self-center"><div class="text-right"><span class="block font-label text-label-sm text-outline">Report status</span><span id="report-status" class="font-headline text-headline-sm font-bold text-primary">Ready</span></div><div class="h-8 w-px bg-surface-container-highest"></div><button type="button" id="export-button" disabled class="flex items-center gap-1.5 rounded-xl bg-surface-container-high px-3 py-2 font-label text-label-md text-on-surface-variant disabled:opacity-50"><span class="material-symbols-outlined text-[18px] text-primary">download</span>Export report</button></div>
+      </div>
+      <div id="synthetic-banner" class="hidden rounded-xl border border-primary/30 bg-primary-container/15 px-3 py-2 text-body-sm text-on-surface"><span class="font-semibold text-primary">Synthetic demonstration data.</span> These fictional accounts and posts are not real-world findings.</div>
 
-        <div class="report-grid">
-          <section class="panel"><h3>Statistics</h3><dl id="statistics" class="statistics"></dl></section>
-          <section class="panel"><h3>Clusters</h3><div id="clusters"></div></section>
-          <section class="panel"><h3>Limitations</h3><ul id="limitations"></ul></section>
-          <section class="panel"><h3>Evidence</h3><div id="evidence"></div></section>
-        </div>
+      <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+        <article class="kpi-card"><div><span class="kpi-label">Analyzed posts</span><span id="kpi-posts" class="kpi-value">—</span><span id="kpi-posts-note" class="kpi-note">No dataset loaded</span></div><span class="material-symbols-outlined kpi-icon">dynamic_feed</span></article>
+        <article class="kpi-card"><div><span class="kpi-label">Recurring relationships</span><span id="kpi-relationships" class="kpi-value">—</span><span id="kpi-relationships-note" class="kpi-note">Requires observed recurrence</span></div><span class="material-symbols-outlined kpi-icon">hub</span></article>
+        <article class="kpi-card"><div><span class="kpi-label">Shared URL groups</span><span id="kpi-urls" class="kpi-value">—</span><span id="kpi-urls-note" class="kpi-note">Observed in input data</span></div><span class="material-symbols-outlined kpi-icon">link</span></article>
+      </div>
 
-        <section class="panel graph-panel">
-          <div class="graph-heading">
-            <div><h3>Actor relationship graph</h3><p class="muted">Only recurring relationships are shown by default.</p></div>
-            <label>Cluster filter <select id="cluster-filter"><option value="all">All actors</option></select></label>
-          </div>
-          <div id="graph" role="img" aria-label="Actor relationship graph"></div>
-          <aside id="graph-detail" class="graph-detail">Select an actor or relationship to inspect its supporting public events.</aside>
+      <div class="grid items-start gap-3 lg:grid-cols-12">
+        <section id="graph-section" class="flex flex-col gap-3 rounded-2xl bg-surface-container-low p-4 shadow-sm lg:col-span-7">
+          <div class="flex items-center justify-between"><div class="flex items-center gap-1"><span class="material-symbols-outlined text-[20px] text-primary">hub</span><h2 class="font-headline text-headline-sm font-semibold">Network relationship graph</h2></div><div class="flex gap-1.5"><button id="graph-zoom-in" class="graph-control" aria-label="Zoom graph in"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button><button id="graph-zoom-out" class="graph-control" aria-label="Zoom graph out"><span class="material-symbols-outlined text-[18px]">zoom_out</span></button><button id="graph-reset" class="graph-control" aria-label="Reset graph"><span class="material-symbols-outlined text-[18px]">restart_alt</span></button></div></div>
+          <div class="relative h-[380px] overflow-hidden rounded-xl bg-surface-container-lowest shadow-inner"><div id="graph" class="h-full w-full"><p class="grid h-full place-items-center px-8 text-center text-body-sm text-outline">Run an investigation to render observed actor relationships.</p></div><div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-surface-container-low/90 p-2 backdrop-blur-md"><div class="flex flex-wrap gap-3 text-body-sm"><span class="inline-flex items-center gap-1.5"><i class="legend-dot bg-primary"></i>Recurring relationship</span><span class="inline-flex items-center gap-1.5"><i class="legend-dot bg-outline"></i>Observed actor</span></div><span class="font-label text-label-sm text-outline">Select a node or edge for source evidence</span></div></div>
+          <div class="grid gap-2 sm:grid-cols-[1fr_auto]"><div id="graph-detail" class="rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant">Select a node or relationship to inspect the event records behind it.</div><label class="field-label">Cluster filter<select id="cluster-filter" class="field-control mt-1 min-w-40"><option value="all">All observed actors</option></select></label></div>
         </section>
-      </section>
-    </main>
-  </body>
+
+        <section id="evidence-section" class="flex flex-col gap-3 rounded-2xl bg-surface-container-low p-4 shadow-sm lg:col-span-5"><div class="flex items-center justify-between"><div class="flex items-center gap-1"><span class="material-symbols-outlined text-[20px] text-primary">policy</span><h2 class="font-headline text-headline-sm font-semibold">Captured evidence</h2></div><span id="evidence-count" class="rounded-lg bg-surface-container-high px-2 py-1 font-label text-label-sm text-on-surface-variant">0 records</span></div><div id="evidence-feed" class="flex max-h-[454px] flex-col gap-2 overflow-y-auto pr-1"><p class="rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant">No evidence loaded yet.</p></div></section>
+      </div>
+
+      <div class="grid gap-3 md:grid-cols-3">
+        <section id="clusters-section" class="report-panel"><div class="panel-title"><span class="material-symbols-outlined text-primary">bubble_chart</span>Clusters</div><div id="clusters" class="panel-content">No clusters loaded.</div></section>
+        <section class="report-panel"><div class="panel-title"><span class="material-symbols-outlined text-primary">analytics</span>Statistics</div><div id="statistics" class="panel-content">No statistics loaded.</div></section>
+        <section id="limitations-section" class="report-panel"><div class="panel-title"><span class="material-symbols-outlined text-tertiary">info</span>Coverage &amp; limitations</div><div id="limitations" class="panel-content">Results must be read with their source coverage and uncertainty.</div></section>
+      </div>
+    </section>
+  </div></main></div>
+</body>
 </html>
