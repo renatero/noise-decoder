@@ -9,7 +9,21 @@ python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 
 The deployed demo runs at `https://radar.188.166.112.226.nip.io/`. Its
 systemd service binds only to `127.0.0.1:8000`; Caddy terminates public HTTPS
-and proxies the dashboard to it. The active Caddy host is:
+and proxies the dashboard to it. Install the declared dependencies in the
+project's virtual environment before starting the service:
+
+```bash
+cd /opt/projects/noise-decoder
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+```
+
+On Ubuntu, the Python `venv` OS package must be installed first. The supplied
+systemd unit runs `.venv/bin/python` so collection uses the declared `httpx`
+dependency rather than relying on packages in the system Python environment.
+For test runs, install `requirements-dev.txt` in the same environment.
+
+The active Caddy host is:
 
 ```caddyfile
 radar.188.166.112.226.nip.io {

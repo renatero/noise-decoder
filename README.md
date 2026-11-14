@@ -9,15 +9,18 @@ python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 
 Open `http://127.0.0.1:8000/` locally, or the VPS address during a network
 demo. The dashboard provides two reproducible synthetic scenarios, bounded
-public Bluesky search, an offline public-data snapshot, and normalized JSON
+public Bluesky and Hacker News search, BBC World / Guardian World / Al Jazeera
+news feeds, an offline public-data snapshot, and normalized JSON
 import. See [the API guide](src/api/README.md), [deployment guide](deploy/README.md),
-and [demo runbook](docs/demo-runbook.md).
+and [demo runbook](docs/demo-runbook.md). The source selector offers individual
+sources or **Live: All sources**. See [source research and coverage](docs/news-sources.md).
 
 ## Verify
 
 ```bash
 python3 -m unittest discover -s src/collectors/tests -v
 python3 -m unittest discover -s src/api/tests -v
+python3 -m unittest discover -s src/discovery/tests -v
 python3 -m unittest discover -s src/engine/tests -v
 node --experimental-default-type=module chrome-extension/tests/background.test.mjs
 ```

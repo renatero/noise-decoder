@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 import httpx
 
 
-SEARCH_URL = "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts"
+SEARCH_URL = "https://api.bsky.app/xrpc/app.bsky.feed.searchPosts"
 MAX_SEEDS = 40
 MAX_QUERIES = 5
 MAX_RESULTS_PER_QUERY = 25

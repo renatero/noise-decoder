@@ -30,6 +30,11 @@ function closeInvestigation() {
 const sourceMessages = {
   synthetic_coordinated: "Synthetic data is reproducible, labelled demonstration data and works offline.",
   synthetic_benign: "Synthetic data is reproducible, labelled demonstration data and works offline.",
+  all: "Searches Bluesky and Hacker News plus current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
+  hackernews: "Searches Hacker News story submissions by date. Actors are submitting usernames, not article authors.",
+  bbc: "BBC World headlines and summaries. Leave the phrase empty for recent items, or filter current headlines by all words. Actors represent the publisher.",
+  guardian: "The Guardian World headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
+  aljazeera: "Al Jazeera headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
   bluesky: "Uses a bounded public Bluesky search. Availability and coverage depend on the public endpoint.",
   snapshot: "Uses a stored public-data snapshot, so the demonstration can run without network access.",
   import: "Import normalized event JSON with id, platform, actor_id, timestamp, text, urls, and source_url fields.",
@@ -72,7 +77,7 @@ async function api(path, options = {}) {
 }
 
 function updateSourceFields() {
-  const isLive = source.value === "bluesky";
+  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera"].includes(source.value);
   const isImport = source.value === "import";
   limitField.classList.toggle("hidden", !isLive);
   importField.classList.toggle("hidden", !isImport);
@@ -99,11 +104,16 @@ async function loadSource() {
     case "synthetic_coordinated":
     case "synthetic_benign":
       return api(`/api/datasets/${source.value}`);
+    case "all":
+    case "hackernews":
+    case "bbc":
+    case "guardian":
+    case "aljazeera":
     case "bluesky": {
       const query = investigation.value.trim();
-      if (!query) throw new Error("Enter a phrase or URL for the public Bluesky search.");
+      if (!query && ["all", "bluesky", "hackernews"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
       const limit = Math.min(100, Math.max(1, Number($("#limit").value) || 50));
-      return api(`/api/collect/bluesky?query=${encodeURIComponent(query)}&limit=${limit}`);
+      return api(`/api/collect/${source.value}?query=${encodeURIComponent(query)}&limit=${limit}`);
     }
     case "snapshot":
       return api("/api/snapshots/bluesky");
@@ -198,13 +208,13 @@ function renderLimitations(report, sourceData) {
   const unique = [...new Set(notes)];
   if (!unique.length) unique.push("No additional coverage notes were supplied.");
   const list = element("ul", "space-y-2");
-  unique.slice(0, 6).forEach((note) => list.append(element("li", "flex gap-2 text-body-sm text-on-surface-variant", note)));
+  unique.forEach((note) => list.append(element("li", "flex gap-2 text-body-sm text-on-surface-variant", note)));
   target.append(list);
 }
 
 function sourceLink(event) {
   if (!event?.source_url) return null;
-  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", "Open original public post");
+  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", event.platform === "news_rss" ? `Read at ${event.publisher || event.actor_id}` : "Open original public post");
   link.href = event.source_url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
@@ -219,6 +229,16 @@ function renderEvidence(report) {
   $("#evidence-count").textContent = `${evidence.length} relationship${evidence.length === 1 ? "" : "s"}`;
   if (!evidence.length) {
     target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", "No shared-relationship evidence was returned for this input."));
+    $("#evidence-count").textContent = `${latestEvents.length} source records`;
+    latestEvents.slice(0, 16).forEach((event) => {
+      const card = element("article", "rounded-xl bg-surface-container-lowest p-3");
+      card.append(element("div", "font-label text-label-md font-bold text-on-surface", event.publisher || event.actor_id));
+      card.append(element("div", "mt-1 font-label text-label-sm text-outline", `${formatLabel(event.platform)} · ${new Date(event.timestamp).toLocaleString()}`));
+      card.append(element("p", "mt-1.5 text-body-sm text-on-surface-variant", event.text));
+      const link = sourceLink(event);
+      if (link) card.append(link);
+      target.append(card);
+    });
     return;
   }
   evidence.slice(0, 16).forEach((item) => {
@@ -299,7 +319,11 @@ function renderGraph(report, selectedCluster = "all") {
 }
 
 function renderReport(report, sourceData) {
-  latestReport = report;
+  latestReport = {
+    ...report,
+    limitations: [...new Set([...(sourceData.limitations || []), ...(report.limitations || [])])],
+    collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources },
+  };
   renderVerdict(report);
   renderKpis(report);
   renderStatistics(report);
@@ -356,7 +380,7 @@ function initialiseExtensionInput() {
   const query = params.get("investigate");
   if (!query) return;
   investigation.value = query;
-  source.value = "bluesky";
+  source.value = "all";
   handoffNotice.textContent = "Extension handoff: this prefills an investigation only. It does not mean the selected page or post has been collected or analyzed.";
   handoffNotice.classList.remove("hidden");
   updateSourceFields();

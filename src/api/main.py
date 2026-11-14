@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, collect_posts
+from src.collectors.public import SOURCE_IDS, collect_source, source_catalog
 from src.api.integration import analyze_events
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
@@ -72,6 +73,29 @@ def collect_bluesky(
 ) -> dict[str, Any]:
     """Retrieve a bounded, unauthenticated set of public Bluesky posts."""
     return collect_bluesky_or_error(query, limit)
+
+
+@app.get("/api/sources")
+def list_sources() -> dict[str, Any]:
+    return {"sources": source_catalog()}
+
+
+@app.get("/api/collect/{source}")
+def collect_public_source(
+    source: str,
+    query: str = Query(default="", max_length=512),
+    limit: int = Query(default=50, ge=1, le=100),
+) -> dict[str, Any]:
+    if source not in (*SOURCE_IDS, "all"):
+        raise HTTPException(status_code=404, detail="Unknown public source.")
+    try:
+        return collect_source(source, query, limit=limit)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+    except CollectorRateLimitError as error:
+        raise HTTPException(status_code=429, detail=str(error)) from error
+    except (CollectorError, OSError) as error:
+        raise HTTPException(status_code=502, detail=str(error)) from error
 
 
 @app.get("/api/snapshots/bluesky")
