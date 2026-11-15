@@ -519,17 +519,6 @@ function exportReport() {
   URL.revokeObjectURL(link.href);
 }
 
-async function checkHealth() {
-  try {
-    await api("/healthz");
-    $("#service-indicator").className = "h-2 w-2 rounded-full bg-primary animate-pulse";
-    $("#service-label").textContent = "System active";
-  } catch (_) {
-    $("#service-indicator").className = "h-2 w-2 rounded-full bg-error";
-    $("#service-label").textContent = "Service unavailable";
-  }
-}
-
 async function checkSources() {
   try {
     const catalog = await api("/api/sources");
@@ -570,5 +559,4 @@ $("#investigation-overlay").addEventListener("click", (event) => { if (event.tar
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeInvestigation(); });
 updateSourceFields();
 initialiseExtensionInput();
-checkHealth();
 checkSources();
