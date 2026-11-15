@@ -3,13 +3,17 @@
 `nemotron.json` defines the Verda deployment `noise-decoder-nemotron`:
 
 - Model: `nvidia/NVIDIA-Nemotron-Nano-9B-v2`, pinned Hugging Face revision.
-- Engine: official `vllm/vllm-openai:v0.11.2`, pinned to its image digest.
+- Engine: official `vllm/vllm-openai:v0.11.2`, using an explicit release tag.
+  Its digest was verified as
+  `sha256:2c908d5a84ed251b6a17d179f42d06df1aff353007779ac5eecd8a0ea3fe9331`.
 - Compute: one L40S 48 GB, on demand; maximum one replica.
 - Scaling: zero minimum replicas, queue-triggered startup, 300-second scale-down
   delay, 900-second request TTL. CPU/GPU utilization scaling is disabled.
 - Model context: 16,384 tokens; four sequences; eager execution to reduce startup
   compilation. Mamba state uses float32 as NVIDIA recommends.
-- No Hugging Face credential, persistent paid storage, or registry secret is needed
+- Verda’s deployment scratch disk is mounted at `/data`, with
+  `HF_HOME=/data/hf-cache` to reuse weights across cold starts. No separate SFS
+  storage volume is created. No Hugging Face credential or registry secret is needed
   for this public model and image. Verda's inference gateway requires the existing
   server-side inference API key.
 
@@ -30,10 +34,10 @@ hour** for one L40S on 2026-11-15. Startup and shutdown usage are billable. Verd
 current documentation describes minute-based usage, aggregated on bills in
 10-minute intervals. Five minutes of idle delay is about USD 0.185 at that rate;
 actual costs depend on startup time, requests, billing and future prices. There
-is no always-running minimum replica and no paid storage attached by this manifest.
+is no always-running minimum replica or separately provisioned SFS volume.
 
 The initial image/model download can take several minutes. Subsequent cold starts
-also require warming the model. The application submits each model-catalog request
+also require loading the model, with downloaded weights reused from the scratch disk. The application submits each model-catalog request
 and inference once using Verda's asynchronous gateway, then polls that request's
 result. Each wait has a ten-minute deadline; HTTP calls have 45-second timeouts.
 No second inference is automatically submitted. Polling URLs are restricted to
@@ -66,3 +70,7 @@ Do not put Cloud API tokens, inference keys or operator tokens in this repositor
 NVIDIA's `/no_think` control is added for this model so evidence reviews request
 direct structured output rather than spending the response budget on reasoning.
 Model output still passes the application's exact-quotation and evidence-ID checks.
+
+The nginx deployment example preserves the incoming Host for same-origin settings
+and permits long review responses. The active HTTPS deployment uses Caddy, whose
+proxy does not impose nginx’s former 65-second response timeout.
