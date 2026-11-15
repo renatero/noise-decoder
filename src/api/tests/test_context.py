@@ -34,6 +34,15 @@ class ContextApiTests(unittest.IsolatedAsyncioTestCase):
                 response = await self.client.post("/api/collect/context", json={"query": "ai"}, headers=self.headers)
                 self.assertEqual(response.status_code, status)
 
+    async def test_empty_cached_news_keeps_provider_and_date_window(self):
+        with patch("src.api.main.collect_context_news", return_value={"source": "context_news", "events": [], "cached": True, "credits_consumed": 0}):
+            response = await self.client.post("/api/collect/context", json={"query": "rare phrase", "days": 30}, headers=self.headers)
+        data = response.json()
+        self.assertEqual(data["sources"][0]["name"], "Context.dev news index")
+        self.assertIn("30 days", data["sources"][0]["scope"])
+        self.assertEqual(data["sources"][0]["available_events"], 0)
+        self.assertTrue(data["cached"])
+
     async def test_news_metadata_survives_import_and_is_excluded_from_analysis(self):
         news = [{"id": f"context:{actor}{i}", "platform": "news_context", "actor_id": actor,
                  "timestamp": "2026-11-14T10:00:00Z", "text": "AI news", "urls": [f"https://example.org/{i}"],

@@ -109,3 +109,16 @@ dashboard; it does not make cross-origin API requests.
 
 The deployed service binds locally and is exposed by the Caddy HTTPS reverse
 proxy. Do not expose port `8000` directly for public use.
+
+### Search coverage in dashboard reports
+
+Live collection responses include `sources`, `query`, `requested_limit`, and
+`search_completed_at`, even when no usable records match. Each source includes
+its display name, link, search scope, completion status, and usable/returned
+record counts. A failed source has `available_events: null` (unknown), rather
+than zero matches. Collection errors retain HTTP error status and carry this
+trace under `collection` alongside `detail`. The dashboard shows the trace below
+the verdict and includes it in exported reports. Offline datasets/imports are
+explicitly labelled as having performed no live search. Context.dev reports its
+news index and selected date window; it does not imply direct searches of every
+publisher or social platform.

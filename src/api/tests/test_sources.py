@@ -5,6 +5,7 @@ import httpx
 
 from src.api.main import app
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError
+from src.collectors.public import SOURCE_IDS
 
 
 class SourceApiTests(unittest.IsolatedAsyncioTestCase):
@@ -41,3 +42,43 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
             with patch("src.api.main.collect_source", side_effect=error):
                 response = await self.client.get("/api/collect/hackernews?query=test")
                 self.assertEqual(response.status_code, status)
+                row = response.json()["collection"]["sources"][0]
+                self.assertEqual(row["name"], "Hacker News")
+                self.assertEqual(row["status"], "error")
+                self.assertIsNone(row["available_events"])
+
+    async def test_zero_results_keep_the_searched_source_and_query(self):
+        with patch("src.api.main.collect_source", return_value={"source": "bbc_rss", "events": [], "fetched_posts": 20}):
+            response = await self.client.get("/api/collect/bbc?query=rare%20phrase&limit=10")
+        data = response.json()
+        self.assertEqual(data["query"], "rare phrase")
+        self.assertEqual(data["requested_limit"], 10)
+        self.assertTrue(data["search_completed_at"])
+        row = data["sources"][0]
+        self.assertEqual(row["name"], "BBC News — World")
+        self.assertEqual(row["available_events"], 0)
+        self.assertEqual(row["status"], "ok")
+        self.assertIn("rss", row["url"])
+
+    async def test_total_failure_preserves_every_attempted_source(self):
+        with patch("src.collectors.public.collect_posts", side_effect=CollectorError("offline")), \
+             patch("src.collectors.public.collect_hackernews", side_effect=CollectorError("offline")), \
+             patch("src.collectors.public.collect_feed", side_effect=CollectorError("offline")):
+            response = await self.client.get("/api/collect/all?query=topic")
+        self.assertEqual(response.status_code, 502)
+        data = response.json()["collection"]
+        self.assertEqual({row["id"] for row in data["sources"]}, set(SOURCE_IDS))
+        self.assertTrue(all(row["status"] == "error" and row["available_events"] is None for row in data["sources"]))
+        self.assertNotIn("context", {row["id"] for row in data["sources"]})
+
+    async def test_combined_zero_results_are_successful_searches_not_failures(self):
+        from src.collectors.bluesky import CollectionResult
+        empty = CollectionResult("empty", "topic", 10, 0, 0, 0, [], [])
+        with patch("src.collectors.public.collect_posts", return_value=empty), \
+             patch("src.collectors.public.collect_hackernews", return_value=empty), \
+             patch("src.collectors.public.collect_feed", return_value=empty):
+            response = await self.client.get("/api/collect/all?query=topic&limit=10")
+        self.assertEqual(response.status_code, 200)
+        rows = response.json()["sources"]
+        self.assertEqual(len(rows), 5)
+        self.assertTrue(all(row["status"] == "ok" and row["available_events"] == 0 for row in rows))

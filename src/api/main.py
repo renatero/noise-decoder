@@ -6,12 +6,12 @@ from typing import Any
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, collect_posts
-from src.collectors.public import SOURCE_IDS, collect_source, source_catalog
+from src.collectors.public import SOURCE_IDS, collect_source, source_catalog, collection_details
 from src.collectors.context import ContextUnavailable, collect_news as collect_context_news
 from src.api.integration import analyze_events
 
@@ -79,8 +79,13 @@ class ContextSearchRequest(BaseModel):
     days: int = Field(default=7, ge=1, le=30)
 
 
+def collection_failure(source, query, limit, error, status, *, days=None):
+    return JSONResponse(status_code=status, content={"detail": str(error), "collection":
+        collection_details(source, query, limit, {"events": []}, error=error, days=days)})
+
+
 @app.post("/api/collect/context")
-def collect_context(payload: ContextSearchRequest, request: Request) -> dict[str, Any]:
+def collect_context(payload: ContextSearchRequest, request: Request):
     # Custom header + no CORS opt-in prevents cross-site browser spending. This
     # public demo also enforces a durable, global credit budget in the collector.
     origin = request.headers.get("origin")
@@ -92,33 +97,34 @@ def collect_context(payload: ContextSearchRequest, request: Request) -> dict[str
     if request.headers.get("x-noisedecoder-request") != "1" or foreign_origin:
         raise HTTPException(status_code=403, detail="Start Context.dev searches from this dashboard.")
     try:
-        return collect_context_news(payload.query, limit=payload.limit, days=payload.days)
+        result = collect_context_news(payload.query, limit=payload.limit, days=payload.days)
+        return collection_details("context", payload.query, payload.limit, result, days=payload.days)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from None
     except ContextUnavailable as error:
-        raise HTTPException(status_code=503, detail=str(error)) from None
+        return collection_failure("context", payload.query, payload.limit, error, 503, days=payload.days)
     except CollectorRateLimitError as error:
-        raise HTTPException(status_code=429, detail=str(error)) from None
+        return collection_failure("context", payload.query, payload.limit, error, 429, days=payload.days)
     except CollectorError as error:
-        raise HTTPException(status_code=502, detail=str(error)) from None
+        return collection_failure("context", payload.query, payload.limit, error, 502, days=payload.days)
 
 
-def collect_bluesky_or_error(query: str, limit: int) -> dict[str, Any]:
+def collect_bluesky_or_error(query: str, limit: int):
     try:
-        return collect_posts(query, limit=limit).to_dict()
+        return collection_details("bluesky", query, limit, collect_posts(query, limit=limit).to_dict())
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except CollectorRateLimitError as error:
-        raise HTTPException(status_code=429, detail=str(error)) from error
+        return collection_failure("bluesky", query, limit, error, 429)
     except CollectorError as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
+        return collection_failure("bluesky", query, limit, error, 502)
 
 
 @app.get("/api/collect/bluesky")
 def collect_bluesky(
     query: str = Query(min_length=1, max_length=512),
     limit: int = Query(default=50, ge=1, le=100),
-) -> dict[str, Any]:
+):
     """Retrieve a bounded, unauthenticated set of public Bluesky posts."""
     return collect_bluesky_or_error(query, limit)
 
@@ -133,17 +139,17 @@ def collect_public_source(
     source: str,
     query: str = Query(default="", max_length=512),
     limit: int = Query(default=50, ge=1, le=100),
-) -> dict[str, Any]:
+):
     if source not in (*SOURCE_IDS, "all"):
         raise HTTPException(status_code=404, detail="Unknown public source.")
     try:
-        return collect_source(source, query, limit=limit)
+        return collection_details(source, query, limit, collect_source(source, query, limit=limit))
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except CollectorRateLimitError as error:
-        raise HTTPException(status_code=429, detail=str(error)) from error
+        return collection_failure(source, query, limit, error, 429)
     except (CollectorError, OSError) as error:
-        raise HTTPException(status_code=502, detail=str(error)) from error
+        return collection_failure(source, query, limit, error, 502)
 
 
 @app.get("/api/snapshots/bluesky")

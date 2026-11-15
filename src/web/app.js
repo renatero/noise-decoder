@@ -73,7 +73,11 @@ function setLoading(loading) {
 async function api(path, options = {}) {
   const response = await fetch(path, options);
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+  if (!response.ok) {
+    const error = new Error(typeof data.detail === "string" ? data.detail : `Request failed (${response.status})`);
+    error.collection = data.collection;
+    throw error;
+  }
   return data;
 }
 
@@ -138,6 +142,9 @@ async function loadSource() {
 }
 
 function verdictCopy(status) {
+  if (status === "search_failed") return {
+    title: "Search could not be completed", description: "Review each source's status below and try again.", icon: "error",
+  };
   if (status === "news_context") return {
     title: "Related news collected", description: "Publisher coverage provides background context for your investigation.", icon: "newspaper",
   };
@@ -162,13 +169,61 @@ function eventMap() {
   return new Map(latestEvents.map((event) => [String(event.id), event]));
 }
 
-function renderVerdict(report) {
+function renderVerdict(report, sourceData) {
   const copy = verdictCopy(report.status);
   $("#verdict-title").textContent = copy.title;
-  $("#verdict-summary").textContent = report.summary || copy.description;
+  let summary = report.summary || copy.description;
+  if (report.status === "insufficient_data") {
+    const count = latestEvents.length;
+    const sources = sourceData.sources || [];
+    const failed = sources.filter((item) => item.status === "error").length;
+    summary = sources.length
+      ? `${count} usable record${count === 1 ? "" : "s"} collected. ${failed ? `${failed} of ${sources.length} sources could not complete the search. ` : ""}There is not enough data to assess recurring relationships. See the sources searched below.`
+      : `${count} record${count === 1 ? "" : "s"} loaded. There is not enough data to assess recurring relationships. No live search was performed.`;
+  }
+  $("#verdict-summary").textContent = summary;
   $("#verdict-icon").textContent = copy.icon;
   $("#verdict-badge").textContent = formatLabel(report.status);
   $("#report-status").textContent = formatLabel(report.status);
+}
+
+function renderSearchCoverage(sourceData) {
+  const rows = Array.isArray(sourceData.sources) ? sourceData.sources : [];
+  const section = $("#search-coverage");
+  section.classList.remove("hidden");
+  $("#search-coverage-title").textContent = rows.length ? "Sources searched" : "Data source";
+  const details = [];
+  if (rows.length) {
+    details.push(sourceData.query ? `Query: “${sourceData.query}”` : "Current headlines · no keyword filter");
+    if (sourceData.requested_limit) details.push(`Result limit: ${sourceData.requested_limit}`);
+    if (sourceData.search_completed_at) details.push(`Completed: ${new Date(sourceData.search_completed_at).toLocaleString()}`);
+    if (sourceData.cached) details.push("Cached results · no new provider request");
+    if (sourceData.source === "all_public_sources" || sourceData.source === "all") details.push("Context.dev is searched separately when selected");
+  } else {
+    details.push("No live search was performed. Results use the selected dataset, snapshot, or imported file.");
+  }
+  $("#search-query-summary").textContent = details.join(" · ");
+  const target = $("#search-source-list");
+  clear(target);
+  for (const item of rows) {
+    const card = element("li", "rounded-xl bg-surface-container-lowest p-3");
+    const heading = element("div", "flex flex-wrap items-center justify-between gap-2");
+    const name = element("a", "font-label text-label-md font-bold text-primary underline", item.name || formatLabel(item.id));
+    if (/^https?:\/\//i.test(item.url || "")) {
+      name.href = item.url;
+      name.target = "_blank";
+      name.rel = "noopener noreferrer";
+    }
+    const failed = item.status === "error";
+    const count = item.available_events ?? 0;
+    const status = failed ? "Unavailable · search not completed" : count ? `${count} usable record${count === 1 ? "" : "s"}` : "No usable matches";
+    heading.append(name, element("span", `text-body-sm ${failed ? "text-error" : "text-on-surface-variant"}`, status));
+    card.append(heading);
+    if (item.scope) card.append(element("p", "mt-1 text-body-sm text-outline", item.scope));
+    if (failed) card.append(element("p", "mt-1 text-body-sm text-error", item.error || "This source was unavailable. Its results are unknown."));
+    else if (count > 0 && item.returned_events < count) card.append(element("p", "mt-1 text-body-sm text-outline", `${item.returned_events} included after the combined result limit.`));
+    target.append(card);
+  }
 }
 
 function renderKpis(report) {
@@ -252,7 +307,8 @@ function renderEvidence(report) {
   if (!evidence.length) {
     target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", report.status === "news_context"
       ? "Related publisher coverage. Open an original article to assess its relevance."
-      : "No shared-relationship evidence was returned for this input."));
+      : latestEvents.length ? "No shared-relationship evidence was returned for this input."
+      : "No usable records were returned. Review the source results above."));
     $("#evidence-count").textContent = `${latestEvents.length} source records`;
     latestEvents.slice(0, 16).forEach((event) => {
       const card = element("article", "rounded-xl bg-surface-container-lowest p-3");
@@ -347,9 +403,11 @@ function renderReport(report, sourceData) {
     ...report,
     limitations: [...new Set([...(sourceData.limitations || []), ...(report.limitations || [])])],
     collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources,
+      requested_limit: sourceData.requested_limit, search_completed_at: sourceData.search_completed_at,
       cached: sourceData.cached, credits_consumed: sourceData.credits_consumed, collected_at: sourceData.collected_at },
   };
-  renderVerdict(report);
+  renderVerdict(report, sourceData);
+  renderSearchCoverage(sourceData);
   renderKpis(report);
   renderStatistics(report);
   renderClusters(report);
@@ -373,6 +431,11 @@ async function runInvestigation(event) {
     setStatus(`Report ready: ${formatLabel(report.status)}.`, "success");
     closeInvestigation();
   } catch (error) {
+    if (error.collection) {
+      latestEvents = [];
+      renderReport({status: "search_failed", summary: error.message, statistics: {}, nodes: [], edges: [], evidence: [], clusters: []}, error.collection);
+      closeInvestigation();
+    }
     setStatus(error.message || "Unable to run this investigation.", "error");
   } finally {
     setLoading(false);
