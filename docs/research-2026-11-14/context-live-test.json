@@ -1,0 +1,273 @@
+{
+  "tested_at": "2026-11-14T23:38:03.152790+00:00",
+  "calls": [
+    {
+      "method": "GET",
+      "path": "/org/usage",
+      "status": 200,
+      "seconds": 0.344,
+      "response_fields": [
+        "auto_topup",
+        "credits_remaining",
+        "key_metadata",
+        "next_refill",
+        "period",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 0,
+        "credits_remaining": 51000
+      },
+      "request_id": "29ded45b-6af3-4220-9918-59956cfc1f3f",
+      "credits_used_header": null
+    },
+    {
+      "method": "POST",
+      "path": "/news/search",
+      "status": 200,
+      "seconds": 0.387,
+      "response_fields": [
+        "data",
+        "has_more",
+        "key_metadata",
+        "meta",
+        "next_cursor",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 1,
+        "credits_remaining": 50999
+      },
+      "request_id": "851d8dee-6167-4993-bdb5-a40339f258a0",
+      "credits_used_header": "1"
+    },
+    {
+      "method": "POST",
+      "path": "/web/scrape",
+      "status": 200,
+      "seconds": 3.381,
+      "response_fields": [
+        "bytes",
+        "cache_metadata",
+        "highlights",
+        "html",
+        "images",
+        "json",
+        "key_metadata",
+        "markdown",
+        "metadata",
+        "parsed",
+        "product",
+        "profile",
+        "request_id",
+        "screenshot",
+        "url"
+      ],
+      "key_metadata": {
+        "credits_consumed": 1,
+        "credits_remaining": 50998
+      },
+      "request_id": "a8cc3c6c-5f79-453c-9f0d-4784c451e4f0",
+      "credits_used_header": "1"
+    },
+    {
+      "method": "GET",
+      "path": "/org/usage",
+      "status": 200,
+      "seconds": 0.236,
+      "response_fields": [
+        "auto_topup",
+        "credits_remaining",
+        "key_metadata",
+        "next_refill",
+        "period",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 0,
+        "credits_remaining": 50998
+      },
+      "request_id": "75a8554e-6ff9-452c-a911-01386115f0c5",
+      "credits_used_header": null
+    }
+  ],
+  "balance_before": 51000,
+  "query": "artificial intelligence regulation",
+  "news": {
+    "count": 10,
+    "has_more": true,
+    "cursor_present": true,
+    "pagination_tested": false,
+    "article_fields": [
+      "authors",
+      "description",
+      "id",
+      "image_url",
+      "language",
+      "match",
+      "published_at",
+      "source",
+      "story_id",
+      "title",
+      "type",
+      "url"
+    ],
+    "distinct_publishers": 7,
+    "samples": [
+      {
+        "id": "9416b415794cbcc39546c2fc594f63ad68eee157acf20be0b07e410fe4914ea3",
+        "story_id": "79156777f93c7c07ebaeb01435d92773fd886968a988d8fc8ce22d2ec0dc3d93",
+        "title": "Oh Sure, Big Tech Wants Regulation—on Its Own Terms",
+        "url": "https://wired.com/story/opinion-oh-sure-big-tech-wants-regulationon-its-own-terms",
+        "published_at": "2020-01-28T14:34:00.000Z",
+        "source": {
+          "name": "wired.com",
+          "domain": "wired.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "4c2c7ee17acf232e3c2f152e7290a5b105d4054c52be85d11e5527ceae72b59b",
+        "story_id": "364c16fd266d941fa62af2a4a7ec444a87467b8945e2ff4528bdd6bcbd71a8e7",
+        "title": "What should be taken into account if Artificial Intelligence is to be regulated?",
+        "url": "https://finextra.com/the-long-read/62/what-should-be-taken-into-account-if-artificial-intelligence-is-to-be-regulated",
+        "published_at": "2020-10-26T18:47:00.000Z",
+        "source": {
+          "name": "finextra.com",
+          "domain": "finextra.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "de711ab613e1d24884e55bcc27a013804c4c4f720d27545423ef6c880ba20037",
+        "story_id": "f4eb2c76dd346af4547a6ea6a17657548ee4716334c69ad8d71ba0f55bbf8c28",
+        "title": "Regulation artificial intelligence",
+        "url": "https://koreatimes.co.kr/www/opinion/2023/06/195_353315.html",
+        "published_at": "2023-06-20T07:30:00.000Z",
+        "source": {
+          "name": "koreatimes",
+          "domain": "koreatimes.co.kr",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "c6761b074629f23fd9e326b1726c27fae5e4f04aab5d08434625a27351588c7c",
+        "story_id": "20c138291412bd6b4bece406b54bf5d0a2e1db6e13b6b70fbb434cb2787123e3",
+        "title": "AI: the world is finally starting to regulate artificial intelligence – what to expect from US, EU and China’s new laws",
+        "url": "https://moneycontrol.com/news/technology/ai-the-world-is-finally-starting-to-regulate-artificial-intelligence-what-to-expect-from-us-eu-and-chinas-new-laws-11764201.html",
+        "published_at": "2023-11-18T07:01:00.000Z",
+        "source": {
+          "name": "Moneycontrol",
+          "domain": "moneycontrol.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "08c63403bdceabe56bf591ef56a9092846a94ba16c8331883fdf6a66c6c25eb9",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/capital-region/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "13cf8e94267464fdb1302dc1e5045fbd82aff9f9b7680a4b52bf020828392fba",
+        "story_id": "b4d87de224baa39893945037d289ac2ccc5b3032246199e2d60a35e7529f38df",
+        "title": "AI regulation: Governments race to regulate artificial intelligence tools - The Economic Times",
+        "url": "https://m.economictimes.com/tech/technology/governments-race-to-regulate-artificial-intelligence-tools/articleshow/104677130.cms",
+        "published_at": "2023-10-24T13:27:55.000Z",
+        "source": {
+          "name": "The Economic Times (m.economictimes.com)",
+          "domain": "economictimes.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "3e050892bf728d6fe283a811f7458b6764d5a7f69819a3fb6f7951d4e7fbf7bb",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/buffalo/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "8b851f6f612d9e790002b32734eb0bc32a559839d780c446df044cc747a5d15c",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/central-ny/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "ec8f7c5ba991d8c0c0f47c0b449681e9ecedf0c9d8906330315d1be5498cb929",
+        "story_id": "5aefa8e8175264f9921465e1c99a63ea48f5abb6b6194eafa0287cbf5e0c3f72",
+        "title": "Cinco alternativas para regular la inteligencia artificial",
+        "url": "https://nytimes.com/es/2023/12/10/espanol/inteligencia-artificial-como-regular.html",
+        "published_at": "2023-12-10T08:01:09.000Z",
+        "source": {
+          "name": "nytimes.com",
+          "domain": "nytimes.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "es"
+      },
+      {
+        "id": "a6924fe06e1972bff0514e2baf314b7b05641fb04204f8c1dfd3cce4b6883ccc",
+        "story_id": "bcf0672e970ae89d280d8cdffcd223f22680d5f819517d3dd77cf0a3f65767ba",
+        "title": "Five Ways A.I. Could Be Regulated",
+        "url": "https://nytimes.com/2023/12/06/technology/artificial-intelligence-regulation.html",
+        "published_at": "2023-12-06T18:58:54.000Z",
+        "source": {
+          "name": "nytimes.com",
+          "domain": "nytimes.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      }
+    ],
+    "valid_event_mappings": 10
+  },
+  "scrape": {
+    "url": "https://wired.com/story/opinion-oh-sure-big-tech-wants-regulationon-its-own-terms",
+    "markdown_fields": [
+      "data",
+      "requested",
+      "success"
+    ],
+    "success": true,
+    "code": null,
+    "markdown_characters": 32252
+  },
+  "balance_after": 50998,
+  "observed_balance_delta": 2
+}

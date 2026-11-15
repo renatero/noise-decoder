@@ -1,0 +1,252 @@
+{
+  "tested_at": "2026-11-14T23:38:45.446969+00:00",
+  "calls": [
+    {
+      "method": "GET",
+      "path": "/org/usage",
+      "status": 200,
+      "seconds": 0.637,
+      "response_fields": [
+        "auto_topup",
+        "credits_remaining",
+        "key_metadata",
+        "next_refill",
+        "period",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 0,
+        "credits_remaining": 50998
+      },
+      "request_id": "5b80efc0-a24b-491d-bf6e-81c8daff5a99",
+      "credits_used_header": null
+    },
+    {
+      "method": "POST",
+      "path": "/news/search",
+      "status": 200,
+      "seconds": 0.766,
+      "response_fields": [
+        "data",
+        "has_more",
+        "key_metadata",
+        "meta",
+        "next_cursor",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 1,
+        "credits_remaining": 50997
+      },
+      "request_id": "e45185a4-238e-48ad-9714-14bc554044ab",
+      "credits_used_header": "1"
+    },
+    {
+      "method": "GET",
+      "path": "/org/usage",
+      "status": 200,
+      "seconds": 0.245,
+      "response_fields": [
+        "auto_topup",
+        "credits_remaining",
+        "key_metadata",
+        "next_refill",
+        "period",
+        "request_id"
+      ],
+      "key_metadata": {
+        "credits_consumed": 0,
+        "credits_remaining": 50997
+      },
+      "request_id": "2e0020ed-65ce-4986-8793-fccc85eafbc7",
+      "credits_used_header": null
+    }
+  ],
+  "balance_before": 50998,
+  "query": "artificial intelligence regulation",
+  "search_request": {
+    "searchBy": {
+      "type": "natural_language",
+      "query": "artificial intelligence regulation"
+    },
+    "limit": 10,
+    "filterBy": {
+      "articleLanguage": [
+        "en"
+      ],
+      "date": {
+        "from": 1794094726155,
+        "to": 1794699526155
+      }
+    }
+  },
+  "news": {
+    "count": 10,
+    "has_more": true,
+    "cursor_present": true,
+    "pagination_tested": false,
+    "article_fields": [
+      "authors",
+      "description",
+      "id",
+      "image_url",
+      "language",
+      "match",
+      "published_at",
+      "source",
+      "story_id",
+      "title",
+      "type",
+      "url"
+    ],
+    "distinct_publishers": 7,
+    "distinct_story_ids": 8,
+    "samples": [
+      {
+        "id": "d1ff61e39a244ae7175fcc5281f698b299982aab9bf2b3828fe5fdf7f9d704c3",
+        "story_id": "f5518a7367f0225093d31a72b39823abab5011778d3982e54b6cfe41021ad9f6",
+        "title": "Australia plans new regulator for artificial intelligence after OpenAI hack",
+        "url": "https://asia.nikkei.com/business/technology/artificial-intelligence/australia-plans-new-regulator-for-artificial-intelligence-after-openai-hack",
+        "published_at": "2026-11-10T03:56:21.000Z",
+        "source": {
+          "name": "Nikkei Asia",
+          "domain": "asia.nikkei.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "8fb20ecc05b2f41e371d31c4f71d76651700d512cdcd835e9a4bf2acd5263dc0",
+        "story_id": "9769b7fcd7b10a1fdd0fb23d101ad5b59fc783fa2b80033d15aa017aba9ab8b4",
+        "title": "With new Democratic Congress incoming, Illinois Gov. JB Pritzker calls for federal AI regulations",
+        "url": "https://cbsnews.com/chicago/news/gov-jb-pritzker-federal-ai-artificial-intelligence-regulations-democratic-congress",
+        "published_at": "2026-11-09T19:05:16.000Z",
+        "source": {
+          "name": "CBS News",
+          "domain": "cbsnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "35336d93746cdcf8f3d0f36a2cd508c8f14ab8d99b359cf0257f440e23498171",
+        "story_id": "a0e5d0f88309f17a5b8598f67a87cf35c24d40ddef68da9206ded69e63b36932",
+        "title": "Australia to be AI first-mover with safety regulator - RTHK",
+        "url": "https://news.rthk.hk/rthk/en/component/k2/1877246-20261110.htm",
+        "published_at": "2026-11-10T06:45:23.000Z",
+        "source": {
+          "name": "RTHK News",
+          "domain": "rthk.hk",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "9eb9dbd81a4348661e4257e53da5c32f0f6a5975387bb542adcf8dbd48a83da2",
+        "story_id": "bf823e1ab9c068b624185751fe2c2bdaa20c0b3ef642a48f06bb613f7c99520c",
+        "title": "Australia to set up AI safety regulator with powers to penalise companies",
+        "url": "https://business-standard.com/world-news/australia-to-set-up-ai-safety-regulator-with-powers-to-penalise-companies-126111000139_1.html",
+        "published_at": "2026-11-10T04:12:21.000Z",
+        "source": {
+          "name": "Business Standard",
+          "domain": "business-standard.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "d2f7a62993426aa4f0077e8feb4ce852ad2d39aa5bc898a3f1de5a6a155d254c",
+        "story_id": "c0f42805af68132c471dac69a842f596bcf327ca17c1c9b6e9e98fd8a19ff43f",
+        "title": "EU Pharmaceutical Regulations and Regulatory Strategy Training Course (Mar 1st - 2nd, 2027): Legislative Reform and AI Adoption Enable Faster Market Authorisation and Growth",
+        "url": "https://finance.yahoo.com/healthcare/articles/eu-pharmaceutical-regulations-regulatory-strategy-163000997.html",
+        "published_at": "2026-11-13T16:30:00.000Z",
+        "source": {
+          "name": "Yahoo Finance",
+          "domain": "finance.yahoo.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "08c63403bdceabe56bf591ef56a9092846a94ba16c8331883fdf6a66c6c25eb9",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/capital-region/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "3e050892bf728d6fe283a811f7458b6764d5a7f69819a3fb6f7951d4e7fbf7bb",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/buffalo/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "8b851f6f612d9e790002b32734eb0bc32a559839d780c446df044cc747a5d15c",
+        "story_id": "3d836e0c37742d79dfcb12b859bd1f88b290d32c2f84abe69b15d8d3b0c6eeb0",
+        "title": "GlobalFoundries starts New York expansion with U.S.-Japan fab",
+        "url": "https://spectrumlocalnews.com/nys/central-ny/news/2026/11/13/globalfoundries-starts-malta-expansion-with-u-s--japan-fab",
+        "published_at": "2026-11-13T23:07:00.000Z",
+        "source": {
+          "name": "Spectrum News",
+          "domain": "spectrumlocalnews.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "72be3b2f034c317864f3ae21ce78b99f63ea55db7f2a162d60dd1a831d3d1404",
+        "story_id": "ff0826850a6d015573b58a55414eafcdbbc96dfa7484ad10c5ecd7c1cff9e8bb",
+        "title": "Semiconductor Active Vibration Isolation Market Size, Share, and Trends - Global Forecast 2026-2032 | Fab Expansion and AI-Enabled Precision Control Drive 9.31% CAGR to USD 1.38 Billion",
+        "url": "https://finance.yahoo.com/technology/articles/semiconductor-active-vibration-isolation-market-140500461.html",
+        "published_at": "2026-11-12T14:05:00.000Z",
+        "source": {
+          "name": "Yahoo Finance",
+          "domain": "finance.yahoo.com",
+          "direct": true
+        },
+        "type": "editorial",
+        "language": "en"
+      },
+      {
+        "id": "4d82756dec373ce645abd0c55835bad24c48699c8f09876412b181082f91952b",
+        "story_id": "9a88d95f67ed7aa6ea4162522cc96cc2d5f1e5d91ab1abcd8573c4ab01b61d39",
+        "title": "Democratic political group launches new push to shape AI agenda before 2028",
+        "url": "https://twincities.com/2026/11/13/democrats-artificial-intelligence-agenda",
+        "published_at": "2026-11-13T19:08:33.000Z",
+        "source": {
+          "name": "twincities.com",
+          "domain": "twincities.com",
+          "direct": false
+        },
+        "type": "editorial",
+        "language": "en"
+      }
+    ],
+    "valid_event_mappings": 10,
+    "dates_in_requested_window": 10,
+    "english_results": 10
+  },
+  "balance_after": 50997,
+  "observed_balance_delta": 1
+}
