@@ -73,7 +73,10 @@ initial shared credential was rejected by Verda's managed `/v1/models` (HTTP 401
 A replacement Verda inference key subsequently authenticated successfully.
 The operator then authorized a dedicated NVIDIA deployment; its reproducible
 configuration and cost/scaling details are in [the deployment guide](../deploy/verda/README.md).
-No Cala credential was supplied. Credentials themselves are never committed.
+Cala was initially unconfigured. Its key was subsequently saved privately and Cala
+enabled on 2026-11-15. A live research request returned HTTP 200 after approximately
+78 seconds; Cala therefore has a two-minute read timeout. Credentials themselves
+are never committed.
 
 ## Review behavior and limits
 
@@ -100,7 +103,7 @@ rolling 30 days. An operation may include a model catalog check plus inference;
 these are application limits, not advertised vendor quotas or spending guarantees.
 Access tests and failed/uncertain requests consume an operation. There are no
 automatic retries. Inference is capped at 1,800 output tokens, responses at 2 MiB,
-and HTTP timeouts at 45 seconds. For Verda serverless cold starts, the application
+and HTTP timeouts at 45 seconds, except Cala's 120-second read timeout. For Verda serverless cold starts, the application
 submits each request once and polls its result for up to ten minutes. Polls never
 resubmit inference. Provider errors are sanitized before display.
 
