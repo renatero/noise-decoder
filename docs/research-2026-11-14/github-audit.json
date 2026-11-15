@@ -1,0 +1,354 @@
+[
+  {
+    "repository": "DIYgod/RSSHub",
+    "url": "https://github.com/DIYgod/RSSHub",
+    "description": "\ud83e\udde1 Everything is RSSible",
+    "archived": false,
+    "pushed_at": "2026-11-14T14:24:31Z",
+    "updated_at": "2026-11-14T19:55:40Z",
+    "license": "AGPL-3.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "RSS-Bridge/rss-bridge",
+    "url": "https://github.com/RSS-Bridge/rss-bridge",
+    "description": "The RSS feed for websites missing it",
+    "archived": false,
+    "pushed_at": "2026-11-13T02:08:44Z",
+    "updated_at": "2026-11-14T21:49:53Z",
+    "license": "Unlicense",
+    "default_branch": "master"
+  },
+  {
+    "repository": "FreshRSS/FreshRSS",
+    "url": "https://github.com/FreshRSS/FreshRSS",
+    "description": "A free, self-hostable news aggregator\u2026",
+    "archived": false,
+    "pushed_at": "2026-11-14T21:31:21Z",
+    "updated_at": "2026-11-14T21:57:09Z",
+    "license": "AGPL-3.0",
+    "default_branch": "edge"
+  },
+  {
+    "repository": "miniflux/v2",
+    "url": "https://github.com/miniflux/v2",
+    "description": "Minimalist and opinionated feed reader",
+    "archived": false,
+    "pushed_at": "2026-11-12T04:53:11Z",
+    "updated_at": "2026-11-14T20:22:07Z",
+    "license": "Apache-2.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "huginn/huginn",
+    "url": "https://github.com/huginn/huginn",
+    "description": "Create agents that monitor and act on your behalf.  Your agents are standing by!",
+    "archived": false,
+    "pushed_at": "2026-11-09T01:28:46Z",
+    "updated_at": "2026-11-14T21:45:17Z",
+    "license": "MIT",
+    "default_branch": "master"
+  },
+  {
+    "repository": "searxng/searxng",
+    "url": "https://github.com/searxng/searxng",
+    "description": "SearXNG is a free internet metasearch engine which aggregates results from various search services and databases. Users are neither tracked nor profiled.",
+    "archived": false,
+    "pushed_at": "2026-11-14T09:20:31Z",
+    "updated_at": "2026-11-14T23:01:30Z",
+    "license": "AGPL-3.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "dgtlmoon/changedetection.io",
+    "url": "https://github.com/dgtlmoon/changedetection.io",
+    "description": "Best and simplest tool for website change detection, web page monitoring, and website change alerts. Perfect for tracking content changes, price drops, restock alerts, and website defacement monitoring\u2014 MCP included! all for free or enjoy our SaaS plan!",
+    "archived": false,
+    "pushed_at": "2026-11-14T15:52:55Z",
+    "updated_at": "2026-11-14T21:20:34Z",
+    "license": "Apache-2.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "JustAnotherArchivist/snscrape",
+    "url": "https://github.com/JustAnotherArchivist/snscrape",
+    "description": "A social networking service scraper in Python",
+    "archived": false,
+    "pushed_at": "2023-11-15T00:21:52Z",
+    "updated_at": "2026-11-14T17:48:30Z",
+    "license": "GPL-3.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "zedeus/nitter",
+    "url": "https://github.com/zedeus/nitter",
+    "description": "Alternative Twitter front-end",
+    "archived": true,
+    "pushed_at": "2026-10-09T21:08:08Z",
+    "updated_at": "2026-11-14T21:24:45Z",
+    "license": "AGPL-3.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "soxoj/maigret",
+    "url": "https://github.com/soxoj/maigret",
+    "description": "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f Collect a dossier on a person by username from 6K websites",
+    "archived": false,
+    "pushed_at": "2026-11-14T09:21:15Z",
+    "updated_at": "2026-11-14T21:35:24Z",
+    "license": "MIT",
+    "default_branch": "main"
+  },
+  {
+    "repository": "smicallef/spiderfoot",
+    "url": "https://github.com/smicallef/spiderfoot",
+    "description": "SpiderFoot automates OSINT for threat intelligence and mapping your attack surface.",
+    "archived": false,
+    "pushed_at": "2026-04-13T19:43:06Z",
+    "updated_at": "2026-11-14T22:52:02Z",
+    "license": "MIT",
+    "default_branch": "master"
+  },
+  {
+    "repository": "bluesky-social/jetstream",
+    "url": "https://github.com/bluesky-social/jetstream",
+    "description": "Full-network archive and streaming service for atproto.",
+    "archived": false,
+    "pushed_at": "2026-10-29T09:20:13Z",
+    "updated_at": "2026-11-14T03:39:18Z",
+    "license": "Apache-2.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "bluesky-social/indigo",
+    "url": "https://github.com/bluesky-social/indigo",
+    "description": "Go source code for Bluesky's atproto services.",
+    "archived": false,
+    "pushed_at": "2026-11-14T05:07:23Z",
+    "updated_at": "2026-11-10T11:24:49Z",
+    "license": "Apache-2.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "LonamiWebs/Telethon",
+    "url": "https://github.com/LonamiWebs/Telethon",
+    "description": "Pure Python 3 MTProto API Telegram client library, for bots too!",
+    "archived": true,
+    "pushed_at": "2026-02-21T21:11:58Z",
+    "updated_at": "2026-11-14T11:46:39Z",
+    "license": "MIT",
+    "default_branch": "v1"
+  },
+  {
+    "repository": "tdlib/td",
+    "url": "https://github.com/tdlib/td",
+    "description": "Cross-platform library for building Telegram clients",
+    "archived": false,
+    "pushed_at": "2026-11-09T12:08:17Z",
+    "updated_at": "2026-11-14T11:24:55Z",
+    "license": "BSL-1.0",
+    "default_branch": "master"
+  },
+  {
+    "repository": "praw-dev/praw",
+    "url": "https://github.com/praw-dev/praw",
+    "description": "PRAW, an acronym for \"Python Reddit API Wrapper\", is a python package that allows for simple access to Reddit's API.",
+    "archived": false,
+    "pushed_at": "2026-11-09T23:40:00Z",
+    "updated_at": "2026-11-14T13:47:22Z",
+    "license": "BSD-2-Clause",
+    "default_branch": "main"
+  },
+  {
+    "repository": "Rapptz/discord.py",
+    "url": "https://github.com/Rapptz/discord.py",
+    "description": "An API wrapper for Discord written in Python.",
+    "archived": false,
+    "pushed_at": "2026-09-07T18:11:46Z",
+    "updated_at": "2026-11-14T13:13:43Z",
+    "license": "MIT",
+    "default_branch": "master"
+  },
+  {
+    "repository": "mediacloud/api-client",
+    "url": "https://github.com/mediacloud/api-client",
+    "description": "Public client for consuming content from the Media Cloud Online News Archive & Directory.",
+    "archived": false,
+    "pushed_at": "2026-10-06T23:50:37Z",
+    "updated_at": "2026-10-06T23:50:25Z",
+    "license": "Apache-2.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "dessalines/lemmy",
+    "url": "https://github.com/LemmyNet/lemmy",
+    "description": "\ud83d\udc00 A decentralised discussion platform for communities.",
+    "archived": false,
+    "pushed_at": "2026-11-13T16:25:47Z",
+    "updated_at": "2026-11-14T20:40:21Z",
+    "license": "AGPL-3.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "TeamNewPipe/NewPipeExtractor",
+    "url": "https://github.com/TeamNewPipe/NewPipeExtractor",
+    "description": "NewPipe's core library for extracting data from streaming sites",
+    "archived": false,
+    "pushed_at": "2026-11-11T11:15:37Z",
+    "updated_at": "2026-11-14T13:56:10Z",
+    "license": "GPL-3.0",
+    "default_branch": "dev"
+  },
+  {
+    "repository": "mwmbl/mwmbl",
+    "url": "https://github.com/mwmbl/mwmbl",
+    "description": "An open source, non-profit web search engine",
+    "archived": false,
+    "pushed_at": "2026-11-13T22:40:32Z",
+    "updated_at": "2026-11-13T21:39:45Z",
+    "license": "AGPL-3.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "ArchiveBox/ArchiveBox",
+    "url": "https://github.com/ArchiveBox/ArchiveBox",
+    "description": "\ud83d\uddc3 Open source self-hosted web archiving. Takes URLs/browser history/bookmarks/Pocket/Pinboard/etc., saves HTML, JS, PDFs, media, and more...",
+    "archived": false,
+    "pushed_at": "2026-11-14T22:49:54Z",
+    "updated_at": "2026-11-14T17:34:30Z",
+    "license": "MIT",
+    "default_branch": "dev"
+  },
+  {
+    "repository": "VladUZH/harken",
+    "url": "https://github.com/VladUZH/harken",
+    "description": "Self-hosted, open-source social listening \u2014 track what people say about you across Hacker News, Reddit, Mastodon, Bluesky & RSS, with sentiment & themes. No SaaS, no telemetry.",
+    "archived": false,
+    "pushed_at": "2026-07-22T11:59:28Z",
+    "updated_at": "2026-11-13T17:58:27Z",
+    "license": "MIT",
+    "default_branch": "main"
+  },
+  {
+    "repository": "obris-dev/openmagpie",
+    "url": "https://github.com/obris-dev/openmagpie",
+    "description": "Open-source, self-hostable social listening.",
+    "archived": false,
+    "pushed_at": "2026-10-14T14:21:14Z",
+    "updated_at": "2026-11-14T18:54:44Z",
+    "license": "NOASSERTION",
+    "default_branch": "main"
+  },
+  {
+    "repository": "beanssec/Orthanc",
+    "url": "https://github.com/beanssec/Orthanc",
+    "description": "Open source intelligence platform ",
+    "archived": false,
+    "pushed_at": "2026-06-15T04:09:37Z",
+    "updated_at": "2026-09-21T10:20:08Z",
+    "license": "MIT",
+    "default_branch": "main"
+  },
+  {
+    "repository": "CrispStrobe/CrispDeck",
+    "url": "https://github.com/CrispStrobe/CrispDeck",
+    "description": "Cross-platform Mastodon + Bluesky client with crossposting, identity mapping, and smart mentions. Web, desktop, and mobile.",
+    "archived": false,
+    "pushed_at": "2026-11-12T17:58:41Z",
+    "updated_at": "2026-11-11T00:55:52Z",
+    "license": "AGPL-3.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "freed-project/freed",
+    "url": "https://github.com/freed-project/freed",
+    "description": "Take back your feed. Open source, local-first social media aggregator. Capture FB, Insta, Linkedin, rss and more. Tune your ranking algos. Sync across devices. No cloud dependencies, no tracking, no algorithmic manipulation. Their algorithms optimize for profit. Optimize yours for life.",
+    "archived": false,
+    "pushed_at": "2026-11-13T00:13:51Z",
+    "updated_at": "2026-11-13T04:53:37Z",
+    "license": "MIT",
+    "default_branch": "dev"
+  },
+  {
+    "repository": "twintproject/twint",
+    "url": "https://github.com/twintproject/twint",
+    "description": "An advanced Twitter scraping & OSINT tool written in Python that doesn't use Twitter's API, allowing you to scrape a user's followers, following, Tweets and more while evading most API limitations.",
+    "archived": true,
+    "pushed_at": "2023-02-23T13:58:09Z",
+    "updated_at": "2026-11-14T10:12:13Z",
+    "license": "MIT",
+    "default_branch": "master"
+  },
+  {
+    "repository": "mariusor/vocata",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "repository": "fedimapper/fedisearch",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "repository": "genmon/aboutfeeds",
+    "url": "https://github.com/genmon/aboutfeeds",
+    "description": "Web feeds/RSS \"getting started\" guide for new users.",
+    "archived": false,
+    "pushed_at": "2025-07-01T17:45:08Z",
+    "updated_at": "2026-10-22T16:53:06Z",
+    "license": null,
+    "default_branch": "main"
+  },
+  {
+    "repository": "supahgreg/nostr-watch",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "repository": "nostr-protocol/nips",
+    "url": "https://github.com/nostr-protocol/nips",
+    "description": "Nostr Implementation Possibilities",
+    "archived": false,
+    "pushed_at": "2026-11-12T14:44:22Z",
+    "updated_at": "2026-11-14T14:27:09Z",
+    "license": null,
+    "default_branch": "master"
+  },
+  {
+    "repository": "LemmyNet/lemmy-js-client",
+    "url": "https://github.com/LemmyNet/lemmy-js-client",
+    "description": "A javascript / typescript http and websocket client and type system for Lemmy.",
+    "archived": false,
+    "pushed_at": "2026-11-11T08:02:39Z",
+    "updated_at": "2026-11-11T02:12:31Z",
+    "license": "AGPL-3.0",
+    "default_branch": "main"
+  },
+  {
+    "repository": "Chocobozzz/PeerTube",
+    "url": "https://github.com/Chocobozzz/PeerTube",
+    "description": "ActivityPub-federated video streaming platform using P2P directly in your web browser",
+    "archived": false,
+    "pushed_at": "2026-11-10T13:29:08Z",
+    "updated_at": "2026-11-14T14:15:44Z",
+    "license": "AGPL-3.0",
+    "default_branch": "develop"
+  },
+  {
+    "repository": "RSSNext/Folo",
+    "url": "https://github.com/RSSNext/Folo",
+    "description": "\ud83e\udde1 Folo is the AI RSS Reader",
+    "archived": false,
+    "pushed_at": "2026-11-10T16:50:54Z",
+    "updated_at": "2026-11-14T22:23:00Z",
+    "license": "AGPL-3.0",
+    "default_branch": "dev"
+  },
+  {
+    "repository": "algolia/hn-search",
+    "url": "https://github.com/algolia/hn-search",
+    "description": "Hacker News Search",
+    "archived": true,
+    "pushed_at": "2023-11-04T05:44:05Z",
+    "updated_at": "2026-10-13T20:57:49Z",
+    "license": "NOASSERTION",
+    "default_branch": "master"
+  }
+]

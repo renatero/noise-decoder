@@ -1,0 +1,101 @@
+[
+  {
+    "source": "Bluesky search",
+    "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=climate&limit=2&sort=latest",
+    "checked_at": "2026-11-14T23:11:46.532046+00:00",
+    "status": 403,
+    "error": "<html><head><title>403 Forbidden</title><link href='//fonts.bunny.net/css?family=Rubik:300,400,500' rel='stylesheet' type='text/css'><style>html, body { width: 100%; margin: 0; padding: 0; text-align: center; font-family: 'Rubik'; background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjg4MHB4IiBoZWlnaHQ9IjE0MjRweCIgdmlld0JveD0iMCAwIDI4ODAgMTQyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRw"
+  },
+  {
+    "source": "Hacker News official",
+    "url": "https://hacker-news.firebaseio.com/v0/newstories.json",
+    "checked_at": "2026-11-14T23:11:46.533080+00:00",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes_read": 4501,
+    "response_shape": "list",
+    "items": 500
+  },
+  {
+    "source": "Hacker News Algolia",
+    "url": "https://hn.algolia.com/api/v1/search_by_date?query=climate&hitsPerPage=2",
+    "checked_at": "2026-11-14T23:11:46.533793+00:00",
+    "status": 200,
+    "content_type": "application/json",
+    "bytes_read": 6404,
+    "response_shape": [
+      "exhaustive",
+      "exhaustiveNbHits",
+      "exhaustiveTypo",
+      "hits",
+      "hitsPerPage",
+      "nbHits"
+    ],
+    "items": 2
+  },
+  {
+    "source": "GDELT DOC",
+    "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=climate&mode=artlist&format=json&maxrecords=2&timespan=24h",
+    "checked_at": "2026-11-14T23:11:46.534579+00:00",
+    "status": 429,
+    "error": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries. All high-traffic users should switch to our ngrams dataset: https://blog.gdeltproject.org/using-the-new-web-ngrams-dataset-to-find-relevant-coverage/. For trend analysis, please see our daily newsletter briefings: https://blog.gdeltproject.org/announcing-our-new-daily-todays-trends-on-capitol-hill-todays-media-trends-newsletter-briefings/.\n\n"
+  },
+  {
+    "source": "GDELT bulk index",
+    "url": "https://data.gdeltproject.org/gdeltv2/lastupdate.txt",
+    "checked_at": "2026-11-14T23:11:46.535374+00:00",
+    "status": 200,
+    "content_type": "text/plain",
+    "bytes_read": 319,
+    "response_shape": "XML/text"
+  },
+  {
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/api/v1/documents.json?per_page=2&order=newest",
+    "checked_at": "2026-11-14T23:11:46.536469+00:00",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes_read": 1919,
+    "response_shape": [
+      "description",
+      "count",
+      "total_pages",
+      "next_page_url",
+      "results"
+    ],
+    "items": 2
+  },
+  {
+    "source": "USGS events",
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=2&orderby=time",
+    "checked_at": "2026-11-14T23:11:46.681033+00:00",
+    "status": 200,
+    "content_type": "application/json; charset=utf-8",
+    "bytes_read": 1775,
+    "response_shape": [
+      "type",
+      "metadata",
+      "features",
+      "bbox"
+    ],
+    "items": 2
+  },
+  {
+    "source": "Google News RSS (undocumented)",
+    "url": "https://news.google.com/rss/search?q=climate&hl=en-US&gl=US&ceid=US:en",
+    "checked_at": "2026-11-14T23:11:46.858341+00:00",
+    "status": 200,
+    "content_type": "application/xml; charset=utf-8",
+    "bytes_read": 140570,
+    "response_shape": "XML/text"
+  },
+  {
+    "source": "BBC World RSS",
+    "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "checked_at": "2026-11-14T23:11:46.869011+00:00",
+    "status": 200,
+    "content_type": "text/xml; charset=utf-8",
+    "bytes_read": 18259,
+    "response_shape": "XML/text"
+  }
+]
