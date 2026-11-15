@@ -1,6 +1,7 @@
 """Same-origin API, dashboard shell, and bounded public-data collection."""
 
 import json
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
@@ -17,6 +18,7 @@ from src.collectors.public import SOURCE_IDS, collect_source, source_catalog, co
 from src.collectors.context import ContextUnavailable, collect_news as collect_context_news
 from src.api.integration import analyze_events
 from src.providers.experimental import router as provider_router
+from src.providers.companies import router as company_router, recover_jobs
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
 SNAPSHOT_PATH = Path(__file__).resolve().parents[2] / "datasets" / "bluesky_public_snapshot.json"
@@ -25,8 +27,17 @@ SYNTHETIC_DATASETS = {
     "synthetic_coordinated": DATASET_DIR / "synthetic_coordinated.json",
     "synthetic_benign": DATASET_DIR / "synthetic_benign.json",
 }
-app = FastAPI(title="Coordination Radar")
+
+
+@asynccontextmanager
+async def lifespan(app):
+    recover_jobs()
+    yield
+
+
+app = FastAPI(title="Coordination Radar", lifespan=lifespan)
 app.include_router(provider_router)
+app.include_router(company_router)
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
 
 

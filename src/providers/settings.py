@@ -10,6 +10,7 @@ import sqlite3
 import time
 
 PROVIDERS = {
+    'openrouter': {'name': 'OpenRouter · Jev', 'env': 'OPENROUTER_API_KEY', 'enabled': False, 'model': '~typesafe/jev-latest', 'base_url': 'https://openrouter.ai/api'},
     'context': {'name': 'Context.dev', 'env': 'CONTEXT_API_KEY', 'enabled': True, 'model': '', 'base_url': 'https://api.context.dev/v1'},
     'cala': {'name': 'Cala.ai', 'env': 'CALA_API_KEY', 'enabled': False, 'model': '', 'base_url': 'https://api.cala.ai/v1'},
     'featherless': {'name': 'Featherless', 'env': 'FEATHERLESS_API_KEY', 'enabled': False, 'model': 'Qwen/Qwen2.5-7B-Instruct', 'base_url': 'https://api.featherless.ai/v1'},
@@ -87,7 +88,12 @@ def save_config(provider, patch):
         values['api_key'] = ''  # explicitly overrides any environment key too
     if 'api_key' in values and (len(values['api_key']) > 512 or any(c.isspace() for c in values['api_key'])):
         raise ValueError('API keys must contain no whitespace and at most 512 characters.')
-    if 'model' in values and not re.fullmatch(r'[A-Za-z0-9_./:-]{0,200}', values['model']):
+    if provider == 'openrouter' and 'model' in values:
+        if values['model'] == 'jev-latest':
+            values['model'] = '~typesafe/jev-latest'
+        if not re.fullmatch(r'(?:~typesafe/jev-latest|typesafe/jev-[A-Za-z0-9.-]+)', values['model']):
+            raise ValueError('Use ~typesafe/jev-latest or an exact typesafe/jev- model ID.')
+    elif 'model' in values and not re.fullmatch(r'[A-Za-z0-9_./:-]{0,200}', values['model']):
         raise ValueError('Invalid model ID.')
     if 'base_url' in values:
         base = values['base_url'].rstrip('/')
