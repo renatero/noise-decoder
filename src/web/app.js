@@ -14,6 +14,7 @@ const syntheticBanner = $("#synthetic-banner");
 const exportButton = $("#export-button");
 let graph = null;
 let graphResizeObserver = null;
+let tooltipAbortController = null;
 let latestReport = null;
 let latestEvents = [];
 
@@ -438,7 +439,7 @@ function detailForNode(node) {
   const events = (node.event_ids || []).map((id) => byId.get(String(id))).filter(Boolean);
   const panel = $("#graph-detail");
   clear(panel);
-  panel.append(element("div", "font-label text-label-md text-on-surface", node.displayLabel && node.displayLabel !== node.id ? `${node.displayLabel} · ${node.id}` : node.id));
+  panel.append(element("div", "font-label text-label-md text-on-surface", node.id));
   panel.append(element("p", "mt-1", `${events.length} normalized event record${events.length === 1 ? "" : "s"} connected to this actor.`));
   const link = sourceLink(events[0]);
   if (link) panel.append(link);
@@ -456,6 +457,8 @@ function detailForEdge(edge) {
 function renderGraph(report, selectedCluster = "all") {
   const container = $("#graph");
   graphResizeObserver?.disconnect();
+  tooltipAbortController?.abort();
+  tooltipAbortController = new AbortController();
   if (graph) { graph.destroy(); graph = null; }
   $("#graph-detail").textContent = "Select a node or relationship to inspect the event records behind it.";
   clear(container);
@@ -483,14 +486,14 @@ function renderGraph(report, selectedCluster = "all") {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-outline", "This filter has no graphable actor records."));
     return;
   }
-  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Select an actor for its full ID.`;
+  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Hover over an actor for its full ID. Select it for details.`;
   const connected = new Set(edges.flatMap(edge => [edge.source, edge.target]));
   const dense = nodes.length <= 24 && edges.length > nodes.length;
   graph = window.cytoscape({
     container,
-    elements: { nodes: nodes.map((node, index) => ({ data: {...node, displayLabel: node.id.length > 14 ? `Actor ${index + 1}` : node.id}, classes: connected.has(node.id) ? "recurring" : "" })), edges: edges.map((edge) => ({ data: edge })) },
+    elements: { nodes: nodes.map((node) => ({ data: node, classes: connected.has(node.id) ? "recurring" : "" })), edges: edges.map((edge) => ({ data: edge })) },
     style: [
-      { selector: "node", style: { "background-color": "#869397", label: "data(displayLabel)", color: "#dee2f6", "font-family": "Inter", "font-size": 12, "text-valign": "bottom", "text-margin-y": 6, "text-background-color": "#090e1c", "text-background-opacity": 0.9, "text-background-padding": 2, width: 24, height: 24 } },
+      { selector: "node", style: { "background-color": "#869397", label: "", color: "#dee2f6", "font-family": "Inter", "font-size": 12, "text-valign": "bottom", "text-margin-y": 6, "text-background-color": "#090e1c", "text-background-opacity": 0.9, "text-background-padding": 2, width: 24, height: 24 } },
       { selector: "node.recurring", style: { "background-color": "#4cd7f6" } },
       { selector: "edge", style: { width: "mapData(weight, 1, 8, 1, 2.5)", "line-color": "#06b6d4", "curve-style": "bezier", opacity: 0.3 } },
       { selector: "edge:selected", style: { opacity: 1, width: 3 } },
@@ -501,6 +504,21 @@ function renderGraph(report, selectedCluster = "all") {
       ? { name: "circle", animate: false, fit: false, radius: Math.max(160, nodes.length * 12), avoidOverlap: false }
       : { name: "cose", animate: false, fit: false, nodeDimensionsIncludeLabels: true, nodeRepulsion: () => 12000, idealEdgeLength: () => 140, componentSpacing: 100 },
   });
+  const tooltip = element("div", "graph-actor-tooltip");
+  tooltip.setAttribute("role", "tooltip");
+  tooltip.hidden = true;
+  container.append(tooltip);
+  const hideTooltip = () => { tooltip.hidden = true; };
+  graph.on("mouseover", "node", (event) => {
+    tooltip.textContent = event.target.id();
+    tooltip.hidden = false;
+    const point = event.target.renderedPosition();
+    tooltip.style.left = `${Math.max(8, Math.min(point.x - tooltip.offsetWidth / 2, container.clientWidth - tooltip.offsetWidth - 8))}px`;
+    tooltip.style.top = `${Math.max(8, Math.min(point.y + 18, container.clientHeight - tooltip.offsetHeight - 8))}px`;
+  });
+  graph.on("mouseout", "node", hideTooltip);
+  graph.on("pan zoom resize drag", hideTooltip);
+  container.addEventListener("mouseleave", hideTooltip, { signal: tooltipAbortController.signal });
   fitGraph();
   graphResizeObserver = new ResizeObserver(() => fitGraph());
   graphResizeObserver.observe(container);

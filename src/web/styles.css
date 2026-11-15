@@ -39,3 +39,19 @@
 #evidence-feed > article { min-width: 0; flex-shrink: 0; }
 #evidence-feed summary { overflow-wrap: anywhere; }
 #graph canvas { display: block; }
+
+#graph { position: relative; }
+.graph-actor-tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  max-width: min(280px, calc(100% - 16px));
+  padding: 6px 9px;
+  border: 1px solid #4cd7f6;
+  border-radius: 6px;
+  background: #090e1c;
+  color: #dee2f6;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}

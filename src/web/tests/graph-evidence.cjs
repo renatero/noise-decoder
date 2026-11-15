@@ -26,20 +26,23 @@ const assert = require('node:assert/strict');
       assert(g.nodeSize>=16,'Fitting the graph made its nodes and labels unreadable');
       assert(!g.overflow && !g.evidenceOverflow,'Page or evidence panel overflows');
       for (const b of g.boxes) assert(b.x1>=0 && b.y1>=0 && b.x2<=g.width+1 && b.y2<=g.height+1,`Clipped node ${b.id}`);
-      // Check labels independently from nodes: no overlapping rendered text.
-      const overlaps=await page.evaluate(()=>{
-        const boxes=graph.nodes().map(n=>n.renderedBoundingBox({includeNodes:false,includeLabels:true,includeOverlays:false}));
-        return boxes.flatMap((a,i)=>boxes.slice(i+1).filter(b=>Math.min(a.x2,b.x2)>Math.max(a.x1,b.x1)+1 && Math.min(a.y2,b.y2)>Math.max(a.y1,b.y1)+1));
-      });
-      assert.equal(overlaps.length,0,'Graph labels overlap');
+      assert(await page.evaluate(()=>graph.nodes().every(n=>n.style('label') === '')), 'Actor labels must be hidden by default');
     }
     await checkFit();
+    await page.locator('#graph').scrollIntoViewIfNeeded();
+    const tooltip=page.locator('.graph-actor-tooltip');
+    assert(!await tooltip.isVisible());
     const nodePoint = await page.evaluate(()=>{
       const p=graph.nodes()[0].renderedPosition(), r=document.querySelector('#graph').getBoundingClientRect();
       return {x:p.x+r.left,y:p.y+r.top};
     });
+    await page.mouse.move(nodePoint.x,nodePoint.y);
+    await tooltip.waitFor({state:'visible'});
+    assert.equal(await tooltip.textContent(),'demo:coordinated-01');
+    await page.mouse.move(0,0);
+    await tooltip.waitFor({state:'hidden'});
     await page.mouse.click(nodePoint.x,nodePoint.y);
-    assert.match(await page.locator('#graph-detail').textContent(),/Actor 1 · demo:coordinated-01/);
+    assert.match(await page.locator('#graph-detail').textContent(),/demo:coordinated-01/);
     const headings=await page.locator('.evidence-card h3').allTextContents();
     assert.equal(headings.length,16);
     assert.equal(new Set(headings).size,16,'Different relationships have indistinguishable headings');
@@ -63,11 +66,29 @@ const assert = require('node:assert/strict');
     await page.evaluate(()=>renderGraph({nodes:[{id:'a'},{id:'b'}],edges:[{id:'a-b',source:'a',target:'b',weight:2,repeated:true}]}));
     await page.waitForTimeout(300);
     await checkFit();
+    // Observed actors also stay unlabeled; long hover text wraps inside mobile bounds.
+    const longId='observed:'+'long-actor-id-'.repeat(12);
+    await page.evaluate(id=>renderGraph({nodes:[{id}],edges:[]}),longId);
+    await page.waitForTimeout(300);
+    await page.locator('#graph').scrollIntoViewIfNeeded();
+    assert(await page.evaluate(()=>graph.nodes()[0].style('label') === ''));
+    const observedPoint=await page.evaluate(()=>{
+      const p=graph.nodes()[0].renderedPosition(),r=document.querySelector('#graph').getBoundingClientRect();
+      return {x:p.x+r.left,y:p.y+r.top};
+    });
+    await page.mouse.move(observedPoint.x,observedPoint.y);
+    await tooltip.waitFor({state:'visible'});
+    assert.equal(await tooltip.textContent(),longId);
+    const tipBounds=await tooltip.boundingBox(), graphBounds=await page.locator('#graph').boundingBox();
+    assert(tipBounds.x>=graphBounds.x && tipBounds.x+tipBounds.width<=graphBounds.x+graphBounds.width);
+    assert(tipBounds.y>=graphBounds.y && tipBounds.y+tipBounds.height<=graphBounds.y+graphBounds.height);
+    await page.mouse.click(observedPoint.x,observedPoint.y);
+    assert((await page.locator('#graph-detail').textContent()).includes(longId));
     // Empty report clears selections and disconnects the previous resize observer.
     await page.evaluate(()=>{latestEvents=[]; renderReport({nodes:[],edges:[],evidence:[],clusters:[],statistics:{},status:'insufficient_data'},{});});
     assert.match(await page.locator('#graph-detail').textContent(),/Select a node or relationship/);
     assert.match(await page.locator('#graph').textContent(),/no graphable actor/);
     assert.deepEqual(errors,[]);
-    console.log('Graph and evidence checks passed: fit, label separation, resize, pair provenance, inspect, reset, empty state.');
+    console.log('Graph and evidence checks passed: fit, hidden labels, hover, resize, pair provenance, inspect, reset, empty state.');
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
