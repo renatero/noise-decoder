@@ -30,7 +30,7 @@ function closeInvestigation() {
 const sourceMessages = {
   synthetic_coordinated: "Synthetic data is reproducible, labelled demonstration data and works offline.",
   synthetic_benign: "Synthetic data is reproducible, labelled demonstration data and works offline.",
-  all: "Searches Bluesky and Hacker News plus current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
+  all: "Searches Bluesky, Hacker News, Reddit and current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
   hackernews: "Searches Hacker News story submissions by date. Actors are submitting usernames, not article authors.",
   bbc: "BBC World headlines and summaries. Leave the phrase empty for recent items, or filter current headlines by all words. Actors represent the publisher.",
   guardian: "The Guardian World headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
@@ -534,9 +534,13 @@ async function checkSources() {
   try {
     const catalog = await api("/api/sources");
     const context = catalog.sources.find((item) => item.id === "context");
+    const reddit = catalog.sources.find((item) => item.id === "reddit");
     const option = source.querySelector('option[value="context"]');
     option.disabled = !context?.available;
     option.textContent = context?.available ? "News: Context.dev search" : "News: Context.dev (unavailable)";
+    const redditOption = source.querySelector('option[value="reddit"]');
+    redditOption.disabled = !reddit?.available;
+    redditOption.textContent = reddit?.available ? "Discussion: Reddit search" : "Discussion: Reddit (configure OAuth)";
   } catch (_) { /* Keep the optional source disabled if configuration is unknown. */ }
 }
 
