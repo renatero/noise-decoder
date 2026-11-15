@@ -8,12 +8,15 @@ from urllib.parse import urlsplit
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 from pydantic import BaseModel, Field
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, collect_posts
 from src.collectors.public import SOURCE_IDS, collect_source, source_catalog, collection_details
 from src.collectors.context import ContextUnavailable, collect_news as collect_context_news
 from src.api.integration import analyze_events
+from src.providers.experimental import router as provider_router
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
 SNAPSHOT_PATH = Path(__file__).resolve().parents[2] / "datasets" / "bluesky_public_snapshot.json"
@@ -23,7 +26,16 @@ SYNTHETIC_DATASETS = {
     "synthetic_benign": DATASET_DIR / "synthetic_benign.json",
 }
 app = FastAPI(title="Coordination Radar")
+app.include_router(provider_router)
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request: Request, error: RequestValidationError):
+    # FastAPI normally echoes invalid input, which may contain submitted keys.
+    if request.url.path.startswith('/api/settings'):
+        return JSONResponse(status_code=422, content={'detail': 'Invalid provider settings. Check field types and lengths.'})
+    return await request_validation_exception_handler(request, error)
 
 
 class Event(BaseModel):

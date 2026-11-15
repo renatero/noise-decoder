@@ -16,6 +16,7 @@ import httpx
 
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError, canonicalize_url, normalize_timestamp
 from src.collectors.news import MAX_RESPONSE_BYTES, _validate, plain_text
+from src.providers.settings import api_key
 
 SEARCH_URL = "https://api.context.dev/v1/news/search"
 CACHE_SECONDS = 600
@@ -28,7 +29,7 @@ class ContextUnavailable(CollectorError):
 
 
 def configured() -> bool:
-    return bool(os.environ.get("CONTEXT_API_KEY", "").strip())
+    return bool(api_key('context'))
 
 
 def _fetch(body: dict[str, Any], key: str) -> dict[str, Any]:
@@ -116,7 +117,7 @@ def collect_news(query: str, *, limit: int = 10, days: int = 7) -> dict[str, Any
     query = _validate(query, limit)
     if limit > 10 or not 1 <= days <= 30:
         raise ValueError("Context.dev supports 1–10 results and a 1–30 day window per search.")
-    key = os.environ.get("CONTEXT_API_KEY", "").strip()
+    key = api_key('context')
     if not key:
         raise ContextUnavailable("Context.dev is not configured on this server.")
     try:
@@ -126,7 +127,7 @@ def collect_news(query: str, *, limit: int = 10, days: int = 7) -> dict[str, Any
     if daily_limit <= 0:
         raise ContextUnavailable("Context.dev search is disabled by the server administrator.")
     state_path = Path(os.environ.get("CONTEXT_STATE_PATH", ".context-state.sqlite3"))
-    cache_key = hashlib.sha256(json.dumps([query, limit, days]).encode()).hexdigest()
+    cache_key = hashlib.sha256(json.dumps([query, limit, days, key]).encode()).hexdigest()
     # Single flight in this service process; SQLite atomically reserves the budget
     # across workers and restarts. Failed/uncertain requests retain their reservation.
     with _lock:

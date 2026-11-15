@@ -8,6 +8,7 @@ User=ubuntu
 WorkingDirectory=/opt/projects/noise-decoder
 EnvironmentFile=-/etc/noise-decoder/context.env
 Environment=CONTEXT_STATE_PATH=/var/lib/noise-decoder/context.sqlite3
+Environment=NOISE_STATE_DIR=/var/lib/noise-decoder/settings
 StateDirectory=noise-decoder
 UMask=0077
 NoNewPrivileges=true

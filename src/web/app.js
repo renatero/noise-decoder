@@ -401,6 +401,7 @@ function renderGraph(report, selectedCluster = "all") {
 function renderReport(report, sourceData) {
   latestReport = {
     ...report,
+    synthetic: String(source.value).startsWith("synthetic_"),
     limitations: [...new Set([...(sourceData.limitations || []), ...(report.limitations || [])])],
     collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources,
       requested_limit: sourceData.requested_limit, search_completed_at: sourceData.search_completed_at,
@@ -416,6 +417,7 @@ function renderReport(report, sourceData) {
   renderGraph(report);
   syntheticBanner.classList.toggle("hidden", !String(source.value).startsWith("synthetic_"));
   exportButton.disabled = false;
+  document.dispatchEvent(new Event("noise:report"));
 }
 
 async function runInvestigation(event) {
