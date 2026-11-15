@@ -8,7 +8,7 @@ const settingsDialog = document.querySelector("#settings-dialog");
 const providerNames = {context: "Context.dev", cala: "Cala.ai", featherless: "Featherless", verda: "Verda (NVIDIA only)"};
 const providerNotes = {
   context: "Optional publisher news search. Up to 10 articles per request; existing daily credit limits apply.",
-  cala: "Experimental background research. Reference IDs may not link to original sources. Treat answers as unverified leads. Application cap: 90 calls per rolling 30 days.",
+  cala: "Experimental ownership research: one focused question about the named entity. Reference IDs may not link to original sources. Treat answers as unverified leads. Application cap: 90 calls per rolling 30 days.",
   featherless: "Experimental evidence review. Enter an exact model ID available on your plan. Test access checks your account and model catalog without generating text.",
   verda: "NVIDIA-authored models only. Use the exact NVIDIA model ID and the endpoint supplied by Verda (containers.verda.com or containers.datacrunch.io). The GPU scales to zero when idle; starting it can take several minutes. No GPU deployment is created by saving these settings."
 };
@@ -117,6 +117,7 @@ function renderExperimental(result) {
   container.append(element("p", "text-body-sm text-tertiary", result.notice));
   if (result.synthetic) container.append(element("p", "text-primary", "Synthetic input: these are fictional demonstration records."));
   if (result.kind === "research") {
+    if (result.query) container.append(element("p", "text-body-sm text-outline", `Question sent to Cala: ${result.query}`));
     container.append(element("p", "whitespace-pre-wrap break-words", result.content));
     container.append(element("p", "text-body-sm text-tertiary", result.reference_notice));
     for (const ref of result.references || []) container.append(element("p", "whitespace-pre-wrap break-words text-body-sm text-outline", `Cala reference ${ref.id}: ${ref.content}`));
@@ -155,7 +156,7 @@ $("#review-form").onsubmit = async (event) => {
     const result = await operatorApi("/api/experimental/review", {method: "POST", body: JSON.stringify({provider, entity: $("#review-entity").value.trim(), events, synthetic: provider !== "cala" && !!latestReport?.synthetic})});
     if (generation !== researchGeneration) return;
     experimentalResult = result; renderExperimental(result); $("#review-export").disabled = false;
-    $("#review-status").textContent = `Completed at ${new Date(result.created_at).toLocaleString()}. ${provider === "cala" ? "Cala background research" : "Only the submitted records were reviewed; no external web search was performed"}.`;
+    $("#review-status").textContent = `Completed at ${new Date(result.created_at).toLocaleString()}. ${provider === "cala" ? "Cala ownership research" : "Only the submitted records were reviewed; no external web search was performed"}.`;
   } catch (error) { if (generation === researchGeneration) $("#review-status").textContent = error.message; }
   finally { button.disabled = false; }
 };

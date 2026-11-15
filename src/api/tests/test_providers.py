@@ -119,6 +119,7 @@ class ProviderTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(fetch.call_args.args[1], '/knowledge/search')
         self.assertIn('input', fetch.call_args.args[2])
+        self.assertEqual(response.json()['query'], fetch.call_args.args[2]['input'])
         self.assertIn('unverified', response.json()['reference_notice'])
         self.assertEqual(response.json()['references'][0]['id'], 'uuid')
 
