@@ -6,7 +6,9 @@
 - Engine: official `vllm/vllm-openai:v0.11.2`, using an explicit release tag.
   Its digest was verified as
   `sha256:2c908d5a84ed251b6a17d179f42d06df1aff353007779ac5eecd8a0ea3fe9331`.
-- Compute: one L40S 48 GB, on demand; maximum one replica.
+- Compute: one L40S 48 GB per replica, on demand; configured maximum one replica.
+  Verda can temporarily overlap replicas during a rolling update or shutdown;
+  this is not a hard cap on simultaneous billable GPUs during deployment changes.
 - Scaling: zero minimum replicas, queue-triggered startup, 300-second scale-down
   delay, 900-second request TTL. CPU/GPU utilization scaling is disabled.
 - Model context: 16,384 tokens; four sequences; eager execution to reduce startup
@@ -36,12 +38,29 @@ current documentation describes minute-based usage, aggregated on bills in
 actual costs depend on startup time, requests, billing and future prices. There
 is no always-running minimum replica or separately provisioned SFS volume.
 
-The initial image/model download can take several minutes. Subsequent cold starts
-also require loading the model, with downloaded weights reused from the scratch disk. The application submits each model-catalog request
+The first image pull observed on 2026-11-15 took about 25 minutes, followed by
+roughly two minutes for the model server to initialize. Initial provisioning can
+therefore exceed the dashboard's ten-minute request deadline. Bootstrap and check
+the deployment through Verda before enabling reviews; a request timeout does not
+cancel the queued provider request. Avoid repeatedly submitting new warmup jobs.
+Subsequent cold starts also require loading the model, with downloaded weights
+reused from the scratch disk; a different host may still need to pull the image.
+The application submits each model-catalog request
 and inference once using Verda's asynchronous gateway, then polls that request's
 result. Each wait has a ten-minute deadline; HTTP calls have 45-second timeouts.
 No second inference is automatically submitted. Polling URLs are restricted to
 the same official host and deployment, and redirects are rejected.
+
+## Verification on 2026-11-15
+
+The endpoint returned the exact NVIDIA model ID from `/v1/models`, and the live
+dashboard's Verda access check returned `ready: true`. Verda is enabled in the
+server's private provider settings. A real model request returned a structured
+government-funding finding with the exact supplied quote for a synthetic test
+record. Synthetic examples are evaluated within their fictional scenario and
+remain explicitly labeled synthetic; this test is not a real-world allegation
+or an accuracy benchmark. The replacement instance reused the cached image in
+about one second, then initialized the model server in about two minutes.
 
 ## Reproduce or inspect
 
