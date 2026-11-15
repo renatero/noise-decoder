@@ -31,7 +31,26 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertIs(routes["/"], progress_overview)
         self.assertIs(routes["/dashboard"], dashboard)
         self.assertIn("Noise Decoder — Project Progress", progress_overview().path.read_text(encoding="utf-8"))
-        self.assertIn("<title>Coordination Radar</title>", dashboard().path.read_text(encoding="utf-8"))
+        self.assertIn("<title>Coordination Radar</title>", dashboard().body.decode())
+
+    async def test_dashboard_refreshes_asset_urls_when_files_change(self):
+        from pathlib import Path
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as directory:
+            web = Path(directory)
+            filenames = ("app.js", "styles.css", "providers.js")
+            (web / "index.html").write_text(' '.join(f'"/static/{name}"' for name in filenames))
+            for name in filenames:
+                (web / name).write_text("old content")
+            with patch("src.api.main.WEB_DIR", web):
+                first = await self.client.get("/dashboard")
+                self.assertEqual(first.headers["cache-control"], "no-cache")
+                self.assertEqual(first.text.count("?v="), 3)
+                self.assertEqual(first.text, (await self.client.get("/dashboard")).text)
+                for name in filenames:
+                    (web / name).write_text("updated content")
+                updated = await self.client.get("/dashboard")
+                self.assertNotEqual(first.text, updated.text)
 
     async def test_collect_routes_and_empty_feed_query(self):
         with patch("src.api.main.collect_source", return_value={"events": []}) as collector:

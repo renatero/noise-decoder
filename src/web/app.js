@@ -500,7 +500,9 @@ function renderGraph(report, selectedCluster = "all") {
       { selector: ":selected", style: { "background-color": "#4cd7f6", "line-color": "#4cd7f6", "border-width": 2, "border-color": "#dee2f6" } },
     ],
     minZoom: 0.1, maxZoom: 2.5, wheelSensitivity: 0.2,
-    layout: dense
+    layout: !edges.length
+      ? { name: "grid", animate: false, fit: false, padding: 28, avoidOverlap: true }
+      : dense
       ? { name: "circle", animate: false, fit: false, radius: Math.max(160, nodes.length * 12), avoidOverlap: false }
       : { name: "cose", animate: false, fit: false, nodeDimensionsIncludeLabels: true, nodeRepulsion: () => 12000, idealEdgeLength: () => 140, componentSpacing: 100 },
   });

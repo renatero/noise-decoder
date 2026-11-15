@@ -7,6 +7,10 @@ const assert = require('node:assert/strict');
     const page = await browser.newPage({viewport:{width:1440,height:1000}});
     const errors=[]; page.on('pageerror',e=>errors.push(e.message));
     await page.goto(process.argv[2], {waitUntil:'networkidle'});
+    for (const filename of ['app.js','providers.js','styles.css']) {
+      const url=await page.locator(`[src*="/static/${filename}"], [href*="/static/${filename}"]`).evaluate(el=>el.src || el.href);
+      assert.match(url,/\?v=[a-f0-9]{16}$/, 'Dashboard must bypass old cached assets');
+    }
     await page.waitForFunction(()=>typeof window.cytoscape === 'function');
     await page.locator('[data-investigation-toggle]').first().click();
     await page.selectOption('#source','synthetic_coordinated');
@@ -57,6 +61,25 @@ const assert = require('node:assert/strict');
     await checkFit();
     await page.locator('#graph-section').scrollIntoViewIfNeeded();
     await page.screenshot({path:'/tmp/noise-graph-fixed-desktop.png'});
+    // Reproduce the screenshot's isolated grey actors, including actual hover styling.
+    await page.evaluate(()=>renderGraph({nodes:Array.from({length:30},(_,i)=>({id:`hackernews:observed-actor-${i}`})),edges:[]}));
+    await page.waitForTimeout(300);
+    await checkFit();
+    await page.locator('#graph').scrollIntoViewIfNeeded();
+    const greyPoint=await page.evaluate(()=>{
+      const p=graph.nodes()[12].renderedPosition(),r=document.querySelector('#graph').getBoundingClientRect();
+      return {x:p.x+r.left,y:p.y+r.top};
+    });
+    assert(await page.evaluate(()=>graph.nodes().every(n=>n.style('label') === '')));
+    await page.mouse.move(greyPoint.x,greyPoint.y);
+    await tooltip.waitFor({state:'visible'});
+    assert.equal(await tooltip.textContent(),'hackernews:observed-actor-12');
+    const tipStyle=await tooltip.evaluate(el=>({position:getComputedStyle(el).position,fontSize:getComputedStyle(el).fontSize}));
+    assert.deepEqual(tipStyle,{position:'absolute',fontSize:'12px'});
+    await page.screenshot({path:'/tmp/noise-observed-hover.png'});
+    await page.mouse.move(0,0);
+    await tooltip.waitFor({state:'hidden'});
+    await page.evaluate(()=>renderGraph(latestReport));
     await page.setViewportSize({width:390,height:844});
     await page.waitForTimeout(400);
     await checkFit();
