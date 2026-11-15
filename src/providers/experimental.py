@@ -187,7 +187,8 @@ Country of origin, nationality, political views, or government connections alone
 Do not use memory, invent sources, or make claims about protected traits. Distinguish a source's allegation from an established fact.
 Return ONLY JSON: {"relevance":"related|unrelated|uncertain", "findings":[{"claim":"Source reports ...", "category":"ownership|government_funding|political_link|state_media|documented_influence_activity|other", "evidence":[{"id":"e1","quote":"exact verbatim excerpt from that record"}]}]}.
 Every finding MUST have at least one exact supporting quote and supplied evidence ID. No evidence means no finding.
-These are provisional hypotheses for human review, not verdicts. Maximum 8 findings; claims max 800 characters, quotes max 600 characters.'''
+These are provisional hypotheses for human review, not verdicts. Maximum 8 findings; claims max 800 characters, quotes max 600 characters.
+For synthetic input, evaluate entity matching and relationships within the supplied fictional scenario. Synthetic provenance is not a reason to mark a matching entity unrelated or discard supported fictional findings.'''
 
 
 def clean_review(raw, evidence):
