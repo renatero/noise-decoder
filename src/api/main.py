@@ -19,10 +19,12 @@ from src.collectors.context import ContextUnavailable, collect_news as collect_c
 from src.api.integration import analyze_events
 from src.providers.experimental import router as provider_router
 from src.providers.companies import router as company_router, recover_jobs
+from src.engine.propaganda import detect_technique_cues, report_technique_analysis, score_adjustment
 
 WEB_DIR = Path(__file__).resolve().parents[1] / "web"
 SNAPSHOT_PATH = Path(__file__).resolve().parents[2] / "datasets" / "bluesky_public_snapshot.json"
 DATASET_DIR = Path(__file__).resolve().parents[2] / "datasets"
+PROGRESS_OVERVIEW_PATH = Path(__file__).resolve().parents[2] / "progress-overview.html"
 SYNTHETIC_DATASETS = {
     "synthetic_coordinated": DATASET_DIR / "synthetic_coordinated.json",
     "synthetic_benign": DATASET_DIR / "synthetic_benign.json",
@@ -88,6 +90,9 @@ async def analyze(request: AnalyzeRequest) -> dict[str, Any]:
         report["news_context"] = [event.model_dump() for event in news]
         report["statistics"]["news_articles"] = len(news)
         report["statistics"]["news_publishers"] = len({event.actor_id for event in news})
+        report["news_context_technique_analysis"] = report_technique_analysis(
+            detect_technique_cues([event.model_dump() for event in news]), score_adjustment([], 0.0)
+        )
         report["limitations"].append("Context.dev publisher articles are excluded from account coordination analysis.")
         if not social:
             report["status"] = "news_context"
@@ -232,6 +237,11 @@ def load_dataset(dataset_id: str) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-@app.get("/", include_in_schema=False)
+@app.get("/dashboard", include_in_schema=False)
 def dashboard() -> FileResponse:
     return FileResponse(WEB_DIR / "index.html")
+
+
+@app.get("/", include_in_schema=False)
+def progress_overview() -> FileResponse:
+    return FileResponse(PROGRESS_OVERVIEW_PATH)

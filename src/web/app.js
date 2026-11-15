@@ -248,10 +248,74 @@ function renderStatistics(report) {
     [report.status === "news_context" ? "Publishers" : "Actors", report.status === "news_context" ? stats.news_publishers : stats.actors_observed],
     ["URL groups", stats.relationship_groups], ["Recurring", stats.repeated_relationships],
   ];
+  const score = report.permutation_analysis || {};
+  const techniqueScore = report.technique_analysis?.score_adjustment || score.propaganda_technique_adjustment;
+  if (score.network_heuristic_suspicion_score !== undefined) entries.push(["Network score", score.network_heuristic_suspicion_score]);
+  if (score.heuristic_suspicion_score !== undefined) entries.push(["Adjusted score", score.heuristic_suspicion_score]);
+  if (techniqueScore?.score_delta !== undefined) entries.push(["Technique uplift", `+${techniqueScore.score_delta}`]);
   for (const [label, value] of entries) {
     list.append(element("dt", "text-body-sm text-outline", label), element("dd", "text-right font-label text-label-md text-on-surface", String(value ?? 0)));
   }
   target.append(list);
+}
+
+function renderTechniques(report) {
+  const target = $("#techniques");
+  clear(target);
+  const analysis = report.technique_analysis || {};
+  const background = report.news_context_technique_analysis;
+  const techniques = Array.isArray(analysis.techniques) ? analysis.techniques : [];
+  const adjustment = analysis.score_adjustment || report.permutation_analysis?.propaganda_technique_adjustment;
+  if (adjustment) {
+    target.append(element("p", "mb-2 text-body-sm text-on-surface-variant",
+      `Network score ${adjustment.network_score ?? "—"} · technique uplift +${adjustment.score_delta ?? 0} · adjusted ${adjustment.adjusted_score ?? "—"}`));
+  }
+  if (!techniques.length) {
+    target.append(element("p", "text-body-sm text-on-surface-variant", "No candidate technique cues found in the analyzed text."));
+  } else {
+    const list = element("ul", "space-y-2");
+    techniques.forEach((technique) => {
+      const item = element("li", "rounded-lg bg-surface-container-lowest p-2");
+      item.append(element("div", "font-label text-label-md text-on-surface", technique.name || formatLabel(technique.id)));
+      item.append(element("p", "mt-1 text-body-sm text-outline",
+        `${technique.confidence || "low"} confidence · ${technique.supporting_post_count || 0} posts · ${technique.supporting_actor_count || 0} accounts`));
+      const cues = (technique.evidence || []).slice(0, 2).map((evidence) => `“${evidence.matched_text}”`).join(" · ");
+      if (cues) item.append(element("p", "mt-1 text-body-sm text-on-surface-variant", cues));
+      list.append(item);
+    });
+    target.append(list);
+  }
+  if (analysis.method) target.append(element("p", "mt-2 text-body-sm text-outline", analysis.method));
+  if (analysis.reference?.url) {
+    const citation = element("a", "mt-2 inline-block text-body-sm text-primary underline", "PTC-18 taxonomy reference");
+    citation.href = analysis.reference.url;
+    citation.target = "_blank";
+    citation.rel = "noopener noreferrer";
+    target.append(citation);
+  }
+  if (background) {
+    target.append(element("h3", "mb-1 mt-3 font-label text-label-md text-on-surface", "Background news · not scored as account evidence"));
+    const contextTechniques = Array.isArray(background.techniques) ? background.techniques : [];
+    if (!contextTechniques.length) {
+      target.append(element("p", "text-body-sm text-on-surface-variant", "No candidate technique cues found in publisher articles."));
+    } else {
+      contextTechniques.forEach((technique) => {
+        const item = element("div", "mb-2 rounded-lg bg-surface-container-lowest p-2");
+        item.append(element("div", "font-label text-label-md text-on-surface", technique.name || formatLabel(technique.id)));
+        item.append(element("p", "mt-1 text-body-sm text-outline", `Low confidence · ${technique.supporting_post_count || 0} articles`));
+        const cue = technique.evidence?.[0]?.matched_text;
+        if (cue) item.append(element("p", "mt-1 text-body-sm text-on-surface-variant", `“${cue}”`));
+        target.append(item);
+      });
+    }
+    if (background.reference?.url) {
+      const citation = element("a", "mt-1 inline-block text-body-sm text-primary underline", "PTC-18 taxonomy reference");
+      citation.href = background.reference.url;
+      citation.target = "_blank";
+      citation.rel = "noopener noreferrer";
+      target.append(citation);
+    }
+  }
 }
 
 function renderClusters(report) {
@@ -278,7 +342,7 @@ function renderClusters(report) {
 function renderLimitations(report, sourceData) {
   const target = $("#limitations");
   clear(target);
-  const notes = [...(sourceData.limitations || []), ...(report.limitations || [])];
+  const notes = [...(sourceData.limitations || []), ...(report.limitations || []), ...(report.technique_analysis?.limitations || [])];
   if (sourceData.source === "context_news") notes.unshift(sourceData.cached
     ? "This search used cached results and consumed no additional credits."
     : `This search consumed ${sourceData.credits_consumed ?? "an unreported number of"} Context.dev credits.`);
@@ -411,6 +475,7 @@ function renderReport(report, sourceData) {
   renderSearchCoverage(sourceData);
   renderKpis(report);
   renderStatistics(report);
+  renderTechniques(report);
   renderClusters(report);
   renderLimitations(report, sourceData);
   renderEvidence(report);

@@ -8,9 +8,9 @@ python3 -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000
 
 The deployed demo is reachable at:
 
-- Dashboard: `https://radar.188.166.112.226.nip.io/`
-- Health: `https://radar.188.166.112.226.nip.io/healthz`
-- Analysis: `POST https://radar.188.166.112.226.nip.io/api/analyze`
+- Dashboard: `https://decodethenoise.today/dashboard`
+- Health: `https://decodethenoise.today/healthz`
+- Analysis: `POST https://decodethenoise.today/api/analyze`
 
 ## Public-data collection
 
@@ -62,6 +62,20 @@ attribution, access considerations and reasons for selection.
 `POST /api/import` accepts an `events` array already in the normalized schema,
 allowing other platforms to be supplied without adding a collector.
 
+Reports include `technique_analysis`, which lists low-confidence lexical cue
+candidates from the PTC 18-technique taxonomy, their matched text and character
+offsets in the original event text, supporting post/account counts, and a link
+to the source paper. A technique affects the
+network score only when it appears across at least two accounts in an existing
+repeated-evidence community: each distinct corroborated technique adds 5% of
+the network-only score, capped at 25%. The report preserves that base as
+`network_heuristic_suspicion_score`; `heuristic_suspicion_score` is the adjusted
+value. The permutation p-value remains a comparison of the network-only score.
+These transparent lexical rules are candidate cues for human review, not a
+trained propaganda classifier or a finding of intent. Context.dev articles are
+reported separately under `news_context_technique_analysis`; they are never
+used to adjust the account-network score.
+
 ## Bounded news and discussion sources
 
 `GET /api/sources` returns the live source catalog. The dashboard currently
@@ -104,11 +118,13 @@ The generated `datasets/bluesky_public_snapshot.json` is explicitly labelled
 as a bounded public-search snapshot. `GET /api/snapshots/bluesky` loads it
 without needing internet access.
 
-The dashboard and API share one origin, so the extension only opens the
-dashboard; it does not make cross-origin API requests.
+The dashboard and API share one origin. The root path serves the project
+progress overview; open `/dashboard` for the Coordination Radar interface. The
+extension opens `/dashboard` and does not make cross-origin API requests.
 
-The deployed service binds locally and is exposed by the Caddy HTTPS reverse
-proxy. Do not expose port `8000` directly for public use.
+The deployed service binds locally and is exposed by Nginx over HTTPS at
+`https://decodethenoise.today/dashboard`. HTTP requests redirect to HTTPS. Do
+not expose port `8000` directly for public use.
 
 ### Search coverage in dashboard reports
 

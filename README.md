@@ -7,8 +7,9 @@ hostinger challenge junction 2026
 python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 ```
 
-Open `http://127.0.0.1:8000/` locally, or the VPS address during a network
-demo. The dashboard provides two reproducible synthetic scenarios, bounded
+Open `http://127.0.0.1:8000/dashboard` locally, or
+`https://decodethenoise.today/dashboard` on the VPS. The root path serves the
+project progress overview. The dashboard provides two reproducible synthetic scenarios, bounded
 public Bluesky and Hacker News search, BBC World / Guardian World / Al Jazeera
 news feeds, an offline public-data snapshot, and normalized JSON
 import. See [the API guide](src/api/README.md), [deployment guide](deploy/README.md),
@@ -54,7 +55,9 @@ Return an undirected actor graph with identified accounts as nodes and observed 
 
 For each observed graph, discover connected actor clusters using repeated co-activity edges and select the cluster with the largest sum of edge weights. Repeat that same discovery and selection procedure in every one of 199 simulated assignments. Keep every post's content, URL, timestamp, platform, and related-group membership fixed. Shuffle actor labels only among identified posts sharing the same platform, fixed UTC time bucket (using the configured window duration), and a coarse topic proxy: each post's most common non-stopword token in the extracted batch. The actor-label counts within each stratum are preserved. Strata without at least two posts from distinct identified accounts cannot be shuffled and are reported. The max-statistic compares the strongest candidate from the whole discovery procedure, avoiding interpretation of thousands of uncorrected pairwise tests. A p-value is null if the observed maximum is absent or its simulated distribution does not vary.
 
-Report the cluster's `heuristic_suspicion_score` (the summed edge weights) separately from its max-statistic permutation p-value. The score is an uncalibrated ranking/support measure, not a probability. Use the upper-tail Monte Carlo estimate `p = (1 + simulated maximum scores at least as large as observed) / (199 + 1)`. With 199 permutations, the smallest reportable p-value and the step size are 0.005. That coarse resolution is enough for this demo to show the null comparison and flag broad departures from the simulated baseline; it is not enough for fine-grained ranking or strong inferential claims. The report includes the seed, null mean and spread, 95th percentile, exceedance count, and stratum diagnostics so the result can be inspected and reproduced.
+Report the network-only `network_heuristic_suspicion_score` separately from its max-statistic permutation p-value. Reports also list low-confidence candidate text cues from the PTC 18-technique taxonomy, with matched spans for review. A distinct technique adds 5% to the network score only when it appears in posts by at least two actors in a repeated-evidence community; the uplift is capped at 25%. The adjusted value is `heuristic_suspicion_score`. The permutation p-value still compares the network-only score; it does not test this adjusted score. The score is an uncalibrated ranking/support measure, not a probability. Use the upper-tail Monte Carlo estimate `p = (1 + simulated maximum scores at least as large as observed) / (199 + 1)`. With 199 permutations, the smallest reportable p-value and the step size are 0.005. That coarse resolution is enough for this demo to show the null comparison and flag broad departures from the simulated baseline; it is not enough for fine-grained ranking or strong inferential claims. The report includes the seed, null mean and spread, 95th percentile, exceedance count, and stratum diagnostics so the result can be inspected and reproduced.
+
+The 18 labels follow Da San Martino et al., [*Fine-Grained Analysis of Propaganda in News Articles*](https://aclanthology.org/D19-1565/). Our transparent lexical rules are not the paper's trained model: a cue is not evidence that a post is propaganda, deceptive, or false, and requires human review. Context.dev background articles can receive separate technique cues but never affect the account-network score.
 
 ### Connected actor communities
 

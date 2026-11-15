@@ -45,7 +45,7 @@ class ContextApiTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_news_metadata_survives_import_and_is_excluded_from_analysis(self):
         news = [{"id": f"context:{actor}{i}", "platform": "news_context", "actor_id": actor,
-                 "timestamp": "2026-11-14T10:00:00Z", "text": "AI news", "urls": [f"https://example.org/{i}"],
+                 "timestamp": "2026-11-14T10:00:00Z", "text": "Before it's too late, this danger threatens us.", "urls": [f"https://example.org/{i}"],
                  "publisher": actor, "record_type": "publisher_article", "story_id": str(i), "language": "en"}
                 for actor in ("publisher:a", "publisher:b") for i in range(2)]
         imported = (await self.client.post("/api/import", json={"events": news})).json()
@@ -56,6 +56,9 @@ class ContextApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(report["statistics"]["news_articles"], 4)
         self.assertEqual(report["statistics"]["repeated_relationships"], 0)
         self.assertEqual(report["nodes"], [])
+        self.assertEqual(report["technique_analysis"]["techniques"], [])
+        self.assertEqual(report["news_context_technique_analysis"]["techniques"][0]["id"], "appeal_to_fear_prejudice")
+        self.assertEqual(report["news_context_technique_analysis"]["score_adjustment"]["score_delta"], 0)
         social = {**news[0], "id": "social:a", "platform": "bluesky", "actor_id": "alice"}
         report = (await self.client.post("/api/analyze", json={"events": [*news, social]})).json()
         self.assertEqual(report["status"], "insufficient_data")

@@ -7,10 +7,12 @@ development, run:
 python3 -m uvicorn src.api.main:app --host 0.0.0.0 --port 8000
 ```
 
-The deployed demo runs at `https://radar.188.166.112.226.nip.io/`. Its
-systemd service binds only to `127.0.0.1:8000`; Caddy terminates public HTTPS
-and proxies the dashboard to it. Install the declared dependencies in the
-project's virtual environment before starting the service:
+The deployed dashboard is at `https://decodethenoise.today/dashboard`, with DNS pointing
+to `2.24.173.100`. Nginx terminates TLS and redirects HTTP to HTTPS. The
+Coordination Radar service binds to `127.0.0.1:8001`; the legacy extension API
+remains on `127.0.0.1:8000`. Let's Encrypt certificates are renewed by the
+Certbot systemd timer. Install the declared dependencies in the project's
+virtual environment before starting the service:
 
 ```bash
 cd /opt/projects/noise-decoder
@@ -23,19 +25,17 @@ systemd unit runs `.venv/bin/python` so collection uses the declared `httpx`
 dependency rather than relying on packages in the system Python environment.
 For test runs, install `requirements-dev.txt` in the same environment.
 
-The active Caddy host is:
+For a fresh VPS, first enable an HTTP Nginx reverse-proxy server block for
+`decodethenoise.today`, then install Certbot's Nginx plugin and issue the
+certificate:
 
-```caddyfile
-radar.188.166.112.226.nip.io {
-    encode zstd gzip
-    header X-Robots-Tag "noindex, nofollow"
-    reverse_proxy 127.0.0.1:8000
-}
+```sh
+sudo apt install certbot python3-certbot-nginx
+sudo certbot --nginx -d decodethenoise.today --redirect
 ```
 
-For a branded production deployment, replace the `nip.io` hostname with a
-domain you control, point its DNS to this VPS, and update the Caddy host and
-Chrome extension setting together.
+The current extension dashboard and API defaults use the HTTPS domain. Update
+the extension's default URL when deploying to a different host.
 
 Do not expose the plain development server as a long-lived production service.
 The public Bluesky search endpoint is bounded but unauthenticated, so apply

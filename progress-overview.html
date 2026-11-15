@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A current overview of Noise Decoder and Coordination Radar: browser extraction, the public-data API, dashboard, evidence pipeline, statistical model, deployment, and limitations.">
+  <title>Noise Decoder — Project Progress</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --page: #10151c;
+      --panel: #18212b;
+      --ink: #e8eef5;
+      --muted: #aebdca;
+      --line: #334352;
+      --accent: #64dbc5;
+      --accent-ink: #07221d;
+      --code: #0b1016;
+      --warn: #ffd58a;
+      font: 16px/1.68 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--ink); }
+    header, main, footer { width: min(920px, calc(100% - 36px)); margin-inline: auto; }
+    header { padding: 64px 0 38px; border-bottom: 1px solid var(--line); }
+    main { padding: 28px 0 60px; }
+    footer { padding: 22px 0 44px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    h1, h2, h3 { line-height: 1.2; letter-spacing: -.025em; }
+    h1 { max-width: 760px; margin: 12px 0 16px; font-size: clamp(2.3rem, 7vw, 4.4rem); }
+    h2 { margin: 50px 0 14px; font-size: 1.75rem; }
+    h3 { margin: 28px 0 8px; font-size: 1.15rem; }
+    p { margin: 10px 0 16px; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    .eyebrow { color: var(--accent); font-size: .78rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .dek { max-width: 740px; color: var(--muted); font-size: 1.18rem; }
+    .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; color: var(--muted); font-size: .9rem; }
+    .tag { display: inline-block; padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; }
+    .callout { margin: 24px 0; padding: 17px 20px; background: var(--panel); border-left: 3px solid var(--accent); border-radius: 4px; }
+    .callout strong { color: var(--accent); }
+    .caution { border-left-color: var(--warn); }
+    .caution strong { color: var(--warn); }
+    .flow { display: grid; gap: 8px; margin: 20px 0; padding: 0; list-style: none; counter-reset: pipeline; }
+    .flow li { counter-increment: pipeline; display: grid; grid-template-columns: 38px 1fr; gap: 12px; padding: 13px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; }
+    .flow li::before { content: counter(pipeline); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 800; }
+    .flow b { display: block; }
+    .muted { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: .94rem; }
+    th, td { padding: 11px 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--panel); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    code { padding: .12em .34em; border-radius: 4px; background: var(--code); font-size: .9em; overflow-wrap: anywhere; }
+    pre { overflow-x: auto; padding: 16px; border: 1px solid var(--line); border-radius: 9px; background: var(--code); font-size: .88rem; line-height: 1.55; }
+    ul, ol { padding-left: 1.35rem; }
+    li { margin: 6px 0; }
+    .small { color: var(--muted); font-size: .9rem; }
+    @media (prefers-color-scheme: light) {
+      :root { --page: #f5f8fa; --panel: #e9f0f3; --ink: #18242d; --muted: #52636e; --line: #cbd7dd; --accent: #087e70; --accent-ink: white; --code: #e7edf1; --warn: #885500; }
+    }
+    @media print {
+      :root { color-scheme: light; --page: white; --panel: #f1f4f5; --ink: #101820; --muted: #43525d; --line: #c5cdd2; --accent: #087e70; --accent-ink: white; --code: #f3f5f6; --warn: #885500; }
+      header { padding-top: 24px; }
+      h2 { break-after: avoid; }
+      pre, table, .callout { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Noise Decoder · implementation overview</div>
+    <h1>From visible posts to explainable network evidence</h1>
+    <p class="dek">A current overview of the browser extension, Coordination Radar dashboard and API, public-source collection, evidence pipeline, statistical model, deployment, and limitations.</p>
+    <div class="meta">
+      <span class="tag">Chrome Manifest V3</span>
+      <span class="tag">JavaScript feature pipeline</span>
+      <span class="tag">Python + NetworkX engine</span>
+      <span class="tag">Evidence for review, not intent attribution</span>
+    </div>
+  </header>
+
+  <main>
+    <section aria-labelledby="summary">
+      <h2 id="summary">Executive summary</h2>
+      <p>Noise Decoder now has two ways to create an investigation: the Chrome extension extracts posts visible on a page after a user action, while the Coordination Radar web dashboard searches supported public sources through its FastAPI service. Both paths produce normalized records for inspection and analysis. The analysis looks for exact canonical URL reuse and near-duplicate text, groups related posts, checks for activity bursts, records recurring account-pair co-activity, builds a weighted actor graph, estimates a max-cluster permutation p-value, and discovers actor communities in Python.</p>
+      <p>The implementation keeps observable evidence distinct from conclusions. A shared link, similar message, synchronized burst, community membership, rhetorical cue, edge weight, or heuristic score does not by itself show deception or coordination. The system preserves examples and method details so a person can inspect why a relationship was surfaced.</p>
+      <div class="callout caution"><strong>Deployment status (15 November 2026):</strong> commit <code>619ad66</code> is deployed from <code>r-dev</code> to <code>2.24.173.100</code>. The <code>coordination-radar</code> service is active behind Nginx at <a href="https://decodethenoise.today/">decodethenoise.today</a>; HTTPS is enabled with a renewing Let's Encrypt certificate.</div>
+      <p>The VPS keeps the original Noise Decoder extension API on loopback port 8000 and runs the Coordination Radar dashboard API on loopback port 8001. Nginx terminates TLS, redirects HTTP to HTTPS, routes dashboard traffic to port 8001, and preserves the original API endpoints on port 8000. The Chrome extension defaults to the HTTPS domain.</p>
+    </section>
+
+    <section aria-labelledby="technique-analysis">
+      <h2 id="technique-analysis">Possible propaganda-technique cues</h2>
+      <p>Reports compare post text with transparent lexical cues for the 18 labels in the PTC taxonomy, including loaded language, name calling, repetition, fear appeals, whataboutism, and straw men. Each candidate lists the matched words or phrase, its character offsets in the original event text, supporting posts and accounts, and low confidence. The taxonomy follows Da San Martino et al., <a href="https://aclanthology.org/D19-1565/">Fine-Grained Analysis of Propaganda in News Articles</a>; this implementation is not their trained model and a match requires human review.</p>
+      <p>One distinct cue adds 5% to the network-only heuristic score only when it appears in posts by at least two accounts in an already repeated-evidence community. The uplift is capped at 25%. Reports preserve <code>network_heuristic_suspicion_score</code> and place the adjusted value in <code>heuristic_suspicion_score</code>. The permutation p-value still tests the network-only score. Context.dev article cues are reported separately and never change the account-network score.</p>
+    </section>
+
+    <section aria-labelledby="ptc-benchmark">
+      <h2 id="ptc-benchmark">Labeled PTC benchmark</h2>
+      <div class="callout caution"><strong>Training-split diagnostic:</strong> The current lexical cue detector was evaluated on the 371-article labeled training partition of <a href="https://zenodo.org/records/3952415">PTC v2 / SemEval-2020 Task 11</a>. These are not held-out test results. The task site limits corpus use to academic purposes; this repository stores aggregate scores and code, not article text.</div>
+      <p>On 15 November 2026, the detector produced 646 candidate spans. The corpus has 5,468 binary span-identification spans and 6,128 technique-labeled instances across 14 categories. PTC's SemEval 2020 edition merges rare categories into two superclasses and omits Obfuscation, Intentional Vagueness, Confusion. The detector's corresponding rules are mapped to the merged labels. For the task background, see the <a href="https://aclanthology.org/2020.semeval-1.186/">SemEval-2020 Task 11 paper</a>.</p>
+      <table>
+        <thead><tr><th>Evaluation</th><th>Exact span P / R / F1</th><th>Character-overlap P / R / F1</th></tr></thead>
+        <tbody>
+          <tr><td>Span identification, technique ignored</td><td>1.55% / 0.18% / 0.33%</td><td>21.08% / 0.52% / 1.02%</td></tr>
+          <tr><td>End-to-end technique-labeled spans</td><td>0.93% / 0.10% / 0.18%</td><td>9.78% / 0.22% / 0.44%</td></tr>
+          <tr><td>Sentence detection, derived from labeled spans</td><td colspan="2">P 41.20% · R 5.49% · F1 9.69% · specificity 96.88%</td></tr>
+        </tbody>
+      </table>
+      <p>Character-overlap scores credit correctly labeled overlapping characters; exact scores require identical article, offsets, and technique. These are project-defined end-to-end diagnostics, not the organizers' official SI partial-span scorer or conditional TC score, so they should not be compared directly with the PTC leaderboard. The sentence result treats each non-empty body line as one sentence, as supplied by PTC, and calls a sentence positive when an annotated span or predicted cue overlaps it. It is a diagnostic derived from span labels, not an official SLC score. The technique macro F1 over 14 supported classes is 0.77% using character overlap.</p>
+      <h3>Per-technique character-overlap scores</h3>
+      <table>
+        <thead><tr><th>PTC technique</th><th>Gold spans</th><th>Predicted spans</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+        <tbody>
+          <tr><td>Loaded Language</td><td>2,123</td><td>83</td><td>25.74%</td><td>0.28%</td><td>0.56%</td></tr>
+          <tr><td>Name Calling / Labeling</td><td>1,058</td><td>64</td><td>13.61%</td><td>0.26%</td><td>0.51%</td></tr>
+          <tr><td>Repetition</td><td>621</td><td>20</td><td>7.05%</td><td>0.31%</td><td>0.59%</td></tr>
+          <tr><td>Exaggeration / Minimization</td><td>466</td><td>211</td><td>4.64%</td><td>0.33%</td><td>0.62%</td></tr>
+          <tr><td>Doubt</td><td>493</td><td>50</td><td>8.17%</td><td>0.07%</td><td>0.13%</td></tr>
+          <tr><td>Appeal to Fear / Prejudice</td><td>294</td><td>13</td><td>11.32%</td><td>0.04%</td><td>0.08%</td></tr>
+          <tr><td>Flag Waving</td><td>229</td><td>0</td><td>0.00%</td><td>0.00%</td><td>0.00%</td></tr>
+          <tr><td>Causal Oversimplification</td><td>209</td><td>4</td><td>25.00%</td><td>0.06%</td><td>0.12%</td></tr>
+          <tr><td>Slogans</td><td>129</td><td>146</td><td>9.57%</td><td>4.39%</td><td>6.02%</td></tr>
+          <tr><td>Appeal to Authority</td><td>144</td><td>8</td><td>0.00%</td><td>0.00%</td><td>0.00%</td></tr>
+          <tr><td>Black and White Fallacy</td><td>107</td><td>40</td><td>8.53%</td><td>1.07%</td><td>1.91%</td></tr>
+          <tr><td>Thought Terminating Cliches</td><td>76</td><td>2</td><td>0.00%</td><td>0.00%</td><td>0.00%</td></tr>
+          <tr><td>Bandwagon / Reductio ad Hitlerum</td><td>72</td><td>3</td><td>0.00%</td><td>0.00%</td><td>0.00%</td></tr>
+          <tr><td>Whataboutism / Straw Men / Red Herring</td><td>107</td><td>2</td><td>50.00%</td><td>0.14%</td><td>0.27%</td></tr>
+        </tbody>
+      </table>
+      <p>The low recall reflects the current detector's sparse lexical rules and its one-candidate-per-technique-per-article limit. These results do not show that a matched phrase is propaganda; they show that the present cues are a weak screening aid on this news-article benchmark.</p>
+      <p>Reproduce the report by downloading and extracting the <a href="https://zenodo.org/records/3952415">PTC v2 archive</a>, then run <code>python -m src.engine.benchmarks.ptc --data-dir /path/to/datasets --output reports/ptc-benchmark.json</code>. The suite is <code>src/engine/tests/test_ptc_benchmark.py</code>; set <code>PTC_DATA_DIR</code> to include the full corpus check.</p>
+    </section>
+
+    <section aria-labelledby="api-dashboard">
+      <h2 id="api-dashboard">Coordination Radar dashboard and API</h2>
+      <p>The dashboard is served by the same FastAPI application that collects sources and analyzes normalized events. It offers reproducible synthetic coordinated and benign scenarios, bounded live searches, an offline Bluesky snapshot, and normalized JSON import. Reports show the sources searched, query, completion state, result counts, and source errors, including when a search returns no usable records. Failed sources are reported as unknown coverage rather than as zero matches; partial results from healthy sources are retained.</p>
+      <p>The dashboard analysis adapter canonicalizes submitted URLs and forms shared-URL groups. An account pair is treated as a recurring relationship only when it co-occurs in at least two distinct URL groups; single-context edges remain visible as limited evidence. It passes the evidence-weighted graph into the Python community engine. This API path is deliberately narrower than the extension payload, which also carries text-similarity matches, rolling time-window bursts, and the stratified permutation report. News articles tagged <code>news_context</code> are returned as background context and never treated as account evidence.</p>
+      <table>
+        <thead><tr><th>Route</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><code>GET /healthz</code></td><td>Service health check.</td></tr>
+          <tr><td><code>GET /api/sources</code></td><td>Source catalog and current availability.</td></tr>
+          <tr><td><code>GET /api/collect/bluesky?query=…&amp;limit=50</code></td><td>Bounded public Bluesky search.</td></tr>
+          <tr><td><code>GET /api/collect/hackernews</code>, <code>/bbc</code>, <code>/guardian</code>, <code>/aljazeera</code></td><td>Hacker News story search and publisher-provided RSS headlines and summaries.</td></tr>
+          <tr><td><code>GET /api/collect/all</code></td><td>Interleaved results from available live social and publisher sources, up to the requested total limit.</td></tr>
+          <tr><td><code>POST /api/collect/context</code></td><td>Optional Context.dev English news search for the last 1, 7, or 30 days, capped at 10 candidates per request.</td></tr>
+          <tr><td><code>POST /api/analyze</code></td><td>Analyze normalized events. Context.dev publisher articles are retained as background context and excluded from account coordination analysis.</td></tr>
+          <tr><td><code>POST /api/import</code></td><td>Import normalized JSON events from other platforms.</td></tr>
+          <tr><td><code>GET /api/datasets</code>, <code>/api/snapshots/bluesky</code></td><td>Load synthetic scenarios or the saved offline public-data snapshot.</td></tr>
+        </tbody>
+      </table>
+      <p>Bluesky and combined collection are bounded and unauthenticated. Public-feed searches inspect current headlines and summaries; they are not publisher archives. Live collection responses preserve source attribution and coverage diagnostics for display and report export.</p>
+      <p>Context.dev requires a server-side <code>CONTEXT_API_KEY</code>. Its collector defaults to 20 new upstream requests per UTC day and allows at most four new requests per minute; each request fetches at most 10 candidates. Ten-minute cache hits do not consume credits. Searches require the dashboard request header and reject foreign browser origins. If the key is not configured, the dashboard marks this source unavailable and other sources remain usable.</p>
+      <p>On the VPS, Nginx serves the dashboard over HTTPS and proxies it to the app bound at <code>127.0.0.1:8001</code>; the original extension API remains at <code>127.0.0.1:8000</code>. The app's <code>/healthz</code> route was checked after deploying commit <code>619ad66</code>.</p>
+    </section>
+
+    <section aria-labelledby="pipeline">
+      <h2 id="pipeline">The analysis pipeline</h2>
+      <ol class="flow">
+        <li><div><b>User-initiated extraction</b><span class="muted">The Manifest V3 popup injects a self-contained extractor only after the user selects “Extract visible posts.” It reads visible article-like items from the active web page.</span></div></li>
+        <li><div><b>Normalization and feature extraction</b><span class="muted">Message text is normalized and tokenized; post and outgoing URLs are canonicalized; the batch is compared for shared links and near-duplicate wording.</span></div></li>
+        <li><div><b>Related-content groups</b><span class="muted">Posts connected by shared canonical URLs or high token overlap form connected components with pairwise evidence.</span></div></li>
+        <li><div><b>Time-window bursts</b><span class="muted">Related posts are scanned in rolling windows, counting distinct identified accounts and retaining invalid-timestamp diagnostics.</span></div></li>
+        <li><div><b>Repeated co-activity</b><span class="muted">Account pairs are tracked across distinct content groups and detected bursts. Single-context patterns remain limited evidence.</span></div></li>
+        <li><div><b>Weighted actor graph and permutation null</b><span class="muted">Accounts become nodes, recurring pairs become weighted edges, and a stratified randomization compares the strongest discovered actor cluster with a simulated maximum-score distribution.</span></div></li>
+        <li><div><b>Network communities</b><span class="muted">The Python engine uses NetworkX greedy modularity on the repeated-edge graph and returns community summaries and representative examples.</span></div></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="extraction">
+      <h2 id="extraction">Collection, normalization, and matching</h2>
+      <h3>Collection behavior</h3>
+      <p>The extension has no always-running page collector. Collection begins after a user action. Extraction uses common article/feed selectors and a small set of platform-oriented selectors; real page markup is dynamic, so results are deliberately incomplete and should be reviewed before submission.</p>
+      <h3>Text features</h3>
+      <p>The feature module removes zero-width characters, applies Unicode NFKC normalization, collapses whitespace, and lowercases text. Unicode-aware tokenization retains letters and numbers. Similarity uses Jaccard overlap on token sets; candidate pairs are generated through an inverted token index rather than a full all-pairs scan. A text pair qualifies at Jaccard similarity of at least <code>0.8</code>, with at least three unique tokens on each side.</p>
+      <h3>URL features</h3>
+      <p>HTTP(S) URLs are canonicalized by dropping fragments and common tracking parameters, lowercasing the host, removing default ports and trailing path slashes, and sorting remaining query parameters. Exact canonical outgoing URL matches are recorded separately from text similarity. This makes common tracking variants comparable while retaining non-tracking query values.</p>
+      <p>Extracted events preserve the visible text and include normalized text, tokens, canonical permalink, canonical outgoing links, shared-URL evidence, and near-duplicate matches.</p>
+    </section>
+
+    <section aria-labelledby="groups">
+      <h2 id="groups">Groups, bursts, and recurring co-activity</h2>
+      <h3>Related-post groups</h3>
+      <p>Pairwise edges are created for qualifying token similarity or exact canonical outgoing URL matches. Connected components become content groups. Each group includes post IDs and the pairwise match reasons, similarity values, and shared URLs that connect its members.</p>
+      <h3>Rolling publication windows</h3>
+      <p>The extension settings page exposes a rolling window from 1 to 10,080 minutes (default 60) and a minimum of 2 to 100 distinct accounts (default 2). Within each related-content group, posts are sorted by publication time. A burst is reported when the configured number of identified accounts appears within the interval. Missing or invalid publication timestamps are excluded and counted. Posts with unknown account IDs can contribute to post counts but not to the distinct-account threshold.</p>
+      <h3>Repeated account-pair co-activity</h3>
+      <p>For each account pair, the extension records the distinct content groups and publication bursts where both accounts appeared, their contributed post IDs, and direct pairwise evidence when available. A pair is marked repeated if it appears in at least two content groups or at least two bursts. One group plus a burst derived from that group does not count as repetition.</p>
+      <p>The output also includes an evidence assessment. A pair supported only within one content group is labeled <code>limited</code>, even when it recurs across multiple bursts in that group. The report explicitly says that a common cause such as a breaking-news event may explain simultaneous activity. The system does not independently detect breaking news.</p>
+    </section>
+
+    <section aria-labelledby="graph">
+      <h2 id="graph">Weighted actor graph</h2>
+      <p>The extension constructs an undirected graph. Identified accounts are nodes with observed platforms, posts, content-group IDs, and burst IDs. Account pairs are edges with their recurrence counts and supporting context records. Unknown IDs are excluded from this graph so multiple unidentified posts are not collapsed into one artificial account.</p>
+      <table>
+        <thead><tr><th>Weight contribution</th><th>Support score</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>Each distinct content group</td><td>+1</td><td>Primary repeated-content context</td></tr>
+          <tr><td>First burst within a group</td><td>+0</td><td>Avoids counting the same context twice</td></tr>
+          <tr><td>Each additional burst within that group</td><td>+0.25</td><td>Modest extra temporal support</td></tr>
+          <tr><td>Burst without a group</td><td>0.5 base</td><td>Lower-weight standalone timing support</td></tr>
+        </tbody>
+      </table>
+      <p>These weights are transparent evidence-support scores. They are not probabilities, confidence levels, or findings of intent.</p>
+    </section>
+
+    <section aria-labelledby="permutation">
+      <h2 id="permutation">Permutation null model and strongest-cluster test</h2>
+      <p>The current statistical comparison runs 199 actor-assignment permutations. Post content, URL, timestamp, platform, and group membership remain fixed. Actor labels are shuffled among identified posts sharing the same platform, a coarse topic proxy (the most common non-stopword token in the extracted batch), and an epoch-aligned UTC time bucket sized by the configured window. Actor counts within each stratum are preserved.</p>
+      <p>For the observed data and for every permutation, the procedure discovers connected components using repeated actor-pair edges and selects the candidate with the largest sum of edge weights. The p-value compares the observed strongest candidate against the distribution of simulated maximum cluster scores. This max-statistic approach is intended to account for searching across candidate clusters rather than presenting thousands of uncorrected pairwise p-values.</p>
+      <div class="callout"><strong>Score and statistical comparison:</strong> <code>network_heuristic_suspicion_score</code> is the pre-adjustment network support. <code>heuristic_suspicion_score</code> applies the bounded rhetorical-cue uplift and remains uncalibrated; it is not a probability. <code>permutation_p_value</code> compares the network-only score using the upper-tail plus-one formula: <code>(1 + simulated maxima ≥ observed maximum) / (permutations + 1)</code>.</div>
+      <p>With 199 permutations, p-values have a minimum and step size of 0.005. That is enough to demonstrate the null comparison and flag broad departures from the simulated baseline; it is too coarse for fine-grained ranking or strong inferential claims. Results also include a random seed, null mean and spread, 95th percentile, exceedance count, and stratum diagnostics. The p-value is null when there is no observed candidate, no shuffleable stratum, or no variation in the maximum statistic.</p>
+      <p>The topic proxy is approximate, and actor-pair multiple-testing adjustments are not separately reported. These limitations should accompany interpretation.</p>
+    </section>
+
+    <section aria-labelledby="communities">
+      <h2 id="communities">NetworkX community discovery</h2>
+      <p>The Python engine accepts the extension payload and builds a NetworkX undirected graph from repeated evidence-weighted actor edges. One-off edges remain in the raw actor graph but do not join the community-discovery graph. Connected components are partitioned with NetworkX greedy modularity using edge weight values.</p>
+      <p>Each returned community includes:</p>
+      <ul>
+        <li>cluster size and member account IDs;</li>
+        <li>counts of distinct repeated content-group and burst contexts;</li>
+        <li>participating platforms;</li>
+        <li>summed weighted support and partition modularity;</li>
+        <li>representative examples with post IDs, excerpts, timestamps, URLs, and matching evidence;</li>
+        <li>a plain-language explanation.</li>
+      </ul>
+      <p>Explanations use measurable language, for example: “3 accounts formed a repeated-evidence network, sharing 4 distinct canonical URLs, across 3 content groups, with 3 detected publication bursts lasting up to 60 seconds.” The engine says “distinct,” not “unrelated,” because semantic independence of URLs is not established by URL matching. It carries the permutation p-value separately from heuristic support scores.</p>
+    </section>
+
+    <section aria-labelledby="payload">
+      <h2 id="payload">Payload and local workflow</h2>
+      <p>The extension review and its legacy API request carry extracted events plus <code>clusters</code>, <code>time_window_analysis</code>, <code>co_activity</code>, <code>actor_graph</code>, and <code>permutation_analysis</code>. The dashboard API instead accepts normalized events at <code>POST /api/analyze</code>, applies its shared-URL evidence adapter, and returns report status, summary, graph, clusters, statistics, evidence, and limitations. The engine’s <code>analyze(payload)</code> function returns community and statistical details for the extension payload.</p>
+      <p>A synthetic editable request is kept at the repository root as <code>payload.json</code>. It is in <code>.gitignore</code>, so it stays local and is not included in future commits. It contains three sample accounts across three content groups and bursts. Replace its fields with a reviewed payload to try the engine.</p>
+      <pre><code>python -m pip install -r requirements.txt
+python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8001
+python -m unittest discover -s src/api/tests -v
+python -m unittest discover -s src/collectors/tests -v</code></pre>
+      <p>The dashboard API provides its interactive OpenAPI page at <code>/docs</code>. The older extension service can be started separately with <code>python -m src.api.server</code>; it binds to loopback and supports the extension's CORS preflight.</p>
+      <p>To analyze the edited local payload:</p>
+      <pre><code>python - &lt;&lt;'PY'
+import asyncio
+import json
+from src.engine.analyzer import analyze
+
+with open("payload.json", encoding="utf-8") as f:
+    report = asyncio.run(analyze(json.load(f)))
+print(json.dumps(report, indent=2))
+PY</code></pre>
+      <p>For an extension preview, load the <code>chrome-extension</code> directory unpacked from <code>chrome://extensions</code>, open a supported feed, and select extraction. The popup sends the reviewed payload to the legacy local API; if that service is stopped or unreachable, it falls back to the mock response.</p>
+    </section>
+
+    <section aria-labelledby="validation">
+      <h2 id="validation">Validation coverage and current limits</h2>
+      <p>The JavaScript extension suite covers text normalization, URL canonicalization, grouping, rolling-window boundaries, invalid timestamps and account IDs, co-activity repetition, weighted graph scores, and max-cluster permutation behavior. Dashboard checks cover source coverage display and report feedback.</p>
+      <p>Python coverage spans the API routes and error behavior, source collectors, Context.dev request budgeting and caching, the normalized-event integration adapter, NetworkX communities, evidence summaries, p-value separation, malformed input, a repeated synthetic campaign, and a one-off viral-news negative example. The viral example has no repeated edges and does not form a community; the system does not automatically label it deceptive.</p>
+      <ul>
+        <li>Visible extraction depends on changing public-page markup and may miss or misread posts.</li>
+        <li>Some actor IDs are built from visible display names; these may not uniquely identify an account.</li>
+        <li>Canonical URL equality is a sharing signal, not a statement that the linked material is independent or coordinated.</li>
+        <li>Timing and similar text can arise from common external causes; the breaking-news caution is explicit, but breaking news is not classified by the software.</li>
+        <li>Greedy modularity is a heuristic partition, especially uncertain on small or sparse graphs.</li>
+        <li>The permutation topic proxy is coarse and 199 runs provide limited p-value resolution; the results demonstrate a method rather than establish intent.</li>
+        <li>The VPS now has HTTPS through Let's Encrypt, but application authentication and operational monitoring are not included.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Noise Decoder project progress article · Local workspace copy · Excluded from version control by <code>.gitignore</code>. Deployment verified 15 November 2026: commit <code>619ad66</code> is checked out on VPS branch <code>r-dev</code>, the service is active, and <code>/healthz</code> responds successfully.</p>
+  </footer>
+</body>
+</html>
