@@ -8,8 +8,9 @@ from typing import Any
 from src.collectors.bluesky import CollectorError, collect_posts
 from src.collectors.news import FEEDS, collect_feed, collect_hackernews, _validate
 from src.collectors.context import configured as context_configured
+from src.collectors.reddit import collect_reddit, configured as reddit_configured
 
-SOURCE_IDS = ("bluesky", "hackernews", *FEEDS)
+SOURCE_IDS = ("bluesky", "hackernews", "reddit", *FEEDS)
 
 
 class CollectionFailed(CollectorError):
@@ -26,6 +27,7 @@ def source_details(source: str) -> dict[str, str]:
         "all": {"id": source, "name": "All live sources", "url": "", "scope": "Collection stopped before individual source outcomes were available."},
         "bluesky": {"id": source, "name": "Bluesky", "url": "https://bsky.app/", "scope": "Bounded public post search."},
         "hackernews": {"id": source, "name": "Hacker News", "url": "https://hn.algolia.com/", "scope": "Story submissions searched through the Algolia index."},
+        "reddit": {"id": source, "name": "Reddit", "url": "https://www.reddit.com/", "scope": "Bounded search of public submissions through Reddit's OAuth Data API."},
         "context": {"id": source, "name": "Context.dev news index", "url": "https://www.context.dev/", "scope": "English publisher articles in the selected date window, ranked by relevance."},
     }[source]
 
@@ -53,6 +55,7 @@ def source_catalog() -> list[dict[str, Any]]:
         {"id": "all", "name": "All live sources", "kind": "combined"},
         {"id": "bluesky", "name": "Bluesky", "kind": "social_search"},
         {"id": "hackernews", "name": "Hacker News", "kind": "discussion_search"},
+        {"id": "reddit", "name": "Reddit", "kind": "discussion_search", "available": reddit_configured(), "included_in_all": True},
         {"id": "context", "name": "Context.dev news", "kind": "news_search", "available": context_configured(),
          "method": "POST", "max_limit": 10, "default_days": 7, "included_in_all": False},
         *({"id": key, "name": name, "kind": "news_feed", "feed_url": url}
@@ -66,6 +69,8 @@ def collect_source(source: str, query: str = "", *, limit: int = 50) -> dict[str
         return collect_posts(query, limit=limit).to_dict()
     if source == "hackernews":
         return collect_hackernews(query, limit=limit).to_dict()
+    if source == "reddit":
+        return collect_reddit(query, limit=limit).to_dict()
     if source in FEEDS:
         return collect_feed(source, query, limit=limit).to_dict()
     if source != "all":

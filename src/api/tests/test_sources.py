@@ -17,9 +17,11 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_catalog_exposes_all_sources_and_dashboard_options(self):
         catalog = (await self.client.get("/api/sources")).json()["sources"]
-        self.assertEqual({source["id"] for source in catalog}, {"all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"})
+        self.assertEqual({source["id"] for source in catalog}, {"all", "bluesky", "hackernews", "reddit", "bbc", "guardian", "aljazeera", "context"})
         context = next(source for source in catalog if source["id"] == "context")
         self.assertFalse(context["included_in_all"])
+        reddit = next(source for source in catalog if source["id"] == "reddit")
+        self.assertTrue(reddit["included_in_all"])
         from src.collectors.public import SOURCE_IDS
         self.assertNotIn("context", SOURCE_IDS)
         dashboard = (await self.client.get("/dashboard")).text
@@ -102,9 +104,10 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
         empty = CollectionResult("empty", "topic", 10, 0, 0, 0, [], [])
         with patch("src.collectors.public.collect_posts", return_value=empty), \
              patch("src.collectors.public.collect_hackernews", return_value=empty), \
+             patch("src.collectors.public.collect_reddit", return_value=empty), \
              patch("src.collectors.public.collect_feed", return_value=empty):
             response = await self.client.get("/api/collect/all?query=topic&limit=10")
         self.assertEqual(response.status_code, 200)
         rows = response.json()["sources"]
-        self.assertEqual(len(rows), 5)
+        self.assertEqual(len(rows), 6)
         self.assertTrue(all(row["status"] == "ok" and row["available_events"] == 0 for row in rows))

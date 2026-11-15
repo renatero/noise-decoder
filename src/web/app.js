@@ -32,7 +32,7 @@ function closeInvestigation() {
 const sourceMessages = {
   synthetic_coordinated: "Synthetic data is reproducible, labelled demonstration data and works offline.",
   synthetic_benign: "Synthetic data is reproducible, labelled demonstration data and works offline.",
-  all: "Searches Bluesky and Hacker News plus current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
+  all: "Searches Bluesky, Hacker News, Reddit and current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
   hackernews: "Searches Hacker News story submissions by date. Actors are submitting usernames, not article authors.",
   bbc: "BBC World headlines and summaries. Leave the phrase empty for recent items, or filter current headlines by all words. Actors represent the publisher.",
   guardian: "The Guardian World headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
@@ -84,7 +84,7 @@ async function api(path, options = {}) {
 }
 
 function updateSourceFields() {
-  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
+  const isLive = ["all", "bluesky", "hackernews", "reddit", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
   const isImport = source.value === "import";
   const isContext = source.value === "context";
   $("#context-days-field").classList.toggle("hidden", !isContext);
@@ -117,12 +117,13 @@ async function loadSource() {
       return api(`/api/datasets/${source.value}`);
     case "all":
     case "hackernews":
+    case "reddit":
     case "bbc":
     case "guardian":
     case "aljazeera":
     case "bluesky": {
       const query = investigation.value.trim();
-      if (!query && ["all", "bluesky", "hackernews"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
+      if (!query && ["all", "bluesky", "hackernews", "reddit"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
       const limit = Math.min(100, Math.max(1, Number($("#limit").value) || 50));
       return api(`/api/collect/${source.value}?query=${encodeURIComponent(query)}&limit=${limit}`);
     }
@@ -636,24 +637,17 @@ function exportReport() {
   URL.revokeObjectURL(link.href);
 }
 
-async function checkHealth() {
-  try {
-    await api("/healthz");
-    $("#service-indicator").className = "h-2 w-2 rounded-full bg-primary animate-pulse";
-    $("#service-label").textContent = "System active";
-  } catch (_) {
-    $("#service-indicator").className = "h-2 w-2 rounded-full bg-error";
-    $("#service-label").textContent = "Service unavailable";
-  }
-}
-
 async function checkSources() {
   try {
     const catalog = await api("/api/sources");
     const context = catalog.sources.find((item) => item.id === "context");
+    const reddit = catalog.sources.find((item) => item.id === "reddit");
     const option = source.querySelector('option[value="context"]');
     option.disabled = !context?.available;
     option.textContent = context?.available ? "News: Context.dev search" : "News: Context.dev (unavailable)";
+    const redditOption = source.querySelector('option[value="reddit"]');
+    redditOption.disabled = !reddit?.available;
+    redditOption.textContent = reddit?.available ? "Discussion: Reddit search" : "Discussion: Reddit (configure OAuth)";
   } catch (_) { /* Keep the optional source disabled if configuration is unknown. */ }
 }
 
@@ -683,5 +677,4 @@ $("#investigation-overlay").addEventListener("click", (event) => { if (event.tar
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeInvestigation(); });
 updateSourceFields();
 initialiseExtensionInput();
-checkHealth();
 checkSources();
