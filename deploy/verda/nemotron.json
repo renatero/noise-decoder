@@ -5,7 +5,7 @@
   },
   "containers": [
     {
-      "image": "docker.io/vllm/vllm-openai@sha256:2c908d5a84ed251b6a17d179f42d06df1aff353007779ac5eecd8a0ea3fe9331",
+      "image": "docker.io/vllm/vllm-openai:v0.11.2",
       "exposed_port": 8000,
       "should_use_cached_image": true,
       "healthcheck": {
@@ -39,12 +39,22 @@
           "--enforce-eager"
         ]
       },
-      "env": [],
+      "env": [
+        {
+          "name": "HF_HOME",
+          "value_or_reference_to_secret": "/data/hf-cache",
+          "type": "plain"
+        }
+      ],
       "volume_mounts": [
         {
           "type": "memory",
           "mount_path": "/dev/shm",
           "size_in_mb": 1024
+        },
+        {
+          "type": "scratch",
+          "mount_path": "/data"
         }
       ]
     }
