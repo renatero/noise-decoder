@@ -33,3 +33,9 @@
 .panel-title { display: flex; align-items: center; gap: .375rem; font-family: "Plus Jakarta Sans", sans-serif; font-size: 16px; font-weight: 600; }
 .panel-content { margin-top: .75rem; color: #bcc9cd; font-size: 12px; line-height: 18px; }
 #graph canvas { outline: none; }
+
+/* Long actor IDs and source URLs must fit inside the evidence column. */
+#evidence-section, #graph-detail { overflow-wrap: anywhere; }
+#evidence-feed > article { min-width: 0; flex-shrink: 0; }
+#evidence-feed summary { overflow-wrap: anywhere; }
+#graph canvas { display: block; }

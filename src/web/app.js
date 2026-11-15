@@ -13,6 +13,7 @@ const submitButton = $("#investigate-button");
 const syntheticBanner = $("#synthetic-banner");
 const exportButton = $("#export-button");
 let graph = null;
+let graphResizeObserver = null;
 let latestReport = null;
 let latestEvents = [];
 
@@ -385,18 +386,49 @@ function renderEvidence(report) {
     });
     return;
   }
-  evidence.slice(0, 16).forEach((item) => {
-    const card = element("article", "rounded-xl border-l-2 border-primary bg-surface-container-lowest p-3");
-    const ids = item.event_ids || [];
-    const event = byId.get(String(ids[0]));
-    const top = element("div", "flex items-center justify-between gap-2");
-    top.append(element("span", "font-label text-label-md font-bold text-on-surface", event?.actor_id || item.edge_id || "Observed relationship"));
+  const edgesById = new Map((report.edges || []).map(edge => [edge.id, edge]));
+  const shown = evidence.slice(0, 16);
+  target.append(element("p", "text-body-sm text-outline", `Showing ${shown.length} of ${evidence.length} relationships. Each card identifies the actor pair and its supporting records.`));
+  shown.forEach((item) => {
+    const card = element("article", "evidence-card rounded-xl border-l-2 border-primary bg-surface-container-lowest p-3");
+    const edge = edgesById.get(item.edge_id);
+    // Group contexts contain other actors' posts too; show only this pair's records.
+    const actors = edge ? [edge.source, edge.target] : [];
+    const events = [...new Set(item.event_ids || [])].map(id => byId.get(String(id)))
+      .filter(event => event && (!actors.length || actors.includes(event.actor_id)));
+    const top = element("div", "flex flex-wrap items-start justify-between gap-2");
+    top.append(element("h3", "min-w-0 font-label text-label-md font-bold text-on-surface", actors.length ? actors.join(" ↔ ") : item.edge_id || "Observed relationship"));
     top.append(element("span", "rounded bg-surface-container-high px-1.5 py-0.5 font-label text-label-sm text-primary", formatLabel(item.assessment)));
     card.append(top);
-    if (event?.timestamp) card.append(element("div", "mt-1 font-label text-label-sm text-outline", new Date(event.timestamp).toLocaleString()));
-    if (event?.text) card.append(element("p", "mt-1.5 text-body-sm text-on-surface-variant", event.text));
-    if (item.shared_urls?.length) card.append(element("p", "mt-1 break-all text-body-sm text-primary", item.shared_urls.join(" · ")));
-    card.append(sourceLink(event) || element("p", "mt-2 text-body-sm text-outline", `${ids.length} supporting event record${ids.length === 1 ? "" : "s"}`));
+    const urls = [...new Set(item.shared_urls || [])];
+    card.append(element("p", "mt-2 text-body-sm text-outline", `${events.length} supporting records · ${urls.length} shared URLs`));
+    // One example per actor keeps the overview useful without repeating one post
+    // as the entire explanation for every edge in a dense network.
+    const examples = actors.length ? actors.map(actor => events.find(event => event.actor_id === actor)).filter(Boolean) : events.slice(0, 2);
+    for (const event of examples) {
+      const record = element("div", "mt-3");
+      record.append(element("p", "font-label text-label-sm text-outline", `${event.actor_id} · ${new Date(event.timestamp).toLocaleString()}`));
+      record.append(element("p", "mt-1 text-body-sm text-on-surface-variant", event.text));
+      const link = sourceLink(event);
+      if (link) record.append(link);
+      card.append(record);
+    }
+    if (urls.length) {
+      const details = element("details", "mt-2 text-body-sm");
+      details.append(element("summary", "cursor-pointer text-primary", `Shared URLs (${urls.length})`));
+      urls.forEach(url => details.append(element("p", "mt-1 text-on-surface-variant", url)));
+      card.append(details);
+    }
+    if (edge) {
+      const inspect = element("button", "mt-2 text-body-sm text-primary underline", "Inspect relationship");
+      inspect.type = "button";
+      inspect.onclick = () => {
+        graph?.elements().unselect();
+        graph?.getElementById(edge.id).select();
+        detailForEdge(edge);
+      };
+      card.append(inspect);
+    }
     target.append(card);
   });
 }
@@ -406,7 +438,7 @@ function detailForNode(node) {
   const events = (node.event_ids || []).map((id) => byId.get(String(id))).filter(Boolean);
   const panel = $("#graph-detail");
   clear(panel);
-  panel.append(element("div", "font-label text-label-md text-on-surface", node.id));
+  panel.append(element("div", "font-label text-label-md text-on-surface", node.displayLabel && node.displayLabel !== node.id ? `${node.displayLabel} · ${node.id}` : node.id));
   panel.append(element("p", "mt-1", `${events.length} normalized event record${events.length === 1 ? "" : "s"} connected to this actor.`));
   const link = sourceLink(events[0]);
   if (link) panel.append(link);
@@ -423,8 +455,11 @@ function detailForEdge(edge) {
 
 function renderGraph(report, selectedCluster = "all") {
   const container = $("#graph");
+  graphResizeObserver?.disconnect();
   if (graph) { graph.destroy(); graph = null; }
+  $("#graph-detail").textContent = "Select a node or relationship to inspect the event records behind it.";
   clear(container);
+  $("#graph-summary").textContent = "";
   if (!window.cytoscape) {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-error", "The network graph library could not load. The report and evidence remain available."));
     return;
@@ -448,18 +483,37 @@ function renderGraph(report, selectedCluster = "all") {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-outline", "This filter has no graphable actor records."));
     return;
   }
+  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Select an actor for its full ID.`;
+  const connected = new Set(edges.flatMap(edge => [edge.source, edge.target]));
+  const dense = nodes.length <= 24 && edges.length > nodes.length;
   graph = window.cytoscape({
     container,
-    elements: { nodes: nodes.map((node) => ({ data: node })), edges: edges.map((edge) => ({ data: edge })) },
+    elements: { nodes: nodes.map((node, index) => ({ data: {...node, displayLabel: node.id.length > 14 ? `Actor ${index + 1}` : node.id}, classes: connected.has(node.id) ? "recurring" : "" })), edges: edges.map((edge) => ({ data: edge })) },
     style: [
-      { selector: "node", style: { "background-color": "#869397", label: "data(id)", color: "#dee2f6", "font-family": "Inter", "font-size": 10, "text-valign": "bottom", "text-margin-y": 7, width: 22, height: 22 } },
-      { selector: "edge", style: { width: "mapData(weight, 1, 8, 1.5, 5)", "line-color": "#06b6d4", "curve-style": "bezier", opacity: 0.9 } },
+      { selector: "node", style: { "background-color": "#869397", label: "data(displayLabel)", color: "#dee2f6", "font-family": "Inter", "font-size": 12, "text-valign": "bottom", "text-margin-y": 6, "text-background-color": "#090e1c", "text-background-opacity": 0.9, "text-background-padding": 2, width: 24, height: 24 } },
+      { selector: "node.recurring", style: { "background-color": "#4cd7f6" } },
+      { selector: "edge", style: { width: "mapData(weight, 1, 8, 1, 2.5)", "line-color": "#06b6d4", "curve-style": "bezier", opacity: 0.3 } },
+      { selector: "edge:selected", style: { opacity: 1, width: 3 } },
       { selector: ":selected", style: { "background-color": "#4cd7f6", "line-color": "#4cd7f6", "border-width": 2, "border-color": "#dee2f6" } },
     ],
-    layout: { name: "cose", animate: false, padding: 36, nodeRepulsion: 7000, idealEdgeLength: 105 },
+    minZoom: 0.1, maxZoom: 2.5, wheelSensitivity: 0.2,
+    layout: dense
+      ? { name: "circle", animate: false, fit: false, radius: Math.max(160, nodes.length * 12), avoidOverlap: false }
+      : { name: "cose", animate: false, fit: false, nodeDimensionsIncludeLabels: true, nodeRepulsion: () => 12000, idealEdgeLength: () => 140, componentSpacing: 100 },
   });
+  fitGraph();
+  graphResizeObserver = new ResizeObserver(() => fitGraph());
+  graphResizeObserver.observe(container);
   graph.on("tap", "node", (event) => detailForNode(event.target.data()));
   graph.on("tap", "edge", (event) => detailForEdge(event.target.data()));
+}
+
+function fitGraph() {
+  if (!graph || graph.destroyed()) return;
+  graph.resize();
+  graph.fit(undefined, 28);
+  // A small component must not inflate into oversized nodes and overlapping text.
+  if (graph.zoom() > 1) { graph.zoom(1); graph.center(); }
 }
 
 function renderReport(report, sourceData) {
@@ -557,7 +611,7 @@ source.addEventListener("change", updateSourceFields);
 $("#cluster-filter").addEventListener("change", (event) => { if (latestReport) renderGraph(latestReport, event.target.value); });
 $("#graph-zoom-in").addEventListener("click", () => graph?.zoom({ level: graph.zoom() * 1.2, renderedPosition: { x: graph.width() / 2, y: graph.height() / 2 } }));
 $("#graph-zoom-out").addEventListener("click", () => graph?.zoom({ level: graph.zoom() / 1.2, renderedPosition: { x: graph.width() / 2, y: graph.height() / 2 } }));
-$("#graph-reset").addEventListener("click", () => graph?.fit(undefined, 36));
+$("#graph-reset").addEventListener("click", fitGraph);
 exportButton.addEventListener("click", exportReport);
 document.querySelectorAll("[data-scroll-target]").forEach((button) => button.addEventListener("click", () => document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth" })));
 document.querySelectorAll("[data-investigation-toggle]").forEach((trigger) => trigger.addEventListener("click", (event) => { event.preventDefault(); openInvestigation(); }));
