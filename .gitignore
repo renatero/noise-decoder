@@ -227,3 +227,4 @@ __marimo__/
 
 # Context.dev local cache and persistent request budget
 .context-state.sqlite3*
+.noise-state/
