@@ -13,7 +13,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.engine.analyzer import analyze
-from src.discovery.bluesky import discover_related_posts
+from src.discovery.public import discover_related_posts
 
 
 LOGGER = logging.getLogger("noise_decoder.api")
@@ -79,7 +79,7 @@ async def analyze_request(request: Request) -> dict[str, Any]:
 
 @app.post("/discover")
 async def discover_request(request: Request) -> dict[str, Any]:
-    """Search public Bluesky posts using visible posts as seeds."""
+    """Search public Bluesky and Hacker News posts using visible posts as seeds."""
     content_type = request.headers.get("content-type", "").split(";", 1)[0].strip().lower()
     if content_type != "application/json":
         raise HTTPException(status_code=415, detail="Content-Type must be application/json.")

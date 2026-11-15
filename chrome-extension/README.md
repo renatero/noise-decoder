@@ -8,9 +8,8 @@ or send content to an analysis API.
 
 1. Open `chrome://extensions` and enable **Developer mode**.
 2. Choose **Load unpacked** and select this `chrome-extension` directory.
-3. Open **Extension options** and set the dashboard URL. The default is
-   `https://radar.188.166.112.226.nip.io/`. Replace it with your branded HTTPS
-   URL when available.
+3. Open **Extension options** to confirm the dashboard URL. The deployed
+   default is `http://2.24.173.100/`.
 
 To open Settings as its own browser tab, right-click the extension toolbar icon
 and choose **Coordination Radar settings**.

@@ -11,7 +11,7 @@ const analysisResult = document.querySelector("#analysis-result");
 
 let collected = [];
 let visiblePostCount = 0;
-let blueskyPostCount = 0;
+let relatedPostCount = 0;
 let clusters = [];
 let timeWindowAnalysis = {
   config: { window_minutes: 60, minimum_accounts: 2 },
@@ -83,7 +83,7 @@ function renderCollected() {
 }
 
 document.querySelector("#extract").addEventListener("click", async () => {
-  extractionStatus.textContent = "Extracting visible posts and searching public Bluesky posts…";
+  extractionStatus.textContent = "Extracting visible posts and searching public Bluesky and Hacker News posts…";
   analysis.hidden = true;
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -91,7 +91,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
     const [result] = await chrome.scripting.executeScript({ target: { tabId: tab.id }, func: extractVisibleEvents });
     const visibleEvents = result.result.events;
     visiblePostCount = visibleEvents.length;
-    blueskyPostCount = 0;
+    relatedPostCount = 0;
     const endpoint = await getApiEndpoint();
     const discoveryUrl = new URL(endpoint);
     discoveryUrl.pathname = discoveryUrl.pathname.replace(/\/analyze\/?$/, "/discover");
@@ -116,12 +116,12 @@ document.querySelector("#extract").addEventListener("click", async () => {
         }
       }
       const seedIdSet = new Set(visibleEvents.map((event) => event.post_id));
-      blueskyPostCount = [...relevantIds].filter((postId) => !seedIdSet.has(postId)).length;
+      relatedPostCount = [...relevantIds].filter((postId) => !seedIdSet.has(postId)).length;
       collected = enrichEvents(expanded.filter((event) => relevantIds.has(event.post_id)));
       discoveryLimitations = discovery.limitations || [];
     } catch (error) {
       collected = enrichEvents(visibleEvents);
-      discoveryLimitations = [`Bluesky public search was unavailable: ${error.message}`];
+      discoveryLimitations = [`Public post search was unavailable: ${error.message}`];
     }
     clusters = buildClusters(collected);
     const { windowMinutes = 60, minimumAccounts = 2 } = await chrome.storage.sync.get({ windowMinutes: 60, minimumAccounts: 2 });
@@ -130,13 +130,13 @@ document.querySelector("#extract").addEventListener("click", async () => {
     actorGraph = buildWeightedActorGraph(collected, clusters, timeWindowAnalysis, coActivity);
     permutationAnalysis = runPermutationNullModel(collected, clusters, timeWindowAnalysis, coActivity, actorGraph);
     extractionStatus.textContent = collected.length
-      ? `Collected ${visiblePostCount} visible posts from ${result.result.platform} and found ${blueskyPostCount} related public Bluesky posts. Found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared the strongest actor cluster against 199 permutations; p-value ${permutationAnalysis.permutation_p_value ?? "unavailable"}. Review the evidence before sending. ${discoveryLimitations.join(" ")}`
+      ? `Collected ${visiblePostCount} visible posts from ${result.result.platform} and found ${relatedPostCount} related public Bluesky and Hacker News posts. Found ${clusters.length} related group${clusters.length === 1 ? "" : "s"}, ${timeWindowAnalysis.bursts.length} time-window burst${timeWindowAnalysis.bursts.length === 1 ? "" : "s"}, and ${coActivity.statistics.repeated_pairs_found} repeated co-activity pair${coActivity.statistics.repeated_pairs_found === 1 ? "" : "s"}. Compared the strongest actor cluster against 199 permutations; p-value ${permutationAnalysis.permutation_p_value ?? "unavailable"}. Review the evidence before sending. ${discoveryLimitations.join(" ")}`
       : "No supported visible posts were found on this page.";
     renderCollected();
   } catch (error) {
     collected = [];
     visiblePostCount = 0;
-    blueskyPostCount = 0;
+    relatedPostCount = 0;
     clusters = [];
     timeWindowAnalysis = detectTimeBursts([], [], {});
     coActivity = recordCoActivity([], [], timeWindowAnalysis);
@@ -150,7 +150,7 @@ document.querySelector("#extract").addEventListener("click", async () => {
 document.querySelector("#clear").addEventListener("click", () => {
   collected = [];
   visiblePostCount = 0;
-  blueskyPostCount = 0;
+  relatedPostCount = 0;
   clusters = [];
   timeWindowAnalysis = detectTimeBursts([], [], {});
   coActivity = recordCoActivity([], [], timeWindowAnalysis);

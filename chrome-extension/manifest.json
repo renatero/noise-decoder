@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Coordination Radar",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Open a selected public page, link, or text in Coordination Radar.",
   "action": {
     "default_title": "Open Coordination Radar"

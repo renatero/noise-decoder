@@ -30,7 +30,13 @@ function closeInvestigation() {
 const sourceMessages = {
   synthetic_coordinated: "Synthetic data is reproducible, labelled demonstration data and works offline.",
   synthetic_benign: "Synthetic data is reproducible, labelled demonstration data and works offline.",
+  all: "Searches Bluesky and Hacker News plus current BBC, Guardian and Al Jazeera headlines. Results are limited in total; unavailable sources are reported.",
+  hackernews: "Searches Hacker News story submissions by date. Actors are submitting usernames, not article authors.",
+  bbc: "BBC World headlines and summaries. Leave the phrase empty for recent items, or filter current headlines by all words. Actors represent the publisher.",
+  guardian: "The Guardian World headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
+  aljazeera: "Al Jazeera headlines and summaries. Leave the phrase empty for recent items, or filter by all words. Actors represent the publisher.",
   bluesky: "Uses a bounded public Bluesky search. Availability and coverage depend on the public endpoint.",
+  context: "Search recent English news across publishers. Up to 10 results per search, normally 1 credit; repeated searches are cached for 10 minutes. Articles provide background context for your investigation.",
   snapshot: "Uses a stored public-data snapshot, so the demonstration can run without network access.",
   import: "Import normalized event JSON with id, platform, actor_id, timestamp, text, urls, and source_url fields.",
 };
@@ -67,13 +73,21 @@ function setLoading(loading) {
 async function api(path, options = {}) {
   const response = await fetch(path, options);
   const data = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+  if (!response.ok) {
+    const error = new Error(typeof data.detail === "string" ? data.detail : `Request failed (${response.status})`);
+    error.collection = data.collection;
+    throw error;
+  }
   return data;
 }
 
 function updateSourceFields() {
-  const isLive = source.value === "bluesky";
+  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
   const isImport = source.value === "import";
+  const isContext = source.value === "context";
+  $("#context-days-field").classList.toggle("hidden", !isContext);
+  $("#limit").max = isContext ? "10" : "100";
+  if (isContext) $("#limit").value = String(Math.min(10, Number($("#limit").value) || 10));
   limitField.classList.toggle("hidden", !isLive);
   importField.classList.toggle("hidden", !isImport);
   investigation.closest("label").classList.toggle("hidden", isImport);
@@ -99,22 +113,41 @@ async function loadSource() {
     case "synthetic_coordinated":
     case "synthetic_benign":
       return api(`/api/datasets/${source.value}`);
+    case "all":
+    case "hackernews":
+    case "bbc":
+    case "guardian":
+    case "aljazeera":
     case "bluesky": {
       const query = investigation.value.trim();
-      if (!query) throw new Error("Enter a phrase or URL for the public Bluesky search.");
+      if (!query && ["all", "bluesky", "hackernews"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
       const limit = Math.min(100, Math.max(1, Number($("#limit").value) || 50));
-      return api(`/api/collect/bluesky?query=${encodeURIComponent(query)}&limit=${limit}`);
+      return api(`/api/collect/${source.value}?query=${encodeURIComponent(query)}&limit=${limit}`);
     }
     case "snapshot":
       return api("/api/snapshots/bluesky");
     case "import":
       return importedEvents();
+    case "context": {
+      const query = investigation.value.trim();
+      if (!query) throw new Error("Enter a topic or question to search the news.");
+      return api("/api/collect/context", {
+        method: "POST", headers: { "Content-Type": "application/json", "X-NoiseDecoder-Request": "1" },
+        body: JSON.stringify({ query, limit: Math.min(10, Math.max(1, Number($("#limit").value) || 10)), days: Number($("#context-days").value) }),
+      });
+    }
     default:
       throw new Error("Choose a data source.");
   }
 }
 
 function verdictCopy(status) {
+  if (status === "search_failed") return {
+    title: "Search could not be completed", description: "Review each source's status below and try again.", icon: "error",
+  };
+  if (status === "news_context") return {
+    title: "Related news collected", description: "Publisher coverage provides background context for your investigation.", icon: "newspaper",
+  };
   if (status === "suspicious") return {
     title: "Recurring relationship pattern identified",
     description: "The report contains recurring observed relationships that merit review. It does not establish bot identity, coordination intent, or propaganda intent.",
@@ -136,19 +169,69 @@ function eventMap() {
   return new Map(latestEvents.map((event) => [String(event.id), event]));
 }
 
-function renderVerdict(report) {
+function renderVerdict(report, sourceData) {
   const copy = verdictCopy(report.status);
   $("#verdict-title").textContent = copy.title;
-  $("#verdict-summary").textContent = report.summary || copy.description;
+  let summary = report.summary || copy.description;
+  if (report.status === "insufficient_data") {
+    const count = latestEvents.length;
+    const sources = sourceData.sources || [];
+    const failed = sources.filter((item) => item.status === "error").length;
+    summary = sources.length
+      ? `${count} usable record${count === 1 ? "" : "s"} collected. ${failed ? `${failed} of ${sources.length} sources could not complete the search. ` : ""}There is not enough data to assess recurring relationships. See the sources searched below.`
+      : `${count} record${count === 1 ? "" : "s"} loaded. There is not enough data to assess recurring relationships. No live search was performed.`;
+  }
+  $("#verdict-summary").textContent = summary;
   $("#verdict-icon").textContent = copy.icon;
   $("#verdict-badge").textContent = formatLabel(report.status);
   $("#report-status").textContent = formatLabel(report.status);
 }
 
+function renderSearchCoverage(sourceData) {
+  const rows = Array.isArray(sourceData.sources) ? sourceData.sources : [];
+  const section = $("#search-coverage");
+  section.classList.remove("hidden");
+  $("#search-coverage-title").textContent = rows.length ? "Sources searched" : "Data source";
+  const details = [];
+  if (rows.length) {
+    details.push(sourceData.query ? `Query: “${sourceData.query}”` : "Current headlines · no keyword filter");
+    if (sourceData.requested_limit) details.push(`Result limit: ${sourceData.requested_limit}`);
+    if (sourceData.search_completed_at) details.push(`Completed: ${new Date(sourceData.search_completed_at).toLocaleString()}`);
+    if (sourceData.cached) details.push("Cached results · no new provider request");
+    if (sourceData.source === "all_public_sources" || sourceData.source === "all") details.push("Context.dev is searched separately when selected");
+  } else {
+    details.push("No live search was performed. Results use the selected dataset, snapshot, or imported file.");
+  }
+  $("#search-query-summary").textContent = details.join(" · ");
+  const target = $("#search-source-list");
+  clear(target);
+  for (const item of rows) {
+    const card = element("li", "rounded-xl bg-surface-container-lowest p-3");
+    const heading = element("div", "flex flex-wrap items-center justify-between gap-2");
+    const name = element("a", "font-label text-label-md font-bold text-primary underline", item.name || formatLabel(item.id));
+    if (/^https?:\/\//i.test(item.url || "")) {
+      name.href = item.url;
+      name.target = "_blank";
+      name.rel = "noopener noreferrer";
+    }
+    const failed = item.status === "error";
+    const count = item.available_events ?? 0;
+    const status = failed ? "Unavailable · search not completed" : count ? `${count} usable record${count === 1 ? "" : "s"}` : "No usable matches";
+    heading.append(name, element("span", `text-body-sm ${failed ? "text-error" : "text-on-surface-variant"}`, status));
+    card.append(heading);
+    if (item.scope) card.append(element("p", "mt-1 text-body-sm text-outline", item.scope));
+    if (failed) card.append(element("p", "mt-1 text-body-sm text-error", item.error || "This source was unavailable. Its results are unknown."));
+    else if (count > 0 && item.returned_events < count) card.append(element("p", "mt-1 text-body-sm text-outline", `${item.returned_events} included after the combined result limit.`));
+    target.append(card);
+  }
+}
+
 function renderKpis(report) {
   const stats = report.statistics || {};
-  $("#kpi-posts").textContent = String(stats.events_observed ?? latestEvents.length ?? 0);
-  $("#kpi-posts-note").textContent = `Across ${stats.actors_observed ?? 0} observed actors`;
+  const isNews = report.status === "news_context";
+  $("#kpi-posts-label").textContent = isNews ? "News articles" : "Analyzed posts";
+  $("#kpi-posts").textContent = String((isNews ? stats.news_articles : stats.events_observed) ?? latestEvents.length ?? 0);
+  $("#kpi-posts-note").textContent = isNews ? `Across ${stats.news_publishers ?? 0} publishers` : `Across ${stats.actors_observed ?? 0} observed actors`;
   $("#kpi-relationships").textContent = String(stats.repeated_relationships ?? 0);
   $("#kpi-relationships-note").textContent = "Requires recurring shared-URL evidence";
   $("#kpi-urls").textContent = String(stats.relationship_groups ?? 0);
@@ -161,7 +244,8 @@ function renderStatistics(report) {
   const stats = report.statistics || {};
   const list = element("dl", "grid grid-cols-2 gap-x-3 gap-y-2");
   const entries = [
-    ["Posts", stats.events_observed], ["Actors", stats.actors_observed],
+    [report.status === "news_context" ? "Articles" : "Posts", report.status === "news_context" ? stats.news_articles : stats.events_observed],
+    [report.status === "news_context" ? "Publishers" : "Actors", report.status === "news_context" ? stats.news_publishers : stats.actors_observed],
     ["URL groups", stats.relationship_groups], ["Recurring", stats.repeated_relationships],
   ];
   for (const [label, value] of entries) {
@@ -195,16 +279,19 @@ function renderLimitations(report, sourceData) {
   const target = $("#limitations");
   clear(target);
   const notes = [...(sourceData.limitations || []), ...(report.limitations || [])];
+  if (sourceData.source === "context_news") notes.unshift(sourceData.cached
+    ? "This search used cached results and consumed no additional credits."
+    : `This search consumed ${sourceData.credits_consumed ?? "an unreported number of"} Context.dev credits.`);
   const unique = [...new Set(notes)];
   if (!unique.length) unique.push("No additional coverage notes were supplied.");
   const list = element("ul", "space-y-2");
-  unique.slice(0, 6).forEach((note) => list.append(element("li", "flex gap-2 text-body-sm text-on-surface-variant", note)));
+  unique.forEach((note) => list.append(element("li", "flex gap-2 text-body-sm text-on-surface-variant", note)));
   target.append(list);
 }
 
 function sourceLink(event) {
   if (!event?.source_url) return null;
-  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", "Open original public post");
+  const link = element("a", "mt-2 inline-flex items-center gap-1 text-body-sm text-primary underline", ["news_rss", "news_context"].includes(event.platform) ? `Read at ${event.publisher || event.actor_id}` : "Open original public post");
   link.href = event.source_url;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
@@ -218,7 +305,20 @@ function renderEvidence(report) {
   const evidence = Array.isArray(report.evidence) ? report.evidence : [];
   $("#evidence-count").textContent = `${evidence.length} relationship${evidence.length === 1 ? "" : "s"}`;
   if (!evidence.length) {
-    target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", "No shared-relationship evidence was returned for this input."));
+    target.append(element("p", "rounded-xl bg-surface-container-lowest p-3 text-body-sm text-on-surface-variant", report.status === "news_context"
+      ? "Related publisher coverage. Open an original article to assess its relevance."
+      : latestEvents.length ? "No shared-relationship evidence was returned for this input."
+      : "No usable records were returned. Review the source results above."));
+    $("#evidence-count").textContent = `${latestEvents.length} source records`;
+    latestEvents.slice(0, 16).forEach((event) => {
+      const card = element("article", "rounded-xl bg-surface-container-lowest p-3");
+      card.append(element("div", "font-label text-label-md font-bold text-on-surface", event.publisher || event.actor_id));
+      card.append(element("div", "mt-1 font-label text-label-sm text-outline", `${formatLabel(event.platform)} · ${new Date(event.timestamp).toLocaleString()}`));
+      card.append(element("p", "mt-1.5 text-body-sm text-on-surface-variant", event.text));
+      const link = sourceLink(event);
+      if (link) card.append(link);
+      target.append(card);
+    });
     return;
   }
   evidence.slice(0, 16).forEach((item) => {
@@ -299,8 +399,15 @@ function renderGraph(report, selectedCluster = "all") {
 }
 
 function renderReport(report, sourceData) {
-  latestReport = report;
-  renderVerdict(report);
+  latestReport = {
+    ...report,
+    limitations: [...new Set([...(sourceData.limitations || []), ...(report.limitations || [])])],
+    collection: { source: sourceData.source, query: sourceData.query, sources: sourceData.sources,
+      requested_limit: sourceData.requested_limit, search_completed_at: sourceData.search_completed_at,
+      cached: sourceData.cached, credits_consumed: sourceData.credits_consumed, collected_at: sourceData.collected_at },
+  };
+  renderVerdict(report, sourceData);
+  renderSearchCoverage(sourceData);
   renderKpis(report);
   renderStatistics(report);
   renderClusters(report);
@@ -324,6 +431,11 @@ async function runInvestigation(event) {
     setStatus(`Report ready: ${formatLabel(report.status)}.`, "success");
     closeInvestigation();
   } catch (error) {
+    if (error.collection) {
+      latestEvents = [];
+      renderReport({status: "search_failed", summary: error.message, statistics: {}, nodes: [], edges: [], evidence: [], clusters: []}, error.collection);
+      closeInvestigation();
+    }
     setStatus(error.message || "Unable to run this investigation.", "error");
   } finally {
     setLoading(false);
@@ -351,12 +463,22 @@ async function checkHealth() {
   }
 }
 
+async function checkSources() {
+  try {
+    const catalog = await api("/api/sources");
+    const context = catalog.sources.find((item) => item.id === "context");
+    const option = source.querySelector('option[value="context"]');
+    option.disabled = !context?.available;
+    option.textContent = context?.available ? "News: Context.dev search" : "News: Context.dev (unavailable)";
+  } catch (_) { /* Keep the optional source disabled if configuration is unknown. */ }
+}
+
 function initialiseExtensionInput() {
   const params = new URLSearchParams(window.location.search);
   const query = params.get("investigate");
   if (!query) return;
   investigation.value = query;
-  source.value = "bluesky";
+  source.value = "all";
   handoffNotice.textContent = "Extension handoff: this prefills an investigation only. It does not mean the selected page or post has been collected or analyzed.";
   handoffNotice.classList.remove("hidden");
   updateSourceFields();
@@ -378,3 +500,4 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") cl
 updateSourceFields();
 initialiseExtensionInput();
 checkHealth();
+checkSources();

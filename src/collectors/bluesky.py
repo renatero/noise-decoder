@@ -17,7 +17,7 @@ from urllib.request import Request, urlopen
 APPVIEW_BASE_URL = "https://api.bsky.app/xrpc/app.bsky.feed.searchPosts"
 MAX_LIMIT = 100
 DEFAULT_TIMEOUT_SECONDS = 8
-TRACKING_QUERY_KEYS = {"fbclid", "gclid", "dclid", "gclsrc", "msclkid", "mc_cid", "mc_eid"}
+TRACKING_QUERY_KEYS = {"fbclid", "gclid", "dclid", "gclsrc", "msclkid", "mc_cid", "mc_eid", "at_medium", "at_campaign", "traffic_source"}
 
 
 class CollectorError(RuntimeError):
@@ -45,6 +45,8 @@ class CollectionResult:
 
 def canonicalize_url(value: str) -> str | None:
     """Remove fragments and common tracking parameters from an HTTP(S) URL."""
+    if not isinstance(value, str):
+        return None
     try:
         parsed = urlsplit(value)
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
