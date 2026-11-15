@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordination Radar</title>
+  <title>Noise Decoder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script id="tailwind-config">
     tailwind.config = { darkMode: "class", theme: { extend: {
-      colors: { primary: "#4cd7f6", "primary-container": "#06b6d4", "on-primary": "#003640", background: "#0e1321", surface: "#0e1321", "surface-container-lowest": "#090e1c", "surface-container-low": "#161b2a", "surface-container": "#1a1f2e", "surface-container-high": "#252a39", "surface-container-highest": "#303444", "surface-bright": "#343948", "on-surface": "#dee2f6", "on-surface-variant": "#bcc9cd", outline: "#869397", "outline-variant": "#3d494c", error: "#ffb4ab", "error-container": "#93000a", tertiary: "#ffb95f" },
+      colors: { primary: "#963d32", "primary-container": "#963d32", "on-primary": "#fff8e9", background: "#eee5d3", surface: "#eee5d3", "surface-container-lowest": "#f4ecdc", "surface-container-low": "#e3d5bc", "surface-container": "#dccbb0", "surface-container-high": "#d2bea0", "surface-container-highest": "#c6af90", "surface-bright": "#f6eedf", "on-surface": "#332922", "on-surface-variant": "#594d40", outline: "#756656", "outline-variant": "#b9a58b", error: "#963d32", "error-container": "#eed3c9", tertiary: "#80501f" },
       borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
-      fontFamily: { body: ["Inter", "sans-serif"], label: ["JetBrains Mono", "monospace"], headline: ["Plus Jakarta Sans", "sans-serif"] },
+      fontFamily: { body: ["Inter", "sans-serif"], label: ["Inter", "sans-serif"], headline: ["Plus Jakarta Sans", "sans-serif"] },
       fontSize: { "body-sm": ["12px", { lineHeight: "18px" }], "body-md": ["13px", { lineHeight: "20px" }], "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.06em" }], "label-md": ["11px", { lineHeight: "16px", letterSpacing: "0.04em" }], "headline-sm": ["16px", { lineHeight: "24px" }], "headline-md": ["20px", { lineHeight: "28px" }], "headline-lg": ["28px", { lineHeight: "36px" }], display: ["36px", { lineHeight: "44px" }] }
     }}};
   </script>
@@ -22,19 +22,16 @@
   <script defer src="/static/providers.js"></script>
 </head>
 <body class="min-h-screen bg-background font-body text-body-md text-on-surface selection:bg-primary-container selection:text-on-primary">
-  <header class="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between bg-surface-container-lowest/90 px-4 shadow-[0_1px_8px_rgba(0,0,0,0.4)] backdrop-blur-md md:px-6">
+  <header class="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between bg-surface-container-lowest/90 px-4 shadow-[0_1px_8px_rgba(51,41,34,0.14)] backdrop-blur-md md:px-6">
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-2">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/20 text-primary shadow-[0_0_16px_rgba(6,182,212,0.35)]"><span class="material-symbols-outlined text-[20px]">radar</span></div>
-        <span class="font-headline text-headline-sm font-bold tracking-tight">Coordination Radar</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-container/15 text-primary"><span class="material-symbols-outlined text-[20px]">radar</span></div>
+        <span class="font-headline text-headline-sm font-bold tracking-tight">Noise Decoder</span>
       </div>
-      <div class="hidden h-4 w-px bg-surface-container-highest sm:block"></div>
-      <div class="hidden items-center gap-1.5 rounded-full bg-surface-container-high px-2.5 py-1 sm:flex"><span id="service-indicator" class="h-2 w-2 rounded-full bg-outline"></span><span id="service-label" class="font-label text-label-sm font-medium">Checking service</span></div>
     </div>
     <div class="flex items-center gap-2">
       <button type="button" data-investigation-toggle aria-label="Open investigation" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">troubleshoot</span></button>
       <button type="button" id="settings-button" aria-label="Provider settings" class="grid h-9 w-9 place-items-center rounded-lg bg-surface-container-high text-on-surface-variant transition hover:bg-surface-bright hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">settings</span></button>
-      <div class="grid h-9 w-9 place-items-center rounded-full border-l-2 border-primary bg-surface-container-high font-bold"><span class="material-symbols-outlined text-[18px]">person</span></div>
     </div>
   </header>
 
@@ -114,8 +111,8 @@
     </section>
   </div></main></div>
 
-  <div id="investigation-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-[#090e1c]/75 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="investigation-dialog-title">
-    <section class="w-full max-w-2xl rounded-2xl bg-surface-container-low p-5 shadow-[0_12px_48px_rgba(0,0,0,0.55)]">
+  <div id="investigation-overlay" class="fixed inset-0 z-[60] hidden items-center justify-center bg-[#332922]/45 p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="investigation-dialog-title">
+    <section class="w-full max-w-2xl rounded-2xl bg-surface-container-low p-5 shadow-[0_12px_48px_rgba(51,41,34,0.18)]">
       <div class="mb-4 flex items-start justify-between gap-4"><div><p class="font-label text-label-sm uppercase tracking-wider text-primary">Forensic workspace</p><h1 id="investigation-dialog-title" class="mt-1 font-headline text-headline-md font-bold">Open investigation</h1><p class="mt-1 text-body-sm text-on-surface-variant">Load a source, then review its observed relationships in the workspace.</p></div><button type="button" data-investigation-close aria-label="Close investigation dialog" class="graph-control"><span class="material-symbols-outlined">close</span></button></div>
       <form id="investigation-form" class="grid gap-3 sm:grid-cols-[180px_1fr]">
         <label class="field-label">Source<select id="source" class="field-control mt-1"><option value="all" selected>Live: All sources</option><option value="bluesky">Live: Bluesky public search</option><option value="hackernews">Live: Hacker News</option><option value="reddit" disabled>Discussion: Reddit (configure OAuth)</option><option value="bbc">News: BBC World</option><option value="guardian">News: The Guardian World</option><option value="aljazeera">News: Al Jazeera</option><option value="context" disabled>News: Context.dev search</option><option value="snapshot">Offline: Bluesky snapshot</option><option value="import">Normalized JSON import</option><option value="synthetic_coordinated">Synthetic: coordinated</option><option value="synthetic_benign">Synthetic: benign</option></select></label>
