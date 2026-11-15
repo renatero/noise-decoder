@@ -33,3 +33,28 @@
 .panel-title { display: flex; align-items: center; gap: .375rem; font-family: "Plus Jakarta Sans", sans-serif; font-size: 16px; font-weight: 600; }
 .panel-content { margin-top: .75rem; color: #bcc9cd; font-size: 12px; line-height: 18px; }
 #graph canvas { outline: none; }
+
+/* Long actor IDs and source URLs must fit inside the evidence column. */
+#evidence-section, #graph-detail { overflow-wrap: anywhere; }
+#evidence-feed > article { min-width: 0; flex-shrink: 0; }
+#evidence-feed summary { overflow-wrap: anywhere; }
+#graph canvas { display: block; }
+
+#graph { position: relative; }
+.graph-actor-tooltip {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  max-width: min(280px, calc(100% - 16px));
+  padding: 6px 9px;
+  border: 1px solid #4cd7f6;
+  border-radius: 6px;
+  background: #090e1c;
+  color: #dee2f6;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-wrap: anywhere;
+}
+.graph-tooltip-title { color: #4cd7f6; font-weight: 600; }
+.graph-tooltip-subtitle { margin-top: 2px; color: #bcc9cd; font-size: 11px; line-height: 16px; }
+#cluster-filter { max-width: 100%; border: 1px solid #3d494c; border-radius: 6px; background: #090e1c; color: #bcc9cd; padding: 5px 8px; font-size: 11px; }

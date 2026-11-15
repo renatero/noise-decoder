@@ -13,6 +13,8 @@ const submitButton = $("#investigate-button");
 const syntheticBanner = $("#synthetic-banner");
 const exportButton = $("#export-button");
 let graph = null;
+let graphResizeObserver = null;
+let tooltipAbortController = null;
 let latestReport = null;
 let latestEvents = [];
 
@@ -82,7 +84,7 @@ async function api(path, options = {}) {
 }
 
 function updateSourceFields() {
-  const isLive = ["all", "bluesky", "hackernews", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
+  const isLive = ["all", "bluesky", "hackernews", "reddit", "bbc", "guardian", "aljazeera", "context"].includes(source.value);
   const isImport = source.value === "import";
   const isContext = source.value === "context";
   $("#context-days-field").classList.toggle("hidden", !isContext);
@@ -115,12 +117,13 @@ async function loadSource() {
       return api(`/api/datasets/${source.value}`);
     case "all":
     case "hackernews":
+    case "reddit":
     case "bbc":
     case "guardian":
     case "aljazeera":
     case "bluesky": {
       const query = investigation.value.trim();
-      if (!query && ["all", "bluesky", "hackernews"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
+      if (!query && ["all", "bluesky", "hackernews", "reddit"].includes(source.value)) throw new Error("Enter a phrase or URL for the public search.");
       const limit = Math.min(100, Math.max(1, Number($("#limit").value) || 50));
       return api(`/api/collect/${source.value}?query=${encodeURIComponent(query)}&limit=${limit}`);
     }
@@ -323,6 +326,7 @@ function renderClusters(report) {
   const select = $("#cluster-filter");
   clear(target);
   select.replaceChildren(new Option("All observed actors", "all"));
+  select.hidden = true;
   const clusters = Array.isArray(report.clusters) ? report.clusters : [];
   if (!clusters.length) {
     target.textContent = "No clusters were returned for this report.";
@@ -337,6 +341,7 @@ function renderClusters(report) {
     target.append(row);
     if (actors.length) select.add(new Option(`${label} (${actors.length})`, `cluster-${index}`));
   });
+  select.hidden = select.options.length <= 1;
 }
 
 function renderLimitations(report, sourceData) {
@@ -385,18 +390,49 @@ function renderEvidence(report) {
     });
     return;
   }
-  evidence.slice(0, 16).forEach((item) => {
-    const card = element("article", "rounded-xl border-l-2 border-primary bg-surface-container-lowest p-3");
-    const ids = item.event_ids || [];
-    const event = byId.get(String(ids[0]));
-    const top = element("div", "flex items-center justify-between gap-2");
-    top.append(element("span", "font-label text-label-md font-bold text-on-surface", event?.actor_id || item.edge_id || "Observed relationship"));
+  const edgesById = new Map((report.edges || []).map(edge => [edge.id, edge]));
+  const shown = evidence.slice(0, 16);
+  target.append(element("p", "text-body-sm text-outline", `Showing ${shown.length} of ${evidence.length} relationships. Each card identifies the actor pair and its supporting records.`));
+  shown.forEach((item) => {
+    const card = element("article", "evidence-card rounded-xl border-l-2 border-primary bg-surface-container-lowest p-3");
+    const edge = edgesById.get(item.edge_id);
+    // Group contexts contain other actors' posts too; show only this pair's records.
+    const actors = edge ? [edge.source, edge.target] : [];
+    const events = [...new Set(item.event_ids || [])].map(id => byId.get(String(id)))
+      .filter(event => event && (!actors.length || actors.includes(event.actor_id)));
+    const top = element("div", "flex flex-wrap items-start justify-between gap-2");
+    top.append(element("h3", "min-w-0 font-label text-label-md font-bold text-on-surface", actors.length ? actors.join(" ↔ ") : item.edge_id || "Observed relationship"));
     top.append(element("span", "rounded bg-surface-container-high px-1.5 py-0.5 font-label text-label-sm text-primary", formatLabel(item.assessment)));
     card.append(top);
-    if (event?.timestamp) card.append(element("div", "mt-1 font-label text-label-sm text-outline", new Date(event.timestamp).toLocaleString()));
-    if (event?.text) card.append(element("p", "mt-1.5 text-body-sm text-on-surface-variant", event.text));
-    if (item.shared_urls?.length) card.append(element("p", "mt-1 break-all text-body-sm text-primary", item.shared_urls.join(" · ")));
-    card.append(sourceLink(event) || element("p", "mt-2 text-body-sm text-outline", `${ids.length} supporting event record${ids.length === 1 ? "" : "s"}`));
+    const urls = [...new Set(item.shared_urls || [])];
+    card.append(element("p", "mt-2 text-body-sm text-outline", `${events.length} supporting records · ${urls.length} shared URLs`));
+    // One example per actor keeps the overview useful without repeating one post
+    // as the entire explanation for every edge in a dense network.
+    const examples = actors.length ? actors.map(actor => events.find(event => event.actor_id === actor)).filter(Boolean) : events.slice(0, 2);
+    for (const event of examples) {
+      const record = element("div", "mt-3");
+      record.append(element("p", "font-label text-label-sm text-outline", `${event.actor_id} · ${new Date(event.timestamp).toLocaleString()}`));
+      record.append(element("p", "mt-1 text-body-sm text-on-surface-variant", event.text));
+      const link = sourceLink(event);
+      if (link) record.append(link);
+      card.append(record);
+    }
+    if (urls.length) {
+      const details = element("details", "mt-2 text-body-sm");
+      details.append(element("summary", "cursor-pointer text-primary", `Shared URLs (${urls.length})`));
+      urls.forEach(url => details.append(element("p", "mt-1 text-on-surface-variant", url)));
+      card.append(details);
+    }
+    if (edge) {
+      const inspect = element("button", "mt-2 text-body-sm text-primary underline", "Inspect relationship");
+      inspect.type = "button";
+      inspect.onclick = () => {
+        graph?.elements().unselect();
+        graph?.getElementById(edge.id).select();
+        detailForEdge(edge);
+      };
+      card.append(inspect);
+    }
     target.append(card);
   });
 }
@@ -423,8 +459,13 @@ function detailForEdge(edge) {
 
 function renderGraph(report, selectedCluster = "all") {
   const container = $("#graph");
+  graphResizeObserver?.disconnect();
+  tooltipAbortController?.abort();
+  tooltipAbortController = new AbortController();
   if (graph) { graph.destroy(); graph = null; }
+  $("#graph-detail").textContent = "Select a node or relationship to inspect the event records behind it.";
   clear(container);
+  $("#graph-summary").textContent = "";
   if (!window.cytoscape) {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-error", "The network graph library could not load. The report and evidence remain available."));
     return;
@@ -448,18 +489,95 @@ function renderGraph(report, selectedCluster = "all") {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-outline", "This filter has no graphable actor records."));
     return;
   }
+  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Hover over an actor or line to preview its evidence. Select it for details.`;
+  const connected = new Set(edges.flatMap(edge => [edge.source, edge.target]));
+  const dense = nodes.length <= 24 && edges.length > nodes.length;
+  // Dense graphs need quieter lines until one actor or relationship is inspected.
+  const edgeWidth = edges.length > 80 ? [0.6, 1.4] : edges.length > 24 ? [0.8, 2] : [1, 2.5];
+  const edgeOpacity = edges.length > 80 ? 0.12 : edges.length > 24 ? 0.2 : 0.3;
   graph = window.cytoscape({
     container,
-    elements: { nodes: nodes.map((node) => ({ data: node })), edges: edges.map((edge) => ({ data: edge })) },
+    elements: { nodes: nodes.map((node) => ({ data: node, classes: connected.has(node.id) ? "recurring" : "" })), edges: edges.map((edge) => ({ data: edge })) },
     style: [
-      { selector: "node", style: { "background-color": "#869397", label: "data(id)", color: "#dee2f6", "font-family": "Inter", "font-size": 10, "text-valign": "bottom", "text-margin-y": 7, width: 22, height: 22 } },
-      { selector: "edge", style: { width: "mapData(weight, 1, 8, 1.5, 5)", "line-color": "#06b6d4", "curve-style": "bezier", opacity: 0.9 } },
+      { selector: "node", style: { "background-color": "#869397", label: "", color: "#dee2f6", "font-family": "Inter", "font-size": 12, "text-valign": "bottom", "text-margin-y": 6, "text-background-color": "#090e1c", "text-background-opacity": 0.9, "text-background-padding": 2, width: 24, height: 24 } },
+      { selector: "node.recurring", style: { "background-color": "#4cd7f6" } },
+      { selector: "edge", style: { width: `mapData(weight, 1, 8, ${edgeWidth.join(", ")})`, "line-color": "#06b6d4", "curve-style": "bezier", opacity: edgeOpacity } },
+      { selector: "edge:selected", style: { opacity: 1, width: 3 } },
       { selector: ":selected", style: { "background-color": "#4cd7f6", "line-color": "#4cd7f6", "border-width": 2, "border-color": "#dee2f6" } },
+      { selector: "node.dimmed", style: { opacity: 0.3 } },
+      { selector: "edge.dimmed", style: { opacity: 0.06 } },
+      { selector: "node.neighbor", style: { "border-width": 2, "border-color": "#06b6d4" } },
+      { selector: "edge.highlighted", style: { "line-color": "#4cd7f6", width: 2.2, opacity: 0.92 } },
+      { selector: "node.hovered", style: { "background-color": "#4cd7f6", "border-width": 2.5, "border-color": "#dee2f6" } },
+      { selector: "edge.hovered", style: { "line-color": "#4cd7f6", width: 2.8, opacity: 1 } },
     ],
-    layout: { name: "cose", animate: false, padding: 36, nodeRepulsion: 7000, idealEdgeLength: 105 },
+    minZoom: 0.1, maxZoom: 2.5, wheelSensitivity: 0.2,
+    layout: !edges.length
+      ? { name: "grid", animate: false, fit: false, padding: 28, avoidOverlap: true }
+      : dense
+      ? { name: "circle", animate: false, fit: false, radius: Math.max(160, nodes.length * 12), avoidOverlap: false }
+      : { name: "cose", animate: false, fit: false, nodeDimensionsIncludeLabels: true, nodeRepulsion: () => 12000, idealEdgeLength: () => 140, componentSpacing: 100 },
   });
+  const tooltip = element("div", "graph-actor-tooltip");
+  tooltip.setAttribute("role", "tooltip");
+  tooltip.hidden = true;
+  container.append(tooltip);
+  const resetHover = () => {
+    graph.elements().removeClass("hovered neighbor highlighted dimmed");
+    container.style.cursor = "default";
+    tooltip.hidden = true;
+  };
+  const showTooltip = (title, subtitle, point) => {
+    tooltip.replaceChildren(
+      element("div", "graph-tooltip-title", title),
+      element("div", "graph-tooltip-subtitle", subtitle),
+    );
+    tooltip.hidden = false;
+    tooltip.style.left = `${Math.max(8, Math.min(point.x - tooltip.offsetWidth / 2, container.clientWidth - tooltip.offsetWidth - 8))}px`;
+    tooltip.style.top = `${Math.max(8, Math.min(point.y + 18, container.clientHeight - tooltip.offsetHeight - 8))}px`;
+    container.style.cursor = "pointer";
+  };
+  graph.on("mouseover", "node", (event) => {
+    resetHover();
+    const node = event.target;
+    const relationships = node.connectedEdges();
+    graph.elements().addClass("dimmed");
+    relationships.removeClass("dimmed").addClass("highlighted");
+    relationships.connectedNodes().not(node).removeClass("dimmed").addClass("neighbor");
+    node.removeClass("dimmed").addClass("hovered");
+    const data = node.data();
+    const count = data.event_count ?? data.event_ids?.length ?? 0;
+    const platforms = (data.platforms || []).map(formatLabel).join(", ") || "Actor";
+    showTooltip(node.id(), `${platforms} · ${count} record${count === 1 ? "" : "s"}`, node.renderedPosition());
+  });
+  graph.on("mouseover", "edge", (event) => {
+    resetHover();
+    const edge = event.target;
+    graph.elements().addClass("dimmed");
+    edge.removeClass("dimmed").addClass("hovered");
+    edge.connectedNodes().removeClass("dimmed").addClass("neighbor");
+    const data = edge.data();
+    const weight = data.weight || 0;
+    showTooltip(`${data.source} ↔ ${data.target}`,
+      `${weight} shared-URL group${Number(weight) === 1 ? "" : "s"} · ${formatLabel(data.evidence_assessment)}`,
+      edge.renderedMidpoint());
+  });
+  graph.on("mouseout", "node, edge", resetHover);
+  graph.on("pan zoom resize drag", resetHover);
+  container.addEventListener("mouseleave", resetHover, { signal: tooltipAbortController.signal });
+  fitGraph();
+  graphResizeObserver = new ResizeObserver(() => fitGraph());
+  graphResizeObserver.observe(container);
   graph.on("tap", "node", (event) => detailForNode(event.target.data()));
   graph.on("tap", "edge", (event) => detailForEdge(event.target.data()));
+}
+
+function fitGraph() {
+  if (!graph || graph.destroyed()) return;
+  graph.resize();
+  graph.fit(undefined, 28);
+  // A small component must not inflate into oversized nodes and overlapping text.
+  if (graph.zoom() > 1) { graph.zoom(1); graph.center(); }
 }
 
 function renderReport(report, sourceData) {
@@ -550,7 +668,7 @@ source.addEventListener("change", updateSourceFields);
 $("#cluster-filter").addEventListener("change", (event) => { if (latestReport) renderGraph(latestReport, event.target.value); });
 $("#graph-zoom-in").addEventListener("click", () => graph?.zoom({ level: graph.zoom() * 1.2, renderedPosition: { x: graph.width() / 2, y: graph.height() / 2 } }));
 $("#graph-zoom-out").addEventListener("click", () => graph?.zoom({ level: graph.zoom() / 1.2, renderedPosition: { x: graph.width() / 2, y: graph.height() / 2 } }));
-$("#graph-reset").addEventListener("click", () => graph?.fit(undefined, 36));
+$("#graph-reset").addEventListener("click", fitGraph);
 exportButton.addEventListener("click", exportReport);
 document.querySelectorAll("[data-scroll-target]").forEach((button) => button.addEventListener("click", () => document.getElementById(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth" })));
 document.querySelectorAll("[data-investigation-toggle]").forEach((trigger) => trigger.addEventListener("click", (event) => { event.preventDefault(); openInvestigation(); }));

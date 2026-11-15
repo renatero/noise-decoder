@@ -1,13 +1,14 @@
 """Same-origin API, dashboard shell, and bounded public-data collection."""
 
 import json
+from hashlib import sha256
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.exceptions import RequestValidationError
 from fastapi.exception_handlers import request_validation_exception_handler
@@ -238,8 +239,14 @@ def load_dataset(dataset_id: str) -> dict[str, Any]:
 
 
 @app.get("/dashboard", include_in_schema=False)
-def dashboard() -> FileResponse:
-    return FileResponse(WEB_DIR / "index.html")
+def dashboard() -> HTMLResponse:
+    html = (WEB_DIR / "index.html").read_text(encoding="utf-8")
+    # A deploy must replace cached scripts and styles together. Content hashes
+    # change the asset URLs whenever their contents change.
+    for filename in ("styles.css", "app.js", "providers.js"):
+        version = sha256((WEB_DIR / filename).read_bytes()).hexdigest()[:16]
+        html = html.replace(f'/static/{filename}"', f'/static/{filename}?v={version}"')
+    return HTMLResponse(html, headers={"Cache-Control": "no-cache"})
 
 
 @app.get("/", include_in_schema=False)
