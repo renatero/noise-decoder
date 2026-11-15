@@ -10,7 +10,7 @@ const providerNotes = {
   context: "Optional publisher news search. Up to 10 articles per request; existing daily credit limits apply.",
   cala: "Experimental background research. Reference IDs may not link to original sources. Treat answers as unverified leads. Application cap: 90 calls per rolling 30 days.",
   featherless: "Experimental evidence review. Enter an exact model ID available on your plan. Test access checks your account and model catalog without generating text.",
-  verda: "NVIDIA-authored models only. The managed catalog currently lists no NVIDIA model. For an existing Verda vLLM deployment, use https://containers.verda.com/DEPLOYMENT/v1 and its exact nvidia/ model ID. No GPU deployment is created by this app."
+  verda: "NVIDIA-authored models only. Use the exact NVIDIA model ID and the endpoint supplied by Verda (containers.verda.com or containers.datacrunch.io). The GPU scales to zero when idle; starting it can take several minutes. No GPU deployment is created by saving these settings."
 };
 
 function secureSettingsPage() {
@@ -64,7 +64,7 @@ function showProviders(providers) {
     if (["featherless", "verda"].includes(provider.id)) {
       const test = element("button", "rounded-lg bg-surface-container-high px-3 py-2", "Test saved access"); test.type = "button";
       test.onclick = async () => {
-        test.disabled = true; feedback.textContent = "Checking saved credentials and available models…";
+        test.disabled = true; feedback.textContent = "Checking saved credentials and available models… Verda may need several minutes to start.";
         try {
           const result = await operatorApi(`/api/settings/${provider.id}/test`, {method: "POST"});
           feedback.textContent = result.message + (result.models?.length ? `\nAvailable model IDs: ${result.models.join(", ")}` : "");
@@ -147,6 +147,7 @@ $("#review-form").onsubmit = async (event) => {
   experimentalResult = null; $("#review-export").disabled = true; $("#review-result").replaceChildren();
   $("#review-status").textContent = "Requesting an experimental review…";
   const provider = $("#review-provider").value;
+  if (provider === "verda") $("#review-status").textContent = "Requesting the NVIDIA review… Verda may take several minutes to start after being idle. Keep this page open; the request is submitted once.";
   const generation = researchGeneration;
   const events = provider === "cala" ? [] : latestEvents.slice(0, 20).map(item => ({id: String(item.id).slice(0,500), text: String(item.text).slice(0,12000), source_url: item.source_url || null, timestamp: item.timestamp || "", publisher: item.publisher || null}));
   try {

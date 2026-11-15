@@ -76,6 +76,8 @@ class ProviderTests(unittest.IsolatedAsyncioTestCase):
         for url in ('http://127.0.0.1/v1', 'https://evil.example/v1', 'https://containers.verda.com.evil.example/test/v1', 'https://containers.verda.com/a/../v1', 'https://user:password@containers.verda.com/a/v1'):
             self.assertEqual((await self.save('verda', base_url=url)).status_code, 400)
         self.assertEqual((await self.save('verda', base_url='https://containers.verda.com/nemotron/v1')).status_code, 200)
+        self.assertEqual((await self.save('verda', base_url='https://containers.datacrunch.io/nemotron/v1')).status_code, 200)
+        self.assertEqual((await self.save('verda', base_url='https://containers.datacrunch.io.evil.example/nemotron/v1')).status_code, 400)
         self.assertEqual((await self.save(base_url='https://evil.example/v1')).status_code, 400)
 
     async def test_disabled_provider_never_calls_upstream(self):
@@ -150,3 +152,46 @@ class ProviderTests(unittest.IsolatedAsyncioTestCase):
                     experimental.fetch(config, '/models')
                 self.assertNotIn('private-key', raised.exception.detail)
                 self.assertFalse(stream.call_args.kwargs['follow_redirects'])
+
+    async def test_verda_cold_start_submits_once_and_polls_same_job(self):
+        config = {**settings.get_config('verda'), 'base_url':'https://containers.datacrunch.io/nemotron/v1', 'api_key':'private-key'}
+        receipt = {'Id':'job-1', 'ResultPath':'/result/nemotron'}
+        result = {'data':[{'id':'nvidia/NVIDIA-Nemotron-Nano-9B-v2'}]}
+        with patch.object(experimental.uuid, 'uuid4', return_value='job-1'), patch.object(experimental.time, 'sleep'), patch.object(experimental, 'request_json', side_effect=[receipt, None, result]) as request:
+            self.assertEqual(experimental.fetch(config, '/models'), result)
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual(request.call_args_list[0].args[2]['Prefer'], 'respond-async')
+        for call in request.call_args_list[1:]:
+            self.assertEqual(call.args[1], 'https://containers.datacrunch.io/result/nemotron')
+            self.assertEqual(call.args[2]['X-Inference-Id'], 'job-1')
+            self.assertNotIn('Prefer', call.args[2])
+
+    async def test_verda_receipts_cannot_redirect_credentials(self):
+        config = {**settings.get_config('verda'), 'base_url':'https://containers.verda.com/nemotron/v1'}
+        for receipt in ({'Id':'job-1','ResultPath':'https://evil.example/result'}, {'Id':'different','ResultPath':'/result/nemotron'}):
+            with patch.object(experimental.uuid, 'uuid4', return_value='job-1'), patch.object(experimental, 'request_json', return_value=receipt) as request:
+                with self.assertRaises(experimental.HTTPException): experimental.fetch(config, '/models')
+                self.assertEqual(request.call_count, 1)
+
+    async def test_verda_poll_deadline_never_resubmits_inference(self):
+        config = {**settings.get_config('verda'), 'base_url':'https://containers.verda.com/nemotron/v1'}
+        receipt = {'Id':'job-1','ResultPath':'/result/nemotron'}
+        with patch.object(experimental.uuid, 'uuid4', return_value='job-1'), patch.object(experimental.time, 'monotonic', side_effect=[0,0,601]), patch.object(experimental.time, 'sleep'), patch.object(experimental, 'request_json', side_effect=[receipt,None]) as request:
+            with self.assertRaises(experimental.HTTPException) as raised: experimental.fetch(config, '/chat/completions', {'messages':[]})
+            self.assertEqual(raised.exception.status_code, 504)
+            self.assertEqual([c.args[0] for c in request.call_args_list], ['POST','GET'])
+
+    async def test_pending_results_do_not_parse_error_bodies(self):
+        for status in (404,202):
+            response = httpx.Response(status, text='not ready')
+            with patch.object(experimental.httpx, 'stream') as stream:
+                stream.return_value.__enter__.return_value = response
+                self.assertIsNone(experimental.request_json('GET', 'https://containers.verda.com/result/nemotron', {}, pending=True))
+
+    async def test_nemotron_direct_json_mode(self):
+        model = 'nvidia/NVIDIA-Nemotron-Nano-9B-v2'
+        await self.save('verda', api_key='key', enabled=True, model=model)
+        with patch.object(experimental, 'fetch', side_effect=[{'data':[{'id':model}]}, {'choices':[{'message':{'content':'{"relevance":"uncertain","findings":[]}'}}]}]) as fetch:
+            response = await self.request_review('verda')
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(fetch.call_args.args[2]['messages'][0]['content'].endswith('/no_think'))

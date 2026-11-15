@@ -1,0 +1,82 @@
+{
+  "name": "noise-decoder-nemotron",
+  "container_registry_settings": {
+    "is_private": false
+  },
+  "containers": [
+    {
+      "image": "docker.io/vllm/vllm-openai@sha256:2c908d5a84ed251b6a17d179f42d06df1aff353007779ac5eecd8a0ea3fe9331",
+      "exposed_port": 8000,
+      "should_use_cached_image": true,
+      "healthcheck": {
+        "enabled": true,
+        "port": 8000,
+        "path": "/health"
+      },
+      "entrypoint_overrides": {
+        "enabled": true,
+        "entrypoint": [
+          "python3",
+          "-m",
+          "vllm.entrypoints.openai.api_server"
+        ],
+        "cmd": [
+          "--model",
+          "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+          "--revision",
+          "6533e8de2c68e4536bf7c411d7a3ce5734111476",
+          "--served-model-name",
+          "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+          "--trust-remote-code",
+          "--max-model-len",
+          "16384",
+          "--max-num-seqs",
+          "4",
+          "--mamba-ssm-cache-dtype",
+          "float32",
+          "--gpu-memory-utilization",
+          "0.85",
+          "--enforce-eager"
+        ]
+      },
+      "env": [],
+      "volume_mounts": [
+        {
+          "type": "memory",
+          "mount_path": "/dev/shm",
+          "size_in_mb": 1024
+        }
+      ]
+    }
+  ],
+  "compute": {
+    "name": "L40S",
+    "size": 1
+  },
+  "is_spot": false,
+  "scaling": {
+    "min_replica_count": 0,
+    "max_replica_count": 1,
+    "scale_down_policy": {
+      "delay_seconds": 300
+    },
+    "scale_up_policy": {
+      "delay_seconds": 0
+    },
+    "queue_message_ttl_seconds": 900,
+    "concurrent_requests_per_replica": 2,
+    "scaling_triggers": {
+      "queue_load": {
+        "threshold": 1
+      },
+      "cpu_utilization": {
+        "enabled": false,
+        "threshold": 80
+      },
+      "gpu_utilization": {
+        "enabled": false,
+        "threshold": 80
+      }
+    }
+  }
+}
