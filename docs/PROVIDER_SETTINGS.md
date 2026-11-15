@@ -43,11 +43,14 @@ existing page tokens stop authorizing requests immediately.
 - **Context.dev**: existing bounded news collector, now configurable from the UI.
   Keys, enable/disable status and key rotation apply without restarting. Its
   existing cache, four requests/minute and default 20 requests/day limits remain.
-- **Cala.ai**: explicit background research through `POST /v1/knowledge/search`,
+- **Cala.ai**: explicit ownership research through `POST /v1/knowledge/search`,
   `X-API-KEY` authentication, and an `input` field. Generated text and supplied
   reference IDs are displayed as unverified leads. Opaque reference IDs are not
   represented as original-source links. No documented cost-free key-check endpoint
   is assumed; a research query validates access while using the account quota.
+  The question is `Who owns 'ENTITY'?`, shown in the result and included in its
+  export. A live broad multi-part question was rejected as too complex; the
+  focused NVIDIA ownership query returned six reference entries in about 40 seconds.
 - **Featherless**: `GET /v1/plan` checks authenticated API access; a plan-filtered
   model catalog checks the selected model. Reviews use `/v1/chat/completions`.
   The initial model is `Qwen/Qwen2.5-7B-Instruct`; availability is checked before
@@ -82,7 +85,8 @@ are never committed.
 
 Use **Experimental company research** below the investigation report. Enter an
 exact company/entity name, choose a provider, and run the review. Cala does its
-own background research. Featherless and Verda inspect up to 20 collected records,
+own focused ownership research; it does not promise a comprehensive political
+or influence investigation. Featherless and Verda inspect up to 20 collected records,
 with at most 2,000 characters of text per record. They do not independently search
 the web. Only the selected provider receives that request. The UI states the data
 transfer and potential credit cost before execution.

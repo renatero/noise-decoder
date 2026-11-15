@@ -232,12 +232,14 @@ def review(payload: ReviewRequest):
             'notice': 'Experimental AI output, not a verified finding. Check original sources and namesakes. Nationality or political connections alone do not establish propaganda. This review does not change coordination scores.'}
     if payload.provider == 'cala':
         reserve('cala')
-        data = fetch(config, '/knowledge/search', {'input': f'Research the company or entity {payload.entity!r}. Disambiguate namesakes. Find sources for ownership, government funding, political affiliations, and any documented influence activity. Distinguish allegations from established facts and include source references. Do not infer propaganda from country of origin.'})
+        # Cala rejects broad multi-part questions; use one explicit research focus.
+        query = f'Who owns {payload.entity!r}?'
+        data = fetch(config, '/knowledge/search', {'input': query})
         content = data.get('content')
         if not isinstance(content, str):
             raise HTTPException(502, 'Cala returned no research text.')
         context = data.get('context', [])
-        return base | {'kind': 'research', 'content': content[:20000],
+        return base | {'kind': 'research', 'query': query, 'content': content[:20000],
                        'references': [{'id': str(c.get('id', ''))[:200], 'content': str(c.get('content', ''))[:3000]} for c in context[:10] if isinstance(c, dict)] if isinstance(context, list) else [],
                        'reference_notice': 'Cala reference IDs may not resolve to original source URLs. Treat this generated research as unverified leads, not corroborated evidence.'}
     if not payload.events:
