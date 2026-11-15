@@ -228,3 +228,7 @@ __marimo__/
 # Context.dev local cache and persistent request budget
 .context-state.sqlite3*
 .noise-state/
+
+# Externally acquired research datasets are licensed separately and never committed.
+/data/external/*
+!/data/external/README.md
