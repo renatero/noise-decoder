@@ -66,13 +66,14 @@ def fetch(config, path, body=None):
         config['api_key'] if config['name'] == 'Cala.ai' else 'Bearer ' + config['api_key'])
     if re.fullmatch(settings.VERDA_CONTAINER_BASE, config['base_url']):
         return verda_fetch(config, path, body, headers)
-    return request_json('GET' if body is None else 'POST', config['base_url'] + path, headers, body)
+    return request_json('GET' if body is None else 'POST', config['base_url'] + path, headers, body,
+                        read_timeout=120 if config['name'] == 'Cala.ai' else 45)
 
 
-def request_json(method, url, headers, body=None, *, pending=False):
+def request_json(method, url, headers, body=None, *, pending=False, read_timeout=45):
     try:
         with httpx.stream(method, url,
-                          headers=headers, json=body, timeout=45, follow_redirects=False) as response:
+                          headers=headers, json=body, timeout=httpx.Timeout(45, read=read_timeout), follow_redirects=False) as response:
             # Verda returns 404 while an accepted async result is not ready yet.
             if pending and response.status_code in (202, 404):
                 return None

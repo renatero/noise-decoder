@@ -148,6 +148,7 @@ $("#review-form").onsubmit = async (event) => {
   $("#review-status").textContent = "Requesting an experimental review…";
   const provider = $("#review-provider").value;
   if (provider === "verda") $("#review-status").textContent = "Requesting the NVIDIA review… Verda may take several minutes to start after being idle. Keep this page open; the request is submitted once.";
+  if (provider === "cala") $("#review-status").textContent = "Researching with Cala… This may take a minute or two. Keep this page open; the request is submitted once.";
   const generation = researchGeneration;
   const events = provider === "cala" ? [] : latestEvents.slice(0, 20).map(item => ({id: String(item.id).slice(0,500), text: String(item.text).slice(0,12000), source_url: item.source_url || null, timestamp: item.timestamp || "", publisher: item.publisher || null}));
   try {
