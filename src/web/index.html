@@ -84,6 +84,15 @@
       <section id="experimental-section" class="rounded-2xl bg-surface-container-low p-4">
         <h2 class="font-headline text-headline-sm font-semibold">Experimental company research</h2>
         <p class="mt-1 text-body-sm text-on-surface-variant">Cala researches company background. Featherless and Verda review up to 20 collected records for entity relevance and reported ownership, funding or political connections. These provisional reviews do not change the coordination verdict.</p>
+        <div class="mt-3 rounded-xl bg-surface-container-lowest p-3">
+          <h3 class="font-semibold">Automatic company detection</h3>
+          <p class="mt-1 text-body-sm text-outline">With Settings unlocked and OpenRouter enabled, each loaded investigation starts Jev detection → Featherless name extraction → Jev validation → Cala ownership research → Verda NVIDIA and Featherless evidence checks. Up to 20 records and two companies. Calls may consume paid credits; repeat inputs reuse results for 24 hours. Synthetic input skips Cala. Cala leads remain separate from record-based evidence.</p>
+          <p id="company-status" class="mt-2 text-body-sm text-tertiary" role="status">Unlock Settings to enable automatic checks.</p>
+          <button id="company-resume" type="button" class="mt-2 rounded-lg bg-surface-container-high px-3 py-2">Resume automatic check</button>
+          <button id="company-export" type="button" disabled class="mt-2 rounded-lg bg-surface-container-high px-3 py-2 disabled:opacity-50">Export automatic research</button>
+          <div id="company-result" class="mt-3 space-y-3"></div>
+        </div>
+        <h3 class="mt-4 font-semibold">Manual research override</h3>
         <form id="review-form" class="mt-3 grid gap-3 sm:grid-cols-2">
           <label class="field-label">Company or entity<input id="review-entity" class="field-control mt-1" required minlength="2" maxlength="250" placeholder="Exact company name"></label>
           <label class="field-label">Provider<select id="review-provider" class="field-control mt-1"><option value="cala">Cala.ai — background research</option><option value="featherless">Featherless — evidence review</option><option value="verda">Verda — NVIDIA evidence review</option></select></label>

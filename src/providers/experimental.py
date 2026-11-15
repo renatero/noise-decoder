@@ -117,8 +117,8 @@ def verda_fetch(config, path, body, headers):
 
 
 def configured(provider, require_enabled=True):
-    if provider not in ('cala', 'featherless', 'verda'):
-        raise HTTPException(400, 'Choose Cala, Featherless, or Verda.')
+    if provider not in ('cala', 'featherless', 'verda', 'openrouter'):
+        raise HTTPException(400, 'Unknown experimental provider.')
     config = settings.get_config(provider)
     if not config['api_key']:
         raise HTTPException(409, 'Enter and save this provider’s API key in Settings.')
@@ -150,6 +150,10 @@ def nvidia_model(item):
 @router.post('/settings/{provider}/test', dependencies=[Depends(operator)])
 def test_provider(provider: str):
     config = configured(provider, require_enabled=False)
+    if provider == 'openrouter':
+        reserve(provider)
+        fetch(config, '/v1/key')
+        return {'message': 'OpenRouter credentials accepted. Jev decisions are checked when automatic research runs.'}
     if provider == 'cala':
         return {'message': 'Saved. Cala has no documented free credential-check endpoint; run an explicit Cala research query to validate access.'}
     reserve(provider)
@@ -226,6 +230,8 @@ def clean_review(raw, evidence):
 
 @router.post('/experimental/review', dependencies=[Depends(operator)])
 def review(payload: ReviewRequest):
+    if payload.provider not in ('cala', 'featherless', 'verda'):
+        raise HTTPException(400, 'Use the automatic company pipeline for Jev decisions.')
     config = configured(payload.provider)
     base = {'provider': payload.provider, 'entity': payload.entity, 'created_at': datetime.now(timezone.utc).isoformat(),
             'synthetic': payload.synthetic, 'model': config['model'],

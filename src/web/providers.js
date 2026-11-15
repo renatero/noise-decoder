@@ -5,8 +5,9 @@ let operatorToken = "";
 let experimentalResult = null;
 let researchGeneration = 0;
 const settingsDialog = document.querySelector("#settings-dialog");
-const providerNames = {context: "Context.dev", cala: "Cala.ai", featherless: "Featherless", verda: "Verda (NVIDIA only)"};
+const providerNames = {openrouter: "OpenRouter · Jev", context: "Context.dev", cala: "Cala.ai", featherless: "Featherless", verda: "Verda (NVIDIA only)"};
 const providerNotes = {
+  openrouter: "Automatic company discovery on loaded investigations while unlocked. Jev decides and validates; Featherless extracts names, followed by Cala and enabled evidence reviewers. Use ~typesafe/jev-latest. Disabling stops subsequent pipeline stages. Existing request caps apply.",
   context: "Optional publisher news search. Up to 10 articles per request; existing daily credit limits apply.",
   cala: "Experimental ownership research: one focused question about the named entity. Reference IDs may not link to original sources. Treat answers as unverified leads. Application cap: 90 calls per rolling 30 days.",
   featherless: "Experimental evidence review. Enter an exact model ID available on your plan. Test access checks your account and model catalog without generating text.",
@@ -55,13 +56,13 @@ function showProviders(providers) {
     const removeLabel = element("label", "mt-2 flex items-center gap-2 text-body-sm");
     const remove = document.createElement("input"); remove.type = "checkbox";
     removeLabel.append(remove, document.createTextNode("Remove saved key")); form.append(removeLabel);
-    const model = ["verda", "featherless"].includes(provider.id) ? field(form, "Exact model ID", "text", provider.model) : null;
+    const model = ["verda", "featherless", "openrouter"].includes(provider.id) ? field(form, "Exact model ID", "text", provider.model) : null;
     const base = provider.id === "verda" ? field(form, "Verda API base URL (including /v1)", "url", provider.base_url) : null;
     const buttons = element("div", "mt-3 flex gap-2");
     const save = element("button", "rounded-lg bg-primary-container px-3 py-2 text-on-primary", "Save settings"); save.type = "submit";
     buttons.append(save);
     const feedback = element("p", "mt-2 whitespace-pre-wrap break-words text-body-sm text-tertiary"); feedback.setAttribute("role", "status");
-    if (["featherless", "verda"].includes(provider.id)) {
+    if (["featherless", "verda", "openrouter"].includes(provider.id)) {
       const test = element("button", "rounded-lg bg-surface-container-high px-3 py-2", "Test saved access"); test.type = "button";
       test.onclick = async () => {
         test.disabled = true; feedback.textContent = "Checking saved credentials and available models… Verda may need several minutes to start.";
@@ -85,6 +86,7 @@ function showProviders(providers) {
         status.textContent = saved.key_configured ? "API key saved" : "No API key configured";
         feedback.textContent = "Saved. Credentials have not been validated unless you test access or run a request.";
         checkSources();
+        if (provider.id === "openrouter") { automaticEnabled = saved.enabled && saved.key_configured; startAutomatic(); }
       } catch (error) { feedback.textContent = error.message; }
       finally { save.disabled = false; }
     };
@@ -101,18 +103,22 @@ $("#settings-unlock").onsubmit = async (event) => {
   try {
     const result = await operatorApi("/api/settings");
     showProviders(result.providers);
+    automaticEnabled = result.providers.some(p => p.id === "openrouter" && p.enabled && p.key_configured);
+    startAutomatic();
     $("#settings-unlock").classList.add("hidden"); $("#settings-lock").classList.remove("hidden");
     $("#settings-status").textContent = "Unlocked. Experimental calls are limited to 4 operations/minute and 20/day per provider, including failed calls and access tests.";
   } catch (error) { operatorToken = ""; $("#settings-status").textContent = error.message; }
 };
 $("#settings-lock").onclick = () => {
+  automaticGeneration += 1; automaticEnabled = false;
+  $("#company-status").textContent = "Locked. Existing server jobs may finish; unlock to resume viewing.";
   operatorToken = ""; $("#provider-settings").replaceChildren();
   $("#settings-unlock").classList.remove("hidden"); $("#settings-lock").classList.add("hidden");
   $("#settings-status").textContent = "Locked.";
 };
 
-function renderExperimental(result) {
-  const container = $("#review-result"); container.replaceChildren();
+function renderExperimental(result, container = $("#review-result")) {
+  container.replaceChildren();
   container.append(element("h3", "font-semibold", `${providerNames[result.provider]} · ${result.entity}${result.model ? ` · ${result.model}` : ""}`));
   container.append(element("p", "text-body-sm text-tertiary", result.notice));
   if (result.synthetic) container.append(element("p", "text-primary", "Synthetic input: these are fictional demonstration records."));
@@ -162,6 +168,7 @@ $("#review-form").onsubmit = async (event) => {
 };
 document.addEventListener("noise:report", () => {
   researchGeneration += 1;
+  startAutomatic();
   experimentalResult = null;
   $("#review-export").disabled = true;
   $("#review-result").replaceChildren();
@@ -171,4 +178,64 @@ $("#review-export").onclick = () => {
   if (!experimentalResult) return;
   const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([JSON.stringify(experimentalResult, null, 2)], {type: "application/json"}));
   link.download = "experimental-company-research.json"; link.click(); URL.revokeObjectURL(link.href);
+};
+
+// Poll a durable server job; stale responses never replace a newer investigation.
+let automaticEnabled = false;
+let automaticGeneration = 0;
+let automaticResult = null;
+function renderAutomatic(job) {
+  automaticResult = job;
+  $("#company-export").disabled = false;
+  $("#company-status").textContent = `${job.status}: ${job.message}`;
+  const container = $("#company-result"); container.replaceChildren();
+  container.append(element("p", "text-body-sm text-outline", job.notice));
+  if (job.synthetic) container.append(element("p", "text-primary", "Synthetic input: fictional demonstration records."));
+  const c = job.coverage;
+  container.append(element("p", "text-body-sm text-outline", `Detection inspected ${c.records_submitted} of ${c.total_records} records, up to ${c.detection_characters_per_record} characters each (${c.detection_truncated_records} shortened); reviews inspect up to ${c.review_characters_per_record} characters each. Maximum ${c.max_companies} companies. No external web search beyond a completed Cala stage.`));
+  for (const stage of job.stages) {
+    const label = `${stage.stage}${stage.entity ? ` · ${stage.entity}` : ""}: ${stage.status}`;
+    container.append(element("p", "text-body-sm break-words", label + (stage.message ? ` — ${stage.message}` : "")));
+    if (stage.result?.probabilities) container.append(element("p", "text-body-sm text-outline", `${stage.result.model}: ${Object.entries(stage.result.probabilities).map(([k,v]) => `${k} ${(v*100).toFixed(1)}%`).join(", ")}`));
+    if (stage.result?.kind) {
+      const details = element("details", "rounded-lg bg-surface-container-low p-3");
+      details.append(element("summary", "cursor-pointer", "View research and evidence"));
+      const body = element("div", "mt-2 space-y-2"); renderExperimental(stage.result, body);
+      details.append(body); container.append(details);
+    }
+  }
+  for (const company of job.companies) {
+    container.append(element("h4", "font-semibold", `Detected: ${company.name}`));
+    container.append(element("blockquote", "border-l-2 border-primary pl-3 text-body-sm", company.quote));
+    container.append(element("p", "text-body-sm text-outline", `Record ${company.id} · Jev validation ${(company.probability*100).toFixed(1)}%`));
+  }
+}
+async function startAutomatic() {
+  const generation = ++automaticGeneration;
+  automaticResult = null;
+  $("#company-export").disabled = true;
+  $("#company-result").replaceChildren();
+  if (!operatorToken || !automaticEnabled) {
+    $("#company-status").textContent = "Automatic checks require unlocked Settings and an enabled OpenRouter key.";
+    return;
+  }
+  if (!latestReport || !latestEvents.length) { $("#company-status").textContent = "Load an investigation to detect companies automatically."; return; }
+  const events = latestEvents.slice(0,20).map(item => ({id:String(item.id).slice(0,500), text:String(item.text).slice(0,12000), source_url:item.source_url || null, timestamp:item.timestamp || "", publisher:item.publisher || null}));
+  $("#company-status").textContent = "Starting Jev company detection…";
+  try {
+    let job = await operatorApi("/api/experimental/companies", {method:"POST", body:JSON.stringify({events,synthetic:!!latestReport.synthetic,total_records:latestEvents.length})});
+    while (generation === automaticGeneration && operatorToken) {
+      renderAutomatic(job);
+      if (job.status !== "running") return;
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      if (generation !== automaticGeneration || !operatorToken) return;
+      job = await operatorApi(`/api/experimental/companies/${encodeURIComponent(job.id)}`);
+    }
+  } catch (error) { if (generation === automaticGeneration) $("#company-status").textContent = error.message + " No automatic retry was made."; }
+}
+$("#company-resume").onclick = startAutomatic;
+$("#company-export").onclick = () => {
+  if (!automaticResult) return;
+  const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([JSON.stringify(automaticResult,null,2)], {type:"application/json"}));
+  link.download = "automatic-company-research.json"; link.click(); URL.revokeObjectURL(link.href);
 };

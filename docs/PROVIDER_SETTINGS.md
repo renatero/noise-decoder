@@ -1,7 +1,7 @@
 # Provider settings and experimental company research
 
-The dashboard gear opens **Provider settings**. Context.dev, Cala.ai, Featherless,
-and Verda credentials are stored on the server. API responses expose only whether
+The dashboard gear opens **Provider settings**. OpenRouter, Context.dev, Cala.ai,
+Featherless, and Verda credentials are stored on the server. API responses expose only whether
 a key is configured, never the key itself. An empty key field preserves the saved
 key; **Remove saved key** explicitly removes it, including an environment fallback.
 Saving settings takes effect immediately, including the Context.dev source menu.
@@ -135,3 +135,57 @@ and sanitized provider errors. Run it with:
 `src/web/tests/providers.cjs` exercises settings, secret handling, review requests,
 synthetic attribution, safe rendering, export and mobile layout in Playwright.
 Provider requests in this browser test are mocked and spend no credits.
+
+## Automatic company discovery (2026-11-15)
+
+Enable **OpenRouter · Jev** and unlock Settings. Each subsequently loaded
+investigation (or the current one when unlocking) automatically runs:
+
+1. Jev decides whether the first 20 records mention a company.
+2. Featherless extracts at most two names with exact input quotes and record IDs.
+3. Jev validates those candidates; only probabilities at least 0.8 proceed.
+4. Cala researches ownership, then Verda's NVIDIA model and Featherless review
+   the collected evidence for each validated company. Disabled providers and
+   failures are displayed individually. Synthetic input skips external Cala lookup.
+
+Jev is a decision model, not a free-form text generator. Its official latest alias
+is `~typesafe/jev-latest` (`jev-latest` in Settings is normalized to this alias).
+The application uses `POST https://openrouter.ai/api/alpha/decisions` with typed
+`noul` questions; Featherless supplies the name strings. The live alias resolved
+to `typesafe/jev-1.14-20261014` on the verification date. No other OpenRouter model
+is silently substituted. Documentation verified on 2026-11-15:
+[Decisions API](https://openrouter.ai/docs/guides/features/decisions) and
+[Jev guide](https://openrouter.ai/docs/guides/community/jev).
+
+OpenRouter credentials use the same private settings store (`OPENROUTER_API_KEY`
+is the optional environment fallback). Testing saved access uses `/api/v1/key`;
+it does not generate an inference. Enabling OpenRouter enables automatic calls
+while the operator is unlocked. Disabling it stops subsequent stages of running
+jobs; already-submitted calls may complete. Locking the browser stops polling and
+new starts, but already-running server jobs continue.
+
+Detection reads up to 1,000 characters per record; evidence reviews read up to
+2,000. Coverage and shortened-record counts are displayed. This bounded sample
+may miss companies in later records or text. Empty, uncertain, malformed or
+truncated decisions never authorize downstream research. Exact quote checks prove
+only that text appeared in an input record, not that an AI claim is true. Cala's
+AI-generated leads are displayed separately and are **not** fed back as source
+facts to reviewers. No automatic stage changes coordination scores.
+
+Protected endpoints: `POST /api/experimental/companies` starts or retrieves a job;
+`GET /api/experimental/companies/{id}` returns progress and results. Both require
+the operator header and same-origin/HTTPS checks. Jobs and input excerpts persist
+in the private SQLite database. Identical input reuses the prior job for 24 hours,
+including failed/interrupted results, so refreshes do not repeat paid calls.
+Only one job runs at once; another dataset receives a busy message and can be
+resumed explicitly. Completed jobs older than 24 hours are pruned at the next
+start. A restart marks unfinished jobs interrupted, without resubmitting them.
+Run **one uvicorn worker** for this in-process background-task deployment.
+
+A two-company run uses up to two Jev decisions, one Featherless extraction, two
+Cala lookups, two Verda reviews, and two Featherless reviews. Existing application
+caps (4 operations/minute, 20/day/provider; Cala also 90/rolling 30 days) include
+failures. These are operation caps, not provider pricing guarantees; catalog reads
+and Verda result polling occur within an operation. GPU cold starts may take
+several minutes. The automatic research panel shows each stage, exposes provider
+results and supporting quotes, and offers a separate JSON export.
