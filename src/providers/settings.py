@@ -16,6 +16,8 @@ PROVIDERS = {
     'verda': {'name': 'Verda (NVIDIA models only)', 'env': 'VERDA_API_KEY', 'enabled': False, 'model': '', 'base_url': 'https://inference.verda.com/v1'},
 }
 
+VERDA_CONTAINER_BASE = r'https://containers\.(?:verda\.com|datacrunch\.io)/[a-zA-Z0-9_-]+/v1'
+
 
 def state_dir():
     path = Path(os.environ.get('NOISE_STATE_DIR', '.noise-state'))
@@ -90,8 +92,8 @@ def save_config(provider, patch):
     if 'base_url' in values:
         base = values['base_url'].rstrip('/')
         if provider == 'verda':
-            if base != PROVIDERS['verda']['base_url'] and not re.fullmatch(r'https://containers\.verda\.com/[a-zA-Z0-9_-]+/v1', base):
-                raise ValueError('Use https://inference.verda.com/v1 or https://containers.verda.com/DEPLOYMENT/v1.')
+            if base != PROVIDERS['verda']['base_url'] and not re.fullmatch(VERDA_CONTAINER_BASE, base):
+                raise ValueError('Use the Verda managed endpoint or https://containers.verda.com/DEPLOYMENT/v1 (containers.datacrunch.io is also supported).')
         elif base != PROVIDERS[provider]['base_url']:
             raise ValueError('This provider uses its fixed official API endpoint.')
         values['base_url'] = base

@@ -61,14 +61,18 @@ existing page tokens stop authorizing requests immediately.
 
 Verda's managed catalog, checked **2026-11-15**, lists Kimi and DeepSeek rather than
 an NVIDIA model. The settings support an **existing** Verda NVIDIA vLLM deployment
-at `https://containers.verda.com/DEPLOYMENT/v1`, with its inference API key. The
+at `https://containers.verda.com/DEPLOYMENT/v1` or the legacy
+`https://containers.datacrunch.io/DEPLOYMENT/v1`, with its inference API key. The
 application does not create GPU resources, add funds, or enable paid deployments.
-Only that host/path pattern and `https://inference.verda.com/v1` are accepted; other
+Only those host/path patterns and `https://inference.verda.com/v1` are accepted; other
 provider endpoints are fixed. Redirects are never followed with credentials.
 
 Experimental features default off. Operators can explicitly enable each provider.
 The supplied Featherless credential was accepted by `/v1/plan` on 2026-11-15; the
-same supplied credential was rejected by Verda's managed `/v1/models` (HTTP 401).
+initial shared credential was rejected by Verda's managed `/v1/models` (HTTP 401).
+A replacement Verda inference key subsequently authenticated successfully.
+The operator then authorized a dedicated NVIDIA deployment; its reproducible
+configuration and cost/scaling details are in [the deployment guide](../deploy/verda/README.md).
 No Cala credential was supplied. Credentials themselves are never committed.
 
 ## Review behavior and limits
@@ -96,7 +100,9 @@ rolling 30 days. An operation may include a model catalog check plus inference;
 these are application limits, not advertised vendor quotas or spending guarantees.
 Access tests and failed/uncertain requests consume an operation. There are no
 automatic retries. Inference is capped at 1,800 output tokens, responses at 2 MiB,
-and HTTP timeouts at 45 seconds. Provider errors are sanitized before display.
+and HTTP timeouts at 45 seconds. For Verda serverless cold starts, the application
+submits each request once and polls its result for up to ten minutes. Polls never
+resubmit inference. Provider errors are sanitized before display.
 
 ## Official documentation verified 2026-11-15
 

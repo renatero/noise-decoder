@@ -1,5 +1,8 @@
 """Explicit, bounded experimental research. Never modifies coordination scores."""
 import json
+import re
+import time
+import uuid
 from datetime import datetime, timezone
 
 import httpx
@@ -11,6 +14,8 @@ from urllib.parse import urlsplit
 from src.providers import settings
 
 router = APIRouter(prefix='/api')
+VERDA_POLL_SECONDS = 3
+VERDA_WAIT_SECONDS = 600
 
 
 def operator(request: Request):
@@ -59,9 +64,18 @@ def fetch(config, path, body=None):
     headers = {'Accept': 'application/json'}
     headers['X-API-KEY' if config['name'] == 'Cala.ai' else 'Authorization'] = (
         config['api_key'] if config['name'] == 'Cala.ai' else 'Bearer ' + config['api_key'])
+    if re.fullmatch(settings.VERDA_CONTAINER_BASE, config['base_url']):
+        return verda_fetch(config, path, body, headers)
+    return request_json('GET' if body is None else 'POST', config['base_url'] + path, headers, body)
+
+
+def request_json(method, url, headers, body=None, *, pending=False):
     try:
-        with httpx.stream('GET' if body is None else 'POST', config['base_url'] + path,
+        with httpx.stream(method, url,
                           headers=headers, json=body, timeout=45, follow_redirects=False) as response:
+            # Verda returns 404 while an accepted async result is not ready yet.
+            if pending and response.status_code in (202, 404):
+                return None
             if response.status_code >= 300:
                 messages = {401: 'API key rejected', 403: 'API access denied', 402: 'Payment or credits required', 429: 'Provider rate limit reached'}
                 raise HTTPException(502, messages.get(response.status_code, 'Provider request failed') + f' (HTTP {response.status_code}).')
@@ -78,6 +92,27 @@ def fetch(config, path, body=None):
     if not isinstance(result, dict) or result.get('error') or result.get('response_type') == 'ERROR':
         raise HTTPException(502, 'Provider returned an error or unsupported response.')
     return result
+
+
+def verda_fetch(config, path, body, headers):
+    """Submit once, then poll the same job so GPU cold starts do not time out."""
+    inference_id = str(uuid.uuid4())
+    accepted = request_json('GET' if body is None else 'POST', config['base_url'] + path,
+                            {**headers, 'Prefer': 'respond-async', 'X-Inference-Id': inference_id}, body)
+    parsed = urlsplit(config['base_url'])
+    deployment = parsed.path.split('/')[1]
+    result_path = f'/result/{deployment}'
+    if accepted.get('Id') != inference_id or accepted.get('ResultPath') != result_path:
+        raise HTTPException(502, 'Verda returned an invalid asynchronous receipt. No second request was submitted.')
+    # Never follow a provider-supplied absolute URL with our credential.
+    result_url = f'{parsed.scheme}://{parsed.netloc}{result_path}'
+    deadline = time.monotonic() + VERDA_WAIT_SECONDS
+    while time.monotonic() < deadline:
+        result = request_json('GET', result_url, {**headers, 'X-Inference-Id': inference_id}, pending=True)
+        if result is not None:
+            return result
+        time.sleep(VERDA_POLL_SECONDS)
+    raise HTTPException(504, 'Verda is still starting or processing after 10 minutes. The request was submitted once; check the deployment before retrying.')
 
 
 def configured(provider, require_enabled=True):
@@ -223,8 +258,11 @@ def review(payload: ReviewRequest):
         except ValueError:
             item['source_url'] = None
         evidence[f'e{index + 1}'] = item
+    system = SYSTEM
+    if config['model'] == 'nvidia/NVIDIA-Nemotron-Nano-9B-v2':
+        system += '\n/no_think'  # NVIDIA's documented control for direct JSON responses.
     body = {'model': config['model'], 'max_tokens': 1800, 'temperature': 0,
-            'messages': [{'role': 'system', 'content': SYSTEM}, {'role': 'user', 'content': json.dumps({'entity': payload.entity, 'synthetic': payload.synthetic,
+            'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': json.dumps({'entity': payload.entity, 'synthetic': payload.synthetic,
                 'evidence': [{**item, 'id': alias} for alias, item in evidence.items()]})}]}
     data = fetch(config, '/chat/completions', body)
     try:
