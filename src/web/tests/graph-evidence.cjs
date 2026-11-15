@@ -42,7 +42,7 @@ const assert = require('node:assert/strict');
     });
     await page.mouse.move(nodePoint.x,nodePoint.y);
     await tooltip.waitFor({state:'visible'});
-    assert.equal(await tooltip.textContent(),'demo:coordinated-01');
+    assert.equal(await tooltip.locator('.graph-tooltip-title').textContent(),'demo:coordinated-01');
     await page.mouse.move(0,0);
     await tooltip.waitFor({state:'hidden'});
     await page.mouse.click(nodePoint.x,nodePoint.y);
@@ -61,6 +61,50 @@ const assert = require('node:assert/strict');
     await checkFit();
     await page.locator('#graph-section').scrollIntoViewIfNeeded();
     await page.screenshot({path:'/tmp/noise-graph-fixed-desktop.png'});
+    // A real pointer must focus only the actor's connections and preview edges.
+    await page.evaluate(()=>{
+      window.savedReport=latestReport;
+      latestReport={nodes:['a','b','c','d'].map(id=>({id,event_count:3,platforms:['hackernews']})),
+        edges:[{id:'a-b',source:'a',target:'b',weight:2,repeated:true,evidence_assessment:'supported'},
+               {id:'c-d',source:'c',target:'d',weight:3,repeated:true}],
+        clusters:[{nodes:['a','b']},{nodes:['c','d']}]};
+      renderClusters(latestReport); renderGraph(latestReport);
+      graph.nodes().positions(n=>({x:{a:100,b:300,c:100,d:300}[n.id()],y:['a','b'].includes(n.id())?100:260}));
+      fitGraph();
+    });
+    await page.waitForTimeout(300);
+    async function point(id,edge=false) {
+      return page.evaluate(({id,edge})=>{
+        const el=graph.getElementById(id),p=edge?el.renderedMidpoint():el.renderedPosition();
+        const r=document.querySelector('#graph').getBoundingClientRect();
+        return {x:r.left+p.x,y:r.top+p.y};
+      },{id,edge});
+    }
+    await page.evaluate(()=>graph.$id('c-d').select());
+    const a=await point('a');
+    await page.mouse.move(a.x,a.y);
+    await tooltip.waitFor({state:'visible'});
+    assert.match(await tooltip.locator('.graph-tooltip-subtitle').textContent(),/3 records/);
+    assert(await page.evaluate(()=>graph.$id('a-b').hasClass('highlighted') && graph.$id('b').hasClass('neighbor') && graph.$id('c').hasClass('dimmed') && graph.$id('c-d').hasClass('dimmed')));
+    assert.equal(await page.evaluate(()=>Number(graph.$id('c-d').style('opacity'))),0.06,'Previously selected edge should dim too');
+    await page.mouse.move(0,0);
+    assert(await page.evaluate(()=>graph.$('.hovered, .neighbor, .highlighted, .dimmed').length===0));
+    const ab=await point('a-b',true);
+    await page.mouse.move(ab.x,ab.y);
+    await tooltip.waitFor({state:'visible'});
+    assert.equal(await tooltip.locator('.graph-tooltip-title').textContent(),'a ↔ b');
+    assert.match(await tooltip.locator('.graph-tooltip-subtitle').textContent(),/2 shared-URL groups/);
+    assert(await page.evaluate(()=>graph.$id('a-b').hasClass('hovered') && graph.$id('a').hasClass('neighbor') && graph.$id('c-d').hasClass('dimmed')));
+    await page.screenshot({path:'/tmp/noise-edge-hover.png'});
+    await page.mouse.click(ab.x,ab.y);
+    assert.match(await page.locator('#graph-detail').textContent(),/a ↔ b/);
+    await page.mouse.move(0,0);
+    assert(await page.locator('#cluster-filter').isVisible());
+    await page.selectOption('#cluster-filter','cluster-1');
+    assert.deepEqual(await page.evaluate(()=>graph.nodes().map(n=>n.id()).sort()),['c','d']);
+    await page.selectOption('#cluster-filter','all');
+    assert.equal(await page.evaluate(()=>graph.nodes().length),4);
+    await page.evaluate(()=>{latestReport=window.savedReport; renderClusters(latestReport);renderGraph(latestReport);});
     // Reproduce the screenshot's isolated grey actors, including actual hover styling.
     await page.evaluate(()=>renderGraph({nodes:Array.from({length:30},(_,i)=>({id:`hackernews:observed-actor-${i}`})),edges:[]}));
     await page.waitForTimeout(300);
@@ -73,7 +117,7 @@ const assert = require('node:assert/strict');
     assert(await page.evaluate(()=>graph.nodes().every(n=>n.style('label') === '')));
     await page.mouse.move(greyPoint.x,greyPoint.y);
     await tooltip.waitFor({state:'visible'});
-    assert.equal(await tooltip.textContent(),'hackernews:observed-actor-12');
+    assert.equal(await tooltip.locator('.graph-tooltip-title').textContent(),'hackernews:observed-actor-12');
     const tipStyle=await tooltip.evaluate(el=>({position:getComputedStyle(el).position,fontSize:getComputedStyle(el).fontSize}));
     assert.deepEqual(tipStyle,{position:'absolute',fontSize:'12px'});
     await page.screenshot({path:'/tmp/noise-observed-hover.png'});
@@ -101,7 +145,7 @@ const assert = require('node:assert/strict');
     });
     await page.mouse.move(observedPoint.x,observedPoint.y);
     await tooltip.waitFor({state:'visible'});
-    assert.equal(await tooltip.textContent(),longId);
+    assert.equal(await tooltip.locator('.graph-tooltip-title').textContent(),longId);
     const tipBounds=await tooltip.boundingBox(), graphBounds=await page.locator('#graph').boundingBox();
     assert(tipBounds.x>=graphBounds.x && tipBounds.x+tipBounds.width<=graphBounds.x+graphBounds.width);
     assert(tipBounds.y>=graphBounds.y && tipBounds.y+tipBounds.height<=graphBounds.y+graphBounds.height);
@@ -112,6 +156,6 @@ const assert = require('node:assert/strict');
     assert.match(await page.locator('#graph-detail').textContent(),/Select a node or relationship/);
     assert.match(await page.locator('#graph').textContent(),/no graphable actor/);
     assert.deepEqual(errors,[]);
-    console.log('Graph and evidence checks passed: fit, hidden labels, hover, resize, pair provenance, inspect, reset, empty state.');
+    console.log('Graph and evidence checks passed: fit, hidden labels, node/edge hover and focus, cluster filter, resize, pair provenance, inspect, reset, empty state.');
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

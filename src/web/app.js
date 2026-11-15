@@ -325,6 +325,7 @@ function renderClusters(report) {
   const select = $("#cluster-filter");
   clear(target);
   select.replaceChildren(new Option("All observed actors", "all"));
+  select.hidden = true;
   const clusters = Array.isArray(report.clusters) ? report.clusters : [];
   if (!clusters.length) {
     target.textContent = "No clusters were returned for this report.";
@@ -339,6 +340,7 @@ function renderClusters(report) {
     target.append(row);
     if (actors.length) select.add(new Option(`${label} (${actors.length})`, `cluster-${index}`));
   });
+  select.hidden = select.options.length <= 1;
 }
 
 function renderLimitations(report, sourceData) {
@@ -486,18 +488,27 @@ function renderGraph(report, selectedCluster = "all") {
     container.append(element("p", "grid h-full place-items-center px-8 text-center text-body-sm text-outline", "This filter has no graphable actor records."));
     return;
   }
-  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Hover over an actor for its full ID. Select it for details.`;
+  $("#graph-summary").textContent = `${nodes.length} of ${report.nodes.length} actors shown · ${edges.length} recurring relationships. Hover over an actor or line to preview its evidence. Select it for details.`;
   const connected = new Set(edges.flatMap(edge => [edge.source, edge.target]));
   const dense = nodes.length <= 24 && edges.length > nodes.length;
+  // Dense graphs need quieter lines until one actor or relationship is inspected.
+  const edgeWidth = edges.length > 80 ? [0.6, 1.4] : edges.length > 24 ? [0.8, 2] : [1, 2.5];
+  const edgeOpacity = edges.length > 80 ? 0.12 : edges.length > 24 ? 0.2 : 0.3;
   graph = window.cytoscape({
     container,
     elements: { nodes: nodes.map((node) => ({ data: node, classes: connected.has(node.id) ? "recurring" : "" })), edges: edges.map((edge) => ({ data: edge })) },
     style: [
       { selector: "node", style: { "background-color": "#869397", label: "", color: "#dee2f6", "font-family": "Inter", "font-size": 12, "text-valign": "bottom", "text-margin-y": 6, "text-background-color": "#090e1c", "text-background-opacity": 0.9, "text-background-padding": 2, width: 24, height: 24 } },
       { selector: "node.recurring", style: { "background-color": "#4cd7f6" } },
-      { selector: "edge", style: { width: "mapData(weight, 1, 8, 1, 2.5)", "line-color": "#06b6d4", "curve-style": "bezier", opacity: 0.3 } },
+      { selector: "edge", style: { width: `mapData(weight, 1, 8, ${edgeWidth.join(", ")})`, "line-color": "#06b6d4", "curve-style": "bezier", opacity: edgeOpacity } },
       { selector: "edge:selected", style: { opacity: 1, width: 3 } },
       { selector: ":selected", style: { "background-color": "#4cd7f6", "line-color": "#4cd7f6", "border-width": 2, "border-color": "#dee2f6" } },
+      { selector: "node.dimmed", style: { opacity: 0.3 } },
+      { selector: "edge.dimmed", style: { opacity: 0.06 } },
+      { selector: "node.neighbor", style: { "border-width": 2, "border-color": "#06b6d4" } },
+      { selector: "edge.highlighted", style: { "line-color": "#4cd7f6", width: 2.2, opacity: 0.92 } },
+      { selector: "node.hovered", style: { "background-color": "#4cd7f6", "border-width": 2.5, "border-color": "#dee2f6" } },
+      { selector: "edge.hovered", style: { "line-color": "#4cd7f6", width: 2.8, opacity: 1 } },
     ],
     minZoom: 0.1, maxZoom: 2.5, wheelSensitivity: 0.2,
     layout: !edges.length
@@ -510,17 +521,49 @@ function renderGraph(report, selectedCluster = "all") {
   tooltip.setAttribute("role", "tooltip");
   tooltip.hidden = true;
   container.append(tooltip);
-  const hideTooltip = () => { tooltip.hidden = true; };
-  graph.on("mouseover", "node", (event) => {
-    tooltip.textContent = event.target.id();
+  const resetHover = () => {
+    graph.elements().removeClass("hovered neighbor highlighted dimmed");
+    container.style.cursor = "default";
+    tooltip.hidden = true;
+  };
+  const showTooltip = (title, subtitle, point) => {
+    tooltip.replaceChildren(
+      element("div", "graph-tooltip-title", title),
+      element("div", "graph-tooltip-subtitle", subtitle),
+    );
     tooltip.hidden = false;
-    const point = event.target.renderedPosition();
     tooltip.style.left = `${Math.max(8, Math.min(point.x - tooltip.offsetWidth / 2, container.clientWidth - tooltip.offsetWidth - 8))}px`;
     tooltip.style.top = `${Math.max(8, Math.min(point.y + 18, container.clientHeight - tooltip.offsetHeight - 8))}px`;
+    container.style.cursor = "pointer";
+  };
+  graph.on("mouseover", "node", (event) => {
+    resetHover();
+    const node = event.target;
+    const relationships = node.connectedEdges();
+    graph.elements().addClass("dimmed");
+    relationships.removeClass("dimmed").addClass("highlighted");
+    relationships.connectedNodes().not(node).removeClass("dimmed").addClass("neighbor");
+    node.removeClass("dimmed").addClass("hovered");
+    const data = node.data();
+    const count = data.event_count ?? data.event_ids?.length ?? 0;
+    const platforms = (data.platforms || []).map(formatLabel).join(", ") || "Actor";
+    showTooltip(node.id(), `${platforms} · ${count} record${count === 1 ? "" : "s"}`, node.renderedPosition());
   });
-  graph.on("mouseout", "node", hideTooltip);
-  graph.on("pan zoom resize drag", hideTooltip);
-  container.addEventListener("mouseleave", hideTooltip, { signal: tooltipAbortController.signal });
+  graph.on("mouseover", "edge", (event) => {
+    resetHover();
+    const edge = event.target;
+    graph.elements().addClass("dimmed");
+    edge.removeClass("dimmed").addClass("hovered");
+    edge.connectedNodes().removeClass("dimmed").addClass("neighbor");
+    const data = edge.data();
+    const weight = data.weight || 0;
+    showTooltip(`${data.source} ↔ ${data.target}`,
+      `${weight} shared-URL group${Number(weight) === 1 ? "" : "s"} · ${formatLabel(data.evidence_assessment)}`,
+      edge.renderedMidpoint());
+  });
+  graph.on("mouseout", "node, edge", resetHover);
+  graph.on("pan zoom resize drag", resetHover);
+  container.addEventListener("mouseleave", resetHover, { signal: tooltipAbortController.signal });
   fitGraph();
   graphResizeObserver = new ResizeObserver(() => fitGraph());
   graphResizeObserver.observe(container);

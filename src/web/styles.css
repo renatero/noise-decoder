@@ -55,3 +55,6 @@
   line-height: 18px;
   overflow-wrap: anywhere;
 }
+.graph-tooltip-title { color: #4cd7f6; font-weight: 600; }
+.graph-tooltip-subtitle { margin-top: 2px; color: #bcc9cd; font-size: 11px; line-height: 16px; }
+#cluster-filter { max-width: 100%; border: 1px solid #3d494c; border-radius: 6px; background: #090e1c; color: #bcc9cd; padding: 5px 8px; font-size: 11px; }
