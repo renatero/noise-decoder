@@ -41,9 +41,21 @@ const fs = require('node:fs');
     assert.doesNotMatch(await page.locator('body').textContent(), /secret-test-key|operator-test-token/);
     assert.equal(await page.evaluate(() => localStorage.length),0);
     await page.click('#settings-close');
+    let releaseDataset;
+    const datasetGate = new Promise(resolve => { releaseDataset = resolve; });
+    await page.route('**/api/datasets/synthetic_coordinated', async route => {
+      const response = await route.fetch();
+      await datasetGate;
+      await route.fulfill({response});
+    });
     await page.locator('[data-investigation-toggle]').first().click();
     await page.selectOption('#source','synthetic_coordinated');
+    const datasetRequest = page.waitForRequest('**/api/datasets/synthetic_coordinated');
     await page.click('#investigate-button');
+    await datasetRequest;
+    // Changing the next source while loading must not relabel this response.
+    await page.selectOption('#source','bluesky');
+    releaseDataset();
     await page.locator('#investigation-overlay').waitFor({state:'hidden'});
     await page.selectOption('#review-provider','featherless');
     await page.click('#review-button');
