@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import httpx
 
-from src.api.main import app
+from src.api.main import app, dashboard, progress_overview
 from src.collectors.bluesky import CollectorError, CollectorRateLimitError
 from src.collectors.public import SOURCE_IDS
 
@@ -22,9 +22,16 @@ class SourceApiTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(context["included_in_all"])
         from src.collectors.public import SOURCE_IDS
         self.assertNotIn("context", SOURCE_IDS)
-        dashboard = (await self.client.get("/")).text
+        dashboard = (await self.client.get("/dashboard")).text
         for source in catalog:
             self.assertIn(f'value="{source["id"]}"', dashboard)
+
+    async def test_root_serves_progress_overview_and_dashboard_has_its_own_path(self):
+        routes = {route.path: route.endpoint for route in app.routes if hasattr(route, "endpoint")}
+        self.assertIs(routes["/"], progress_overview)
+        self.assertIs(routes["/dashboard"], dashboard)
+        self.assertIn("Noise Decoder — Project Progress", progress_overview().path.read_text(encoding="utf-8"))
+        self.assertIn("<title>Coordination Radar</title>", dashboard().path.read_text(encoding="utf-8"))
 
     async def test_collect_routes_and_empty_feed_query(self):
         with patch("src.api.main.collect_source", return_value={"events": []}) as collector:

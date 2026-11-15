@@ -1,0 +1,246 @@
+{
+  "dataset": "PTC v2 / SemEval-2020 Task 11",
+  "dataset_record": "https://zenodo.org/records/3952415",
+  "dataset_archive_url": "https://zenodo.org/records/3952415/files/datasets-v2.tgz?download=1",
+  "dataset_archive_md5": "a67b730067e275da627ed6753586b98e",
+  "evaluation_date": "2026-11-15",
+  "split": "labeled training partition; diagnostic evaluation, not held-out performance",
+  "articles": 371,
+  "gold_span_identification_spans": 5468,
+  "gold_technique_instances": 6128,
+  "predicted_spans": 646,
+  "predicted_technique_instances": 646,
+  "span_identification": {
+    "exact_span": {
+      "precision": 0.01548,
+      "recall": 0.001829,
+      "f1": 0.003271,
+      "matched": 10,
+      "predicted": 646,
+      "gold": 5468
+    },
+    "character_overlap": {
+      "precision": 0.210774,
+      "recall": 0.00524,
+      "f1": 0.010226,
+      "matched": 1432,
+      "predicted": 6794,
+      "gold": 273271
+    }
+  },
+  "end_to_end_technique_labeling": {
+    "exact_span": {
+      "precision": 0.009288,
+      "recall": 0.000979,
+      "f1": 0.001771,
+      "matched": 6,
+      "predicted": 646,
+      "gold": 6128
+    },
+    "character_overlap": {
+      "precision": 0.097797,
+      "recall": 0.002249,
+      "f1": 0.004397,
+      "matched": 666,
+      "predicted": 6810,
+      "gold": 296092
+    },
+    "macro_f1_supported_classes": 0.007713,
+    "supported_classes": 14,
+    "classes": [
+      {
+        "id": "Loaded_Language",
+        "name": "Loaded Language",
+        "gold_spans": 2123,
+        "predicted_spans": 83,
+        "precision": 0.257443,
+        "recall": 0.002829,
+        "f1": 0.005597,
+        "matched": 147,
+        "predicted": 571,
+        "gold": 51953
+      },
+      {
+        "id": "Name_Calling,Labeling",
+        "name": "Name Calling / Labeling",
+        "gold_spans": 1058,
+        "predicted_spans": 64,
+        "precision": 0.136106,
+        "recall": 0.002585,
+        "f1": 0.005073,
+        "matched": 72,
+        "predicted": 529,
+        "gold": 27854
+      },
+      {
+        "id": "Repetition",
+        "name": "Repetition",
+        "gold_spans": 621,
+        "predicted_spans": 20,
+        "precision": 0.070539,
+        "recall": 0.003079,
+        "f1": 0.0059,
+        "matched": 34,
+        "predicted": 482,
+        "gold": 11044
+      },
+      {
+        "id": "Exaggeration,Minimisation",
+        "name": "Exaggeration / Minimization",
+        "gold_spans": 466,
+        "predicted_spans": 211,
+        "precision": 0.046448,
+        "recall": 0.003306,
+        "f1": 0.006172,
+        "matched": 68,
+        "predicted": 1464,
+        "gold": 20570
+      },
+      {
+        "id": "Doubt",
+        "name": "Doubt",
+        "gold_spans": 493,
+        "predicted_spans": 50,
+        "precision": 0.081673,
+        "recall": 0.000666,
+        "f1": 0.001322,
+        "matched": 41,
+        "predicted": 502,
+        "gold": 61525
+      },
+      {
+        "id": "Appeal_to_fear-prejudice",
+        "name": "Appeal to Fear / Prejudice",
+        "gold_spans": 294,
+        "predicted_spans": 13,
+        "precision": 0.113208,
+        "recall": 0.000414,
+        "f1": 0.000825,
+        "matched": 12,
+        "predicted": 106,
+        "gold": 28984
+      },
+      {
+        "id": "Flag-Waving",
+        "name": "Flag Waving",
+        "gold_spans": 229,
+        "predicted_spans": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "matched": 0,
+        "predicted": 0,
+        "gold": 14171
+      },
+      {
+        "id": "Causal_Oversimplification",
+        "name": "Causal Oversimplification",
+        "gold_spans": 209,
+        "predicted_spans": 4,
+        "precision": 0.25,
+        "recall": 0.000579,
+        "f1": 0.001155,
+        "matched": 15,
+        "predicted": 60,
+        "gold": 25912
+      },
+      {
+        "id": "Slogans",
+        "name": "Slogans",
+        "gold_spans": 129,
+        "predicted_spans": 146,
+        "precision": 0.095687,
+        "recall": 0.043868,
+        "f1": 0.060157,
+        "matched": 142,
+        "predicted": 1484,
+        "gold": 3237
+      },
+      {
+        "id": "Appeal_to_Authority",
+        "name": "Appeal to Authority",
+        "gold_spans": 144,
+        "predicted_spans": 8,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "matched": 0,
+        "predicted": 97,
+        "gold": 20010
+      },
+      {
+        "id": "Black-and-White_Fallacy",
+        "name": "Black and White Fallacy",
+        "gold_spans": 107,
+        "predicted_spans": 40,
+        "precision": 0.085271,
+        "recall": 0.010739,
+        "f1": 0.019076,
+        "matched": 121,
+        "predicted": 1419,
+        "gold": 11267
+      },
+      {
+        "id": "Thought-terminating_Cliches",
+        "name": "Thought Terminating Cliches",
+        "gold_spans": 76,
+        "predicted_spans": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "matched": 0,
+        "predicted": 26,
+        "gold": 2316
+      },
+      {
+        "id": "Bandwagon,Reductio_ad_hitlerum",
+        "name": "Bandwagon / Reductio ad Hitlerum",
+        "gold_spans": 72,
+        "predicted_spans": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "matched": 0,
+        "predicted": 42,
+        "gold": 6932
+      },
+      {
+        "id": "Whataboutism,Straw_Men,Red_Herring",
+        "name": "Whataboutism / Straw Men / Red Herring",
+        "gold_spans": 107,
+        "predicted_spans": 2,
+        "precision": 0.5,
+        "recall": 0.001357,
+        "f1": 0.002707,
+        "matched": 14,
+        "predicted": 28,
+        "gold": 10317
+      }
+    ]
+  },
+  "sentence_detection": {
+    "precision": 0.411955,
+    "recall": 0.054933,
+    "f1": 0.09694,
+    "matched": 255,
+    "predicted": 619,
+    "gold": 4642,
+    "true_negative": 11288,
+    "total_sentences": 16294,
+    "specificity": 0.968761
+  },
+  "metric_definitions": {
+    "exact_span": "A true positive requires the same article, exact character offsets, and (for technique labeling) the same PTC class.",
+    "character_overlap": "Overlapping intervals are unioned per article (and per technique for technique labeling); correctly labeled overlapping characters count toward precision and recall.",
+    "sentence_detection": "Each non-empty article-body line is treated as one sentence; gold positive means a PTC technique span overlaps it, predicted positive means a detector cue overlaps it."
+  },
+  "limitations": [
+    "Only the labeled training partition is publicly included in this archive; these numbers are not held-out test results.",
+    "SemEval 2020 merges rare labels into two superclasses and omits Obfuscation, Intentional Vagueness, Confusion; merged rules are scored against their superclass.",
+    "The application uses transparent lexical cues, not a trained PTC model; it returns at most one matching span per technique per article.",
+    "Exact-span and character-overlap scores are project-defined diagnostics, not the organizers' official SI or conditional TC scorer.",
+    "Sentence-level scores are derived from the corpus's sentence-per-line article format and technique spans; they are diagnostic, not official SLC scores.",
+    "Technique-labeled scores are end-to-end over predicted spans and labels; they are not the official conditional TC score on supplied gold spans.",
+    "The benchmark measures technique-cue detection on news articles, not the network score adjustment or coordination analysis."
+  ]
+}

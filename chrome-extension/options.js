@@ -10,7 +10,7 @@ document.querySelector("#save").addEventListener("click", async () => {
   try {
     const url = new URL(dashboardUrl);
     if (!/^https?:$/.test(url.protocol)) throw new Error("Use an HTTP or HTTPS dashboard URL.");
-    await chrome.storage.sync.set({ dashboardUrl: url.href, dashboardUrlMigrationVersion: 1 });
+    await chrome.storage.sync.set({ dashboardUrl: url.href, dashboardUrlMigrationVersion: 3 });
     saved.textContent = "Saved.";
   } catch (error) {
     saved.textContent = `Invalid dashboard URL: ${error.message}`;

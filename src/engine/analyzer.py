@@ -8,6 +8,8 @@ from typing import Any, TypedDict
 
 import networkx as nx
 
+from src.engine.propaganda import detect_technique_cues, report_technique_analysis, score_adjustment
+
 
 class AnalysisReport(TypedDict):
     """Machine-readable report returned by :func:`analyze`."""
@@ -20,6 +22,7 @@ class AnalysisReport(TypedDict):
     communities: list[dict[str, Any]]
     statistics: dict[str, Any]
     permutation_analysis: dict[str, Any]
+    technique_analysis: dict[str, Any]
     limitations: list[str]
 
 
@@ -294,10 +297,14 @@ def _valid_weight(value: Any) -> float | None:
 
 
 async def analyze(payload: Mapping[str, Any] | None = None) -> AnalysisReport:
-    """Return NetworkX communities and evidence-backed network summaries."""
+    """Return NetworkX communities, evidence summaries, and rhetorical cues."""
     payload = payload or {}
     graph_data = payload.get("actor_graph") or {}
+    events = list(payload.get("events") or [])
+    permutation_analysis = dict(payload.get("permutation_analysis") or {})
     if not graph_data.get("nodes") or not graph_data.get("edges"):
+        techniques = detect_technique_cues(events)
+        adjustment = score_adjustment([], 0.0)
         return {
             "status": "insufficient_data",
             "summary": "No weighted actor graph was provided for network discovery.",
@@ -310,12 +317,42 @@ async def analyze(payload: Mapping[str, Any] | None = None) -> AnalysisReport:
                 "repeated_actor_edges": sum(1 for edge in graph_data.get("edges", []) if edge.get("repeated")),
                 "communities_discovered": 0,
             },
-            "permutation_analysis": dict(payload.get("permutation_analysis") or {}),
+            "permutation_analysis": permutation_analysis,
+            "technique_analysis": report_technique_analysis(techniques, adjustment),
             "limitations": ["The extension must provide an actor_graph with repeated evidence-weighted edges."],
         }
 
     result = discover_communities(payload)
     communities = result["communities"]
+    all_techniques = detect_technique_cues(events)
+    for community in communities:
+        actor_ids = set(community["actor_ids"])
+        community_events = [
+            event for event in events
+            if str(event.get("actor_id") or "") in actor_ids
+        ]
+        community["propaganda_techniques"] = detect_technique_cues(community_events)
+    raw_score = permutation_analysis.get("heuristic_suspicion_score")
+    try:
+        network_score = float(raw_score) if raw_score is not None else sum(
+            float(community.get("weighted_edge_support", 0)) for community in communities
+        )
+    except (TypeError, ValueError, OverflowError):
+        network_score = sum(float(community.get("weighted_edge_support", 0)) for community in communities)
+    if not isfinite(network_score) or network_score < 0:
+        network_score = sum(float(community.get("weighted_edge_support", 0)) for community in communities)
+    adjustment = score_adjustment(communities, network_score)
+    if raw_score is not None:
+        permutation_analysis["network_heuristic_suspicion_score"] = round(network_score, 3)
+        permutation_analysis["heuristic_suspicion_score"] = adjustment["adjusted_score"]
+        permutation_analysis["propaganda_technique_adjustment"] = adjustment
+    elif communities:
+        permutation_analysis.update({
+            "network_heuristic_suspicion_score": round(network_score, 3),
+            "heuristic_suspicion_score": adjustment["adjusted_score"],
+            "propaganda_technique_adjustment": adjustment,
+        })
+        permutation_analysis.setdefault("permutation_p_value", None)
     summary = (
         f"Discovered {len(communities)} evidence-weighted actor communit{'y' if len(communities) == 1 else 'ies'}."
         if communities
@@ -324,10 +361,10 @@ async def analyze(payload: Mapping[str, Any] | None = None) -> AnalysisReport:
     limitations = [
         "Communities are candidate networks based on the supplied evidence-weighted graph; they do not establish coordination or intent.",
         "Greedy modularity is a heuristic partition and may change with different graph data or resolution settings.",
+        "Technique labels are low-confidence lexical cues for human review, not findings that a post is propaganda.",
     ]
-    permutation_analysis = dict(payload.get("permutation_analysis") or {})
     if permutation_analysis.get("permutation_p_value") is not None:
-        limitations.append("The permutation p-value evaluates the strongest discovered cluster and is distinct from any heuristic edge or community score.")
+        limitations.append("The permutation p-value evaluates the network-only score before the rhetorical-technique adjustment; it does not test the adjusted score.")
     return {
         "status": "complete",
         "summary": summary,
@@ -337,5 +374,6 @@ async def analyze(payload: Mapping[str, Any] | None = None) -> AnalysisReport:
         "communities": communities,
         "statistics": result["statistics"],
         "permutation_analysis": permutation_analysis,
+        "technique_analysis": report_technique_analysis(all_techniques, adjustment),
         "limitations": limitations,
     }

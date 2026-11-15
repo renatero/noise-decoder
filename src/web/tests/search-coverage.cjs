@@ -11,14 +11,16 @@ const fs = require('node:fs');
     page.on('pageerror', error => errors.push(error.message));
     let collection;
     let status = 200;
+    let analysisResponse = {status: 'insufficient_data', summary: 'No technique cues.', statistics: {}, nodes: [], edges: [], evidence: [], clusters: [], technique_analysis: {techniques: [], score_adjustment: {network_score: 0, score_delta: 0, adjusted_score: 0}}};
     await page.route('**/api/collect/**', route => route.fulfill({status, json: status === 200 ? collection : {detail: 'Sources are unavailable.', collection}}));
+    await page.route('**/api/analyze', route => route.fulfill({json: analysisResponse}));
     await page.route('**/api/sources', async route => {
       const response = await route.fetch();
       const data = await response.json();
       data.sources.find(item => item.id === 'context').available = true;
       await route.fulfill({json: data});
     });
-    await page.goto(process.argv[2] || 'http://127.0.0.1:18001', {waitUntil: 'domcontentloaded'});
+    await page.goto(process.argv[2] || 'http://127.0.0.1:18001/dashboard', {waitUntil: 'domcontentloaded'});
     const names = ['Bluesky', 'Hacker News', 'BBC News — World', 'The Guardian — World', 'Al Jazeera'];
     const ids = ['bluesky', 'hackernews', 'bbc', 'guardian', 'aljazeera'];
     const query = '<img src=x onerror=alert(1)> rare phrase';
@@ -48,16 +50,28 @@ const fs = require('node:fs');
     assert.equal(exported.report.collection.query, query);
 
     collection = {...structuredClone(empty), source: 'bbc_rss', sources: [empty.sources[2]]};
+    analysisResponse = {status: 'inconclusive', summary: 'Possible rhetorical cues.', statistics: {}, nodes: [], edges: [], evidence: [], clusters: [], technique_analysis: {
+      method: 'Transparent lexical cue rules; candidate labels have low confidence and require human review.',
+      reference: {url: 'https://aclanthology.org/D19-1565/'},
+      score_adjustment: {network_score: 10, score_delta: 0.5, adjusted_score: 10.5},
+      techniques: [{id: 'loaded_language', name: 'Loaded Language', confidence: 'low', supporting_post_count: 2, supporting_actor_count: 2, evidence: [{matched_text: 'vile'}]}],
+    }, permutation_analysis: {network_heuristic_suspicion_score: 10, heuristic_suspicion_score: 10.5}};
     await run('bbc');
     assert.equal(await page.locator('#search-source-list li').count(), 1);
     assert.match(await page.locator('#search-source-list').textContent(), /BBC News/);
     assert.doesNotMatch(await page.locator('#search-source-list').textContent(), /Bluesky/);
+    assert.match(await page.locator('#techniques').textContent(), /Loaded Language/);
+    assert.match(await page.locator('#techniques').textContent(), /“vile”/);
+    assert.match(await page.locator('#techniques').textContent(), /PTC-18 taxonomy reference/);
+    assert.match(await page.locator('#statistics').textContent(), /Adjusted score10\.5/);
 
     collection = {...structuredClone(empty), source: 'context_news', cached: true, credits_consumed: 0, sources: [
       {id: 'context', name: 'Context.dev news index', status: 'ok', available_events: 0, returned_events: 0, scope: 'English articles from the last 7 days.'}]};
+    analysisResponse = {status: 'news_context', summary: 'Context only.', statistics: {news_articles: 0, news_publishers: 0}, nodes: [], edges: [], evidence: [], clusters: [], technique_analysis: {techniques: [], score_adjustment: {network_score: 0, score_delta: 0, adjusted_score: 0}}};
     await run('context');
     assert.match(await page.locator('#search-query-summary').textContent(), /Cached results/);
     assert.match(await page.locator('#search-source-list').textContent(), /Context.dev news index/);
+    assert.match(await page.locator('#techniques').textContent(), /No candidate technique cues/);
 
     status = 502;
     collection = {...structuredClone(empty), sources: empty.sources.map(row => ({...row, status: 'error', available_events: null, error: 'Source timed out.'}))};
@@ -71,6 +85,6 @@ const fs = require('node:fs');
     assert.equal(await page.locator('#search-source-list li').count(), 0);
     assert.match(await page.locator('#search-query-summary').textContent(), /No live search was performed/);
     assert.deepEqual(errors, []);
-    console.log(JSON.stringify({cases: ['partial failure with zero matches', 'export trace', 'single source empty', 'cached Context empty', 'all sources failed', 'offline data'], browser_errors: errors}));
+    console.log(JSON.stringify({cases: ['partial failure with zero matches', 'export trace', 'single source empty and technique report', 'cached Context empty with negative technique result', 'all sources failed', 'offline data'], browser_errors: errors}));
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

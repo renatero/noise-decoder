@@ -89,6 +89,50 @@ class DiscoverCommunitiesTests(unittest.TestCase):
         self.assertNotIn("probability", " ".join(report["limitations"]).lower())
         self.assertEqual(len(report["findings"]), 1)
 
+    def test_corroborated_technique_cues_are_cited_and_adjust_score(self):
+        payload = self.payload
+        payload["events"][0]["text"] = "Those vile traitors are destroying the city."
+        payload["events"][1]["text"] = "Those vile traitors threaten our community."
+
+        report = asyncio.run(analyze(payload))
+
+        techniques = {item["id"]: item for item in report["technique_analysis"]["techniques"]}
+        self.assertEqual(set(techniques), {"loaded_language", "name_calling_labeling"})
+        self.assertEqual(techniques["loaded_language"]["supporting_actor_count"], 2)
+        self.assertEqual(techniques["loaded_language"]["confidence"], "low")
+        self.assertEqual(techniques["loaded_language"]["evidence"][0]["matched_text"].lower(), "vile")
+        self.assertEqual(report["permutation_analysis"]["network_heuristic_suspicion_score"], 2.5)
+        self.assertEqual(report["permutation_analysis"]["heuristic_suspicion_score"], 2.75)
+        self.assertEqual(report["permutation_analysis"]["permutation_p_value"], 0.025)
+        self.assertEqual(report["technique_analysis"]["score_adjustment"]["adjustment_fraction"], 0.1)
+
+    def test_neutral_text_has_no_technique_cues_or_score_uplift(self):
+        payload = self.payload
+        payload["events"][0]["text"] = "The council published its budget on Monday."
+        payload["events"][1]["text"] = "The committee will meet again next week."
+
+        report = asyncio.run(analyze(payload))
+
+        self.assertEqual(report["technique_analysis"]["techniques"], [])
+        self.assertEqual(report["technique_analysis"]["score_adjustment"]["score_delta"], 0)
+        self.assertEqual(report["permutation_analysis"]["heuristic_suspicion_score"], 2.5)
+        self.assertEqual(report["permutation_analysis"]["network_heuristic_suspicion_score"], 2.5)
+
+    def test_single_actor_repetition_is_reported_but_does_not_adjust_network_score(self):
+        payload = self.payload
+        payload["events"][0]["text"] = "Those vile traitors are harming the city."
+        payload["events"][2]["text"] = "Those vile traitors are harming the city again."
+        payload["events"][1]["text"] = "A meeting was held on Monday."
+        payload["events"][3]["text"] = "The next meeting is scheduled for Tuesday."
+
+        report = asyncio.run(analyze(payload))
+
+        loaded = next(item for item in report["technique_analysis"]["techniques"] if item["id"] == "loaded_language")
+        self.assertEqual(loaded["supporting_post_count"], 2)
+        self.assertEqual(loaded["supporting_actor_count"], 1)
+        self.assertFalse(loaded["corroborated_across_actors"])
+        self.assertEqual(report["technique_analysis"]["score_adjustment"]["score_delta"], 0)
+
     def test_missing_graph_returns_insufficient_data(self):
         report = asyncio.run(analyze({"events": []}))
 

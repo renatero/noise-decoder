@@ -120,6 +120,8 @@ async def analyze_events(events: list[dict[str, Any]]) -> dict[str, Any]:
         "edges": engine_report.get("edges", []),
         "clusters": communities or groups,
         "evidence": evidence,
+        "permutation_analysis": engine_report.get("permutation_analysis", {}),
+        "technique_analysis": engine_report.get("technique_analysis", {}),
         "statistics": {
             "events_observed": len(events),
             "actors_observed": len(payload["actor_graph"]["nodes"]),
